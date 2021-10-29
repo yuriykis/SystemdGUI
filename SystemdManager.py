@@ -8,6 +8,7 @@ class SystemdManager():
 
             unitList = []
             for unit, state in manager.Manager.ListUnitFiles():
-                unitList.append(unit)
+                unit_element = (unit, state)
+                unitList.append(unit_element)
 
             return unitList
