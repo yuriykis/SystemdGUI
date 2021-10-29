@@ -1,4 +1,5 @@
 import gi
+import os
 import systemd
 
 gi.require_version("Gtk", "3.0")
@@ -13,6 +14,7 @@ class MainWindow(Gtk.Window):
         Gtk.init_check()
         super().__init__(title="Systemd GUI")
         self.set_border_width(10)
+        self.set_default_size(1000, 500)
 
         scrolledwindow = Gtk.ScrolledWindow()
         self.add(scrolledwindow)
@@ -27,10 +29,14 @@ class MainWindow(Gtk.Window):
         box_outer.pack_start(lbox, True, True, 0)
 
         systemdUnitsList = SystemdManager.getUnitsList()
+        
+        # only service unit should remain
+        systemdUnitsList = map(lambda unit: os.path.basename(unit.decode('UTF-8')), systemdUnitsList)
+        systemdUnitsList = filter(lambda unit: "service" in unit, systemdUnitsList)
 
         for unit in systemdUnitsList:
             row = Gtk.ListBoxRow()
-            hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
+            hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=100)
             row.add(hbox)
             label1 = Gtk.Label(label=unit, xalign=0)
             hbox.pack_start(label1, True, True, 0)
