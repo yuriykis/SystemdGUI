@@ -4,7 +4,7 @@ import systemd
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-from systemd import SystemdManager
+from SystemdManager import SystemdManager
 
 class MainWindow(Gtk.Window):
 
