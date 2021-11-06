@@ -5,6 +5,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from SystemdManager import SystemdManager
+from Confirmation import ConfirmWindow
 
 class MainWindow(Gtk.Window):
 
@@ -45,20 +46,22 @@ class MainWindow(Gtk.Window):
             hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
             row.add(hbox)
             serivce_name = Gtk.Label(label=unit[0], xalign=0)
-            is_loaded = Gtk.Label(label=unit[1], xalign=0)
-            is_active = Gtk.Label(label=unit[2], xalign=0)
-            restart = Gtk.Button.new_with_label("Restart")
+            is_loaded_button = Gtk.Label(label=unit[1], xalign=0)
+            is_active_button = Gtk.Label(label=unit[2], xalign=0)
+            restart_button = Gtk.Button.new_with_label("Restart")
+            restart_button.connect("clicked", self.on_restart_clicked)
+
             hbox.pack_start(serivce_name, True, True, 0)
-            hbox.pack_start(is_loaded, False, True, 0)
-            hbox.pack_start(is_active, False, True, 0)
-            hbox.pack_start(restart, False, True, 0)
+            hbox.pack_start(is_loaded_button, False, True, 0)
+            hbox.pack_start(is_active_button, False, True, 0)
+            hbox.pack_start(restart_button, False, True, 0)
             lbox.add(row)
 
-    def on_click_me_clicked(self, button):
-        print('"Click me" button was clicked')
+    def on_restart_clicked(self, button):
+        confirmWindow = ConfirmWindow(self)
+        response = confirmWindow.run()
 
-    def on_open_clicked(self, button):
-        print('"Open" button was clicked')
+        confirmWindow.destroy()
 
     def on_close_clicked(self, button):
         print("Closing application")
