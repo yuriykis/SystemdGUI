@@ -5,7 +5,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from SystemdManager import SystemdManager
-from Confirmation import ConfirmWindow
+from ConfirmWindow import ConfirmWindow
 
 class MainWindow(Gtk.Window):
 
