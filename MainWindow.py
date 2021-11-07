@@ -2,10 +2,11 @@ import gi
 import os
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 
 from SystemdManager import SystemdManager
 from ConfirmWindow import ConfirmWindow
+from PropsWindow import PropsWindow
 
 class MainWindow(Gtk.Window):
 
@@ -18,15 +19,26 @@ class MainWindow(Gtk.Window):
 
         scrolledwindow = Gtk.ScrolledWindow()
         self.add(scrolledwindow)
-        
-        box_outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        self.add(box_outer)
 
-        scrolledwindow.add(box_outer)
+        self.liststore = Gtk.ListStore(str, str, str)
+        treeview = Gtk.TreeView(model=self.liststore)
+        self.add(treeview)
 
-        lbox = Gtk.ListBox()
-        lbox.set_selection_mode(Gtk.SelectionMode.NONE)
-        box_outer.pack_start(lbox, True, True, 0)
+        scrolledwindow.add(treeview)
+    
+        firstColumnName = Gtk.CellRendererText()
+        systemdUnitsNames = Gtk.TreeViewColumn("Service Name", firstColumnName, text=0)
+        treeview.append_column(systemdUnitsNames)
+
+        secondColumnName = Gtk.CellRendererText()
+        systemdUnitsStatus = Gtk.TreeViewColumn("Load State", secondColumnName, text=1)
+        treeview.append_column(systemdUnitsStatus)
+
+        thirdColumnName = Gtk.CellRendererText()
+        systemdUnitsDescription = Gtk.TreeViewColumn("Active State", thirdColumnName, text=2)
+        treeview.append_column(systemdUnitsDescription)
+
+        treeview.connect("button-press-event", self.on_double_unit_click)
 
         systemdUnitsList = SystemdManager.getUnitsList()
 
@@ -42,26 +54,28 @@ class MainWindow(Gtk.Window):
         systemdUnitsList = filter(lambda unit: "service" in unit[0], systemdUnitsList)
 
         for unit in systemdUnitsList:
-            row = Gtk.ListBoxRow()
-            hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
-            row.add(hbox)
-            serivce_name = Gtk.Label(label=unit[0], xalign=0)
-            is_loaded_button = Gtk.Label(label=unit[1], xalign=0)
-            is_active_button = Gtk.Label(label=unit[2], xalign=0)
+            serivce_name = unit[0]
+            is_loaded_field = unit[1]
+            is_active_field = unit[2]
             restart_button = Gtk.Button.new_with_label("Restart")
             restart_button.connect("clicked", self.on_restart_clicked)
 
-            hbox.pack_start(serivce_name, True, True, 0)
-            hbox.pack_start(is_loaded_button, False, True, 0)
-            hbox.pack_start(is_active_button, False, True, 0)
-            hbox.pack_start(restart_button, False, True, 0)
-            lbox.add(row)
+            self.liststore.append([serivce_name, is_loaded_field, is_active_field])
+            
 
-    def on_restart_clicked(self, button):
-        confirmWindow = ConfirmWindow(self)
-        response = confirmWindow.run()
+    def on_restart_clicked(self, widget, event):
+        if event.button == 1 and event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
+            confirmWindow = ConfirmWindow(self)
+            response = confirmWindow.run()
 
-        confirmWindow.destroy()
+            confirmWindow.destroy()
+
+    def on_double_unit_click(self, widget, event):
+        if event.button == 1 and event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
+            propsWindow = PropsWindow(self)
+            propsWindow.run()
+            propsWindow.destroy()
+
 
     def on_close_clicked(self, button):
         print("Closing application")
