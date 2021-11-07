@@ -21,26 +21,26 @@ class MainWindow(Gtk.Window):
         self.add(scrolledwindow)
 
         self.liststore = Gtk.ListStore(str, str, str)
-        treeview = Gtk.TreeView(model=self.liststore)
-        self.add(treeview)
+        self.treeview = Gtk.TreeView(model=self.liststore)
+        self.add(self.treeview)
 
-        scrolledwindow.add(treeview)
+        scrolledwindow.add(self.treeview)
     
         firstColumnName = Gtk.CellRendererText()
         systemdUnitsNames = Gtk.TreeViewColumn("Service Name", firstColumnName, text=0)
-        treeview.append_column(systemdUnitsNames)
+        self.treeview.append_column(systemdUnitsNames)
 
         secondColumnName = Gtk.CellRendererText()
         systemdUnitsStatus = Gtk.TreeViewColumn("Load State", secondColumnName, text=1)
-        treeview.append_column(systemdUnitsStatus)
+        self.treeview.append_column(systemdUnitsStatus)
 
         thirdColumnName = Gtk.CellRendererText()
         systemdUnitsDescription = Gtk.TreeViewColumn("Active State", thirdColumnName, text=2)
-        treeview.append_column(systemdUnitsDescription)
+        self.treeview.append_column(systemdUnitsDescription)
 
-        treeview.connect("button-press-event", self.on_double_unit_click)
+        self.treeview.connect("button-press-event", self.on_double_unit_click)
 
-        systemdUnitsList = SystemdManager.getUnitsList()
+        self.systemdUnitsList = SystemdManager.getUnitsList()
 
         # only service unit should remain
         def decodeUnit(unit):
@@ -49,11 +49,11 @@ class MainWindow(Gtk.Window):
             return decodeUnit(tuple[0]), decodeUnit(tuple[1]), decodeUnit(tuple[2])
 
 
-        systemdUnitsList = map(decodeTuple, systemdUnitsList)
+        self.systemdUnitsList = map(decodeTuple, self.systemdUnitsList)
 
-        systemdUnitsList = filter(lambda unit: "service" in unit[0], systemdUnitsList)
+        self.systemdUnitsList = list(filter(lambda unit: "service" in unit[0], self.systemdUnitsList))
 
-        for unit in systemdUnitsList:
+        for unit in self.systemdUnitsList:
             serivce_name = unit[0]
             is_loaded_field = unit[1]
             is_active_field = unit[2]
@@ -72,7 +72,10 @@ class MainWindow(Gtk.Window):
 
     def on_double_unit_click(self, widget, event):
         if event.button == 1 and event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
-            propsWindow = PropsWindow(self)
+            mouse_x, mouse_y = self.treeview.get_pointer()
+            row_number = int(str(widget.get_path_at_pos(mouse_x, mouse_y)[0]))
+            clicked_service = self.systemdUnitsList[row_number - 1][0]
+            propsWindow = PropsWindow(self, clicked_service)
             propsWindow.run()
             propsWindow.destroy()
 
