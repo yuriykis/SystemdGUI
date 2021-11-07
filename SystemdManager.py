@@ -1,11 +1,10 @@
-
 from pystemd.systemd1 import Manager
 
-class SystemdManager():
 
+class SystemdManager():
     def getUnitsList():
         with Manager() as manager:
-            
+
             unitList = []
             for unit in manager.Manager.ListUnits():
                 unit_element = (unit[0], unit[2], unit[3])
