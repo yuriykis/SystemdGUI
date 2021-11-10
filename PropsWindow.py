@@ -18,22 +18,38 @@ class PropsWindow(Gtk.Dialog):
         main_area = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
         content_area.add(main_area)
 
-        service_name_label = Gtk.Label(serviceName, xalign=2)
-        box1 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        box1.pack_start(service_name_label, True, True, 0)
+        vbox_left = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
 
-        unit_details = SystemdManager.getUnitDetails(serviceName)
-        main_area.pack_start(box1, True, True, 0)
+        service_name_label = Gtk.Label(xalign=2)
+        service_name_label.set_markup("<big>" + serviceName + "</big>")
+        vbox_left.pack_start(service_name_label, False, True, 10)
 
-        box2 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        unit_details = SystemdManager.getUnitDetails(serviceName).Unit
+
+        serice_description_label = Gtk.Label(
+            unit_details.Description.decode('UTF-8'), xalign=0)
+        vbox_left.pack_start(serice_description_label, True, True, 0)
+
+        is_service_loaded_label = Gtk.Label(
+            "Loaded: " + unit_details.LoadState.decode('UTF-8'), xalign=0)
+        vbox_left.pack_start(is_service_loaded_label, True, True, 0)
+
+        is_service_active_label = Gtk.Label(
+            "Active: " + unit_details.ActiveState.decode('UTF-8'), xalign=0)
+        is_service_active_label.set_justify(Gtk.Justification.LEFT)
+        vbox_left.pack_start(is_service_active_label, True, True, 0)
+
+        main_area.pack_start(vbox_left, True, True, 0)
+
+        vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         restart_button = Gtk.Button.new_with_label("Restart")
         edit_config_file_button = Gtk.Button.new_with_label("Edit config file")
         edit_config_file_button.connect("clicked",
                                         self.on_edit_config_file_clicked)
         restart_button.connect("clicked", self.on_restart_clicked)
-        box2.pack_start(restart_button, True, True, 0)
-        box2.pack_start(edit_config_file_button, True, True, 0)
-        main_area.pack_end(box2, True, True, 0)
+        vbox_right.pack_start(restart_button, True, True, 0)
+        vbox_right.pack_start(edit_config_file_button, True, True, 0)
+        main_area.pack_end(vbox_right, True, True, 0)
 
         self.show_all()
 

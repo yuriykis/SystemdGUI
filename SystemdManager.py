@@ -1,4 +1,4 @@
-from pystemd.systemd1 import Manager
+from pystemd.systemd1 import Manager, Unit
 
 
 class SystemdManager():
@@ -13,5 +13,6 @@ class SystemdManager():
 
     def getUnitDetails(unitName):
         with Manager() as manager:
-            unit = manager.Manager.GetUnit(unitName)
+            unit = Unit(unitName)
+            unit.load()
             return unit
