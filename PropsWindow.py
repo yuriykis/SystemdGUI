@@ -54,17 +54,26 @@ class PropsWindow(Gtk.Dialog):
 
         vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         restart_button = Gtk.Button.new_with_label("Restart")
+        restart_button.connect("clicked", self.on_restart_clicked)
+        stop_button = Gtk.Button.new_with_label("Stop")
+        stop_button.connect("clicked", self.on_stop_clicked)
         edit_config_file_button = Gtk.Button.new_with_label("Edit config file")
         edit_config_file_button.connect("clicked",
                                         self.on_edit_config_file_clicked)
-        restart_button.connect("clicked", self.on_restart_clicked)
         vbox_right.pack_start(restart_button, True, True, 0)
+        vbox_right.pack_start(stop_button, True, True, 0)
         vbox_right.pack_start(edit_config_file_button, True, True, 0)
         main_area.pack_end(vbox_right, True, True, 0)
 
         self.show_all()
 
     def on_restart_clicked(self, widget):
+        confirmWindow = ConfirmWindow(self)
+        response = confirmWindow.run()
+
+        confirmWindow.destroy()
+
+    def on_stop_clicked(self, widget):
         confirmWindow = ConfirmWindow(self)
         response = confirmWindow.run()
 
