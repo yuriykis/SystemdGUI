@@ -14,6 +14,7 @@ class PropsWindow(Gtk.Dialog):
                              Gtk.STOCK_OK, Gtk.ResponseType.OK))
         self.set_default_size(600, 400)
         self.set_border_width(10)
+        self._serviceName = serviceName
         content_area = self.get_content_area()
         main_area = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
         content_area.add(main_area)
@@ -68,14 +69,31 @@ class PropsWindow(Gtk.Dialog):
         self.show_all()
 
     def on_restart_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self)
+        confirmWindow = ConfirmWindow(self, "restart")
         response = confirmWindow.run()
 
         confirmWindow.destroy()
 
     def on_stop_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self)
+        confirmWindow = ConfirmWindow(self, "stop")
         response = confirmWindow.run()
+        if response == Gtk.ResponseType.OK:
+            try:
+                SystemdManager.stopUnit(self._serviceName)
+            except Exception as e:
+                print(e)
+                dialog = Gtk.MessageDialog(
+                    transient_for=self,
+                    flags=0,
+                    message_type=Gtk.MessageType.INFO,
+                    buttons=Gtk.ButtonsType.OK,
+                    text="Error",
+                )
+                dialog.format_secondary_text(
+                    "You need a sudo privileges to perform this action")
+                dialog.run()
+
+                dialog.destroy()
 
         confirmWindow.destroy()
 

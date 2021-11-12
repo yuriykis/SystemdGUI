@@ -12,7 +12,11 @@ class SystemdManager():
             return unitList
 
     def getUnitDetails(unitName):
-        with Manager() as manager:
-            unit = Unit(unitName)
-            unit.load()
-            return unit
+        unit = Unit(unitName)
+        unit.load()
+        return unit
+
+    def stopUnit(unitName):
+        unit = Unit(unitName)
+        unit.load()
+        unit.Unit.Stop(b'replace')
