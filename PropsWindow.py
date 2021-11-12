@@ -54,23 +54,58 @@ class PropsWindow(Gtk.Dialog):
         main_area.pack_start(vbox_left, True, True, 0)
 
         vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        restart_button = Gtk.Button.new_with_label("Restart")
-        restart_button.connect("clicked", self.on_restart_clicked)
+        start_button = Gtk.Button("Start")
+        start_button.connect("clicked", self.on_start_clicked)
         stop_button = Gtk.Button.new_with_label("Stop")
         stop_button.connect("clicked", self.on_stop_clicked)
+        restart_button = Gtk.Button.new_with_label("Restart")
+        restart_button.connect("clicked", self.on_restart_clicked)
         edit_config_file_button = Gtk.Button.new_with_label("Edit config file")
         edit_config_file_button.connect("clicked",
                                         self.on_edit_config_file_clicked)
-        vbox_right.pack_start(restart_button, True, True, 0)
+        vbox_right.pack_start(start_button, True, True, 0)
         vbox_right.pack_start(stop_button, True, True, 0)
+        vbox_right.pack_start(restart_button, True, True, 0)
         vbox_right.pack_start(edit_config_file_button, True, True, 0)
         main_area.pack_end(vbox_right, True, True, 0)
 
         self.show_all()
 
+    def show_required_privileges_dialog(self):
+        dialog = Gtk.MessageDialog(
+            transient_for=self,
+            flags=0,
+            message_type=Gtk.MessageType.INFO,
+            buttons=Gtk.ButtonsType.OK,
+            text="Error",
+        )
+        dialog.format_secondary_text(
+            "You need a sudo privileges to perform this action")
+        dialog.run()
+
+        dialog.destroy()
+
+    def on_start_clicked(self, widget):
+        confirmWindow = ConfirmWindow(self, "start")
+        response = confirmWindow.run()
+        if response == Gtk.ResponseType.OK:
+            try:
+                SystemdManager.startUnit(self._serviceName)
+            except Exception as e:
+                print(e)
+                self.show_required_privileges_dialog()
+
+        confirmWindow.destroy()
+
     def on_restart_clicked(self, widget):
         confirmWindow = ConfirmWindow(self, "restart")
         response = confirmWindow.run()
+        if response == Gtk.ResponseType.OK:
+            try:
+                SystemdManager.restartUnit(self._serviceName)
+            except Exception as e:
+                print(e)
+                self.show_required_privileges_dialog()
 
         confirmWindow.destroy()
 
@@ -82,18 +117,7 @@ class PropsWindow(Gtk.Dialog):
                 SystemdManager.stopUnit(self._serviceName)
             except Exception as e:
                 print(e)
-                dialog = Gtk.MessageDialog(
-                    transient_for=self,
-                    flags=0,
-                    message_type=Gtk.MessageType.INFO,
-                    buttons=Gtk.ButtonsType.OK,
-                    text="Error",
-                )
-                dialog.format_secondary_text(
-                    "You need a sudo privileges to perform this action")
-                dialog.run()
-
-                dialog.destroy()
+                self.show_required_privileges_dialog()
 
         confirmWindow.destroy()
 

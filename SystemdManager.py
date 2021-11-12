@@ -20,3 +20,13 @@ class SystemdManager():
         unit = Unit(unitName)
         unit.load()
         unit.Unit.Stop(b'replace')
+
+    def restartUnit(unitName):
+        unit = Unit(unitName)
+        unit.load()
+        unit.Unit.Restart(b'replace')
+
+    def startUnit(unitName):
+        unit = Unit(unitName)
+        unit.load()
+        unit.Unit.Start(b'replace')
