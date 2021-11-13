@@ -1,6 +1,8 @@
 import gi
 import os
 
+from ServiceAction import ServiceAction
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 
@@ -76,6 +78,20 @@ class MainWindow(Gtk.Window):
             propsWindow = PropsWindow(self, clicked_service)
             propsWindow.run()
             propsWindow.destroy()
+
+    def on_service_action_performed(self, serice_action):
+        if (serice_action == ServiceAction.SERVICE_START_OK):
+            print("Service started")
+        elif (serice_action == ServiceAction.SERVICE_START_FAILED):
+            print("Service start failed")
+        elif (serice_action == ServiceAction.SERVICE_STOP_OK):
+            print("Service stopped")
+        elif (serice_action == ServiceAction.SERVICE_STOP_FAILED):
+            print("Service stop failed")
+        elif (serice_action == ServiceAction.SERVICE_RESTART_OK):
+            print("Service restarted")
+        elif (serice_action == ServiceAction.SERVICE_RESTART_FAILED):
+            print("Service restart failed")
 
     def on_close_clicked(self, button):
         print("Closing application")

@@ -1,4 +1,5 @@
 from pystemd.systemd1 import Manager, Unit
+from ServiceAction import ServiceAction
 
 
 class SystemdManager():
@@ -17,16 +18,31 @@ class SystemdManager():
         return unit
 
     def stopUnit(unitName):
-        unit = Unit(unitName)
-        unit.load()
-        unit.Unit.Stop(b'replace')
+        try:
+            unit = Unit(unitName)
+            unit.load()
+            unit.Unit.Stop(b'replace')
+            return ServiceAction.SERVICE_STOP_OK
+        except Exception as e:
+            print(e)
+            return ServiceAction.SERVICE_STOP_FAILED
 
     def restartUnit(unitName):
-        unit = Unit(unitName)
-        unit.load()
-        unit.Unit.Restart(b'replace')
+        try:
+            unit = Unit(unitName)
+            unit.load()
+            unit.Unit.Restart(b'replace')
+            return ServiceAction.SERVICE_RESTART_OK
+        except Exception as e:
+            print(e)
+            return ServiceAction.SERVICE_RESTART_FAILED
 
     def startUnit(unitName):
-        unit = Unit(unitName)
-        unit.load()
-        unit.Unit.Start(b'replace')
+        try:
+            unit = Unit(unitName)
+            unit.load()
+            unit.Unit.Start(b'replace')
+            return ServiceAction.SERVICE_START_OK
+        except Exception as e:
+            print(e)
+            return ServiceAction.SERVICE_START_FAILED

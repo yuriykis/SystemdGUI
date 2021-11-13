@@ -1,5 +1,7 @@
 import gi
 
+from ServiceAction import ServiceAction
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -15,6 +17,7 @@ class PropsWindow(Gtk.Dialog):
         self.set_default_size(600, 400)
         self.set_border_width(10)
         self._serviceName = serviceName
+        self._parent = parent
         content_area = self.get_content_area()
         main_area = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
         content_area.add(main_area)
@@ -89,36 +92,34 @@ class PropsWindow(Gtk.Dialog):
         confirmWindow = ConfirmWindow(self, "start")
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
-            try:
-                SystemdManager.startUnit(self._serviceName)
-            except Exception as e:
-                print(e)
+            service_action_result = SystemdManager.startUnit(self._serviceName)
+            if service_action_result == ServiceAction.SERVICE_START_FAILED:
                 self.show_required_privileges_dialog()
 
+            self._parent.on_service_action_performed(service_action_result)
         confirmWindow.destroy()
 
     def on_restart_clicked(self, widget):
         confirmWindow = ConfirmWindow(self, "restart")
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
-            try:
-                SystemdManager.restartUnit(self._serviceName)
-            except Exception as e:
-                print(e)
+            service_action_result = SystemdManager.restartUnit(
+                self._serviceName)
+            if service_action_result == ServiceAction.SERVICE_RESTART_FAILED:
                 self.show_required_privileges_dialog()
 
+            self._parent.on_service_action_performed(service_action_result)
         confirmWindow.destroy()
 
     def on_stop_clicked(self, widget):
         confirmWindow = ConfirmWindow(self, "stop")
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
-            try:
-                SystemdManager.stopUnit(self._serviceName)
-            except Exception as e:
-                print(e)
+            service_action_result = SystemdManager.stopUnit(self._serviceName)
+            if service_action_result == ServiceAction.SERVICE_STOP_FAILED:
                 self.show_required_privileges_dialog()
 
+            self._parent.on_service_action_performed(service_action_result)
         confirmWindow.destroy()
 
     def on_edit_config_file_clicked(self, widget):
