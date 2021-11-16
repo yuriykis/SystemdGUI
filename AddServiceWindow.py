@@ -4,14 +4,18 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
-class AddServiceWindow(Gtk.Window):
+class AddServiceWindow(Gtk.Dialog):
     def __init__(self, parent):
-        Gtk.Window.__init__(self, title="Add Service", parent=parent)
+        Gtk.Dialog.__init__(self, "Add Service", parent, 0,
+                            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                             Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(300, 100)
         self.set_border_width(10)
 
+        content_area = self.get_content_area()
         self.whole_screen = Gtk.Box(spacing=6)
         self.whole_screen.set_orientation(Gtk.Orientation.VERTICAL)
-        self.add(self.whole_screen)
+        content_area.add(self.whole_screen)
 
         self.top_box = Gtk.Box(spacing=6)
         self.label1 = Gtk.Label("Service Name:")
@@ -34,11 +38,5 @@ class AddServiceWindow(Gtk.Window):
         self.bottom_box.pack_start(self.label3, False, True, 0)
         self.bottom_box.pack_end(self.entry3, False, True, 0)
         self.whole_screen.pack_start(self.bottom_box, True, True, 0)
-
-        self.button1 = Gtk.Button(label="Add Service")
-        self.whole_screen.pack_start(self.button1, True, True, 0)
-
-        self.button2 = Gtk.Button(label="Close")
-        self.whole_screen.pack_start(self.button2, True, True, 0)
 
         self.show_all()
