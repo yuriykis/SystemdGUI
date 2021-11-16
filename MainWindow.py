@@ -8,6 +8,7 @@ from gi.repository import Gtk, Gdk, GdkPixbuf
 
 from SystemdManager import SystemdManager
 from PropsWindow import PropsWindow
+from AddServiceWindow import AddServiceWindow
 
 
 class MainWindow(Gtk.Window):
@@ -114,4 +115,6 @@ class MainWindow(Gtk.Window):
         Gtk.main_quit()
 
     def on_add_new_service_clicked(self, button):
-        print("Add new service")
+        addServiceWindow = AddServiceWindow(self)
+        addServiceWindow.run()
+        addServiceWindow.destroy()
