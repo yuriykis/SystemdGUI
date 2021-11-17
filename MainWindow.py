@@ -2,6 +2,7 @@ import gi
 import os
 
 from ServiceAction import ServiceAction
+from systemd.ServiceCreator import ServiceCreator
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GdkPixbuf
@@ -118,5 +119,9 @@ class MainWindow(Gtk.Window):
         addServiceWindow = AddServiceWindow(self)
         addServiceWindow.run()
         service_name = addServiceWindow.getServiceName()
-
+        service_description = addServiceWindow.getServiceDescription()
+        service_extec_start = addServiceWindow.getServiceExecStart()
+        service_creator = ServiceCreator()
+        service_creator.createService(service_name, service_description,
+                                      service_extec_start)
         addServiceWindow.destroy()

@@ -1,5 +1,6 @@
 from pystemd.systemd1 import Manager, Unit
 from ServiceAction import ServiceAction
+import subprocess
 
 
 class SystemdManager():
@@ -46,3 +47,19 @@ class SystemdManager():
         except Exception as e:
             print(e)
             return ServiceAction.SERVICE_START_FAILED
+
+    def enableUnit(unitName):
+        try:
+            unit = Unit(unitName)
+            unit.load()
+            unit.Unit.Enable()
+            return ServiceAction.SERVICE_ENABLE_OK
+        except Exception as e:
+            print(e)
+            return ServiceAction.SERVICE_ENABLE_FAILED
+
+    def reloadDaemon():
+        try:
+            subprocess.run(["systemctl", "daemon-reload"])
+        except Exception as e:
+            print(e)

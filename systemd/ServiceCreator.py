@@ -1,9 +1,22 @@
 from pystemd.systemd1 import Manager, Unit
+from .SystemdManager import SystemdManager
 
 
 class ServiceCreator():
-    def createService(self):
-        self.unit = Unit()
-        self.unit.load()
-        self.unit.set("Unit", "Description", "Created by SystemdGUI")
-        self.unit.set("Unit", "Documentation", "Created by SystemdGUI")
+    def createService(self, service_name, service_description,
+                      service_exec_start):
+        try:
+            with open("/lib/systemd/system/%s.service" % service_name,
+                      "w") as f:
+                f.write("[Unit]\n")
+                f.write("Description=%s\n" % service_description)
+                f.write("\n")
+                f.write("[Service]\n")
+                f.write("ExecStart=%s\n" % service_exec_start)
+                f.write("\n")
+                f.write("[Install]\n")
+                f.write("WantedBy=multi-user.target\n")
+                SystemdManager.reloadDaemon()
+                SystemdManager.enableUnit(service_name)
+        except Exception as e:
+            print("Error: %s" % e)
