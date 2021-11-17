@@ -52,11 +52,19 @@ class SystemdManager():
         try:
             unit = Unit(unitName)
             unit.load()
-            unit.Unit.Enable()
+            subprocess.run(["systemctl", "enable", unitName])
             return ServiceAction.SERVICE_ENABLE_OK
         except Exception as e:
             print(e)
             return ServiceAction.SERVICE_ENABLE_FAILED
+
+    def unmaskUnit(unitName):
+        try:
+            unit = Unit(unitName)
+            unit.load()
+            subprocess.run(["systemctl", "unmask", unitName])
+        except Exception as e:
+            print(e)
 
     def reloadDaemon():
         try:
