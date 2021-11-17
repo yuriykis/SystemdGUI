@@ -17,26 +17,88 @@ class AddServiceWindow(Gtk.Dialog):
         self.whole_screen.set_orientation(Gtk.Orientation.VERTICAL)
         content_area.add(self.whole_screen)
 
-        self.top_box = Gtk.Box(spacing=6)
-        self.label1 = Gtk.Label("Service Name:")
-        self.entry1 = Gtk.Entry()
-        self.top_box.pack_start(self.label1, False, True, 0)
-        self.top_box.pack_end(self.entry1, False, True, 0)
-        self.whole_screen.pack_start(self.top_box, True, True, 0)
+        self.service_name_box = Gtk.Box(spacing=6)
+        self.service_name_label = Gtk.Label("Service Name:")
+        self.service_name_entry = Gtk.Entry()
+        self.service_name_box.pack_start(self.service_name_label, False, True,
+                                         0)
+        self.service_name_box.pack_end(self.service_name_entry, False, True, 0)
+        self.whole_screen.pack_start(self.service_name_box, True, True, 0)
 
-        self.middle_box = Gtk.Box(spacing=6)
-        self.label2 = Gtk.Label("Service Description:")
-        self.entry2 = Gtk.Entry()
-        self.middle_box.pack_start(self.label2, False, True, 0)
-        self.middle_box.pack_end(self.entry2, False, True, 0)
+        # Unit statement
+        self.unit_statement_box = Gtk.Box(spacing=6)
+        self.unit_statement_label = Gtk.Label("[Unit]")
+        self.unit_statement_box.pack_start(self.unit_statement_label, False,
+                                           False, 0)
+        self.whole_screen.pack_start(self.unit_statement_box, False, False, 0)
 
-        self.whole_screen.pack_start(self.middle_box, True, True, 0)
+        self.service_description_box = Gtk.Box(spacing=6)
+        self.service_description_label = Gtk.Label("Description:")
+        self.service_description_entry = Gtk.Entry()
+        self.service_description_box.pack_start(self.service_description_label,
+                                                False, True, 0)
+        self.service_description_box.pack_end(self.service_description_entry,
+                                              False, True, 0)
 
-        self.bottom_box = Gtk.Box(spacing=6)
-        self.label3 = Gtk.Label("Service URL:")
-        self.entry3 = Gtk.Entry()
-        self.bottom_box.pack_start(self.label3, False, True, 0)
-        self.bottom_box.pack_end(self.entry3, False, True, 0)
-        self.whole_screen.pack_start(self.bottom_box, True, True, 0)
+        self.whole_screen.pack_start(self.service_description_box, True, True,
+                                     0)
+
+        # Service statement
+        self.service_statement_box = Gtk.Box(spacing=6)
+        self.service_statement_label = Gtk.Label("[Service]")
+        self.service_statement_box.pack_start(self.service_statement_label,
+                                              False, False, 0)
+        self.whole_screen.pack_start(self.service_statement_box, False, False,
+                                     0)
+
+        self.service_type_box = Gtk.Box(spacing=6)
+        self.service_type_label = Gtk.Label("Type:")
+        self.service_type_entry = Gtk.Entry()
+        self.service_type_box.pack_start(self.service_type_label, False, True,
+                                         0)
+        self.service_type_box.pack_end(self.service_type_entry, False, True, 0)
+        self.whole_screen.pack_start(self.service_type_box, True, True, 0)
+
+        self.service_exec_start_box = Gtk.Box(spacing=6)
+        self.service_exec_start_label = Gtk.Label("ExecStart:")
+        self.service_exec_start_entry = Gtk.Entry()
+        self.service_exec_start_box.pack_start(self.service_exec_start_label,
+                                               False, True, 0)
+        self.service_exec_start_box.pack_end(self.service_exec_start_entry,
+                                             False, True, 0)
+        self.whole_screen.pack_start(self.service_exec_start_box, True, True,
+                                     0)
+
+        # Install statement
+        self.install_statement_box = Gtk.Box(spacing=6)
+        self.install_statement_label = Gtk.Label("[Install]")
+        self.install_statement_box.pack_start(self.install_statement_label,
+                                              False, False, 0)
+        self.whole_screen.pack_start(self.install_statement_box, False, False,
+                                     0)
+
+        self.service_wanted_by_box = Gtk.Box(spacing=6)
+        self.service_wanted_by_label = Gtk.Label("WantedBy:")
+        self.service_wanted_by_entry = Gtk.Entry()
+        self.service_wanted_by_box.pack_start(self.service_wanted_by_label,
+                                              False, True, 0)
+        self.service_wanted_by_box.pack_end(self.service_wanted_by_entry,
+                                            False, True, 0)
+        self.whole_screen.pack_start(self.service_wanted_by_box, True, True, 0)
 
         self.show_all()
+
+    def getServiceName(self):
+        return self.service_name_entry.get_text()
+
+    def getServiceDescription(self):
+        return self.service_description_entry.get_text()
+
+    def getServiceType(self):
+        return self.service_type_entry.get_text()
+
+    def getServiceExecStart(self):
+        return self.service_exec_start_entry.get_text()
+
+    def getServiceWantedBy(self):
+        return self.service_wanted_by_entry.get_text()

@@ -6,7 +6,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from ConfirmWindow import ConfirmWindow
-from SystemdManager import SystemdManager
+from systemd.SystemdManager import SystemdManager
 
 
 class PropsWindow(Gtk.Dialog):

@@ -6,7 +6,7 @@ from ServiceAction import ServiceAction
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GdkPixbuf
 
-from SystemdManager import SystemdManager
+from systemd.SystemdManager import SystemdManager
 from PropsWindow import PropsWindow
 from AddServiceWindow import AddServiceWindow
 
@@ -117,4 +117,6 @@ class MainWindow(Gtk.Window):
     def on_add_new_service_clicked(self, button):
         addServiceWindow = AddServiceWindow(self)
         addServiceWindow.run()
+        service_name = addServiceWindow.getServiceName()
+
         addServiceWindow.destroy()
