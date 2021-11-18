@@ -65,21 +65,25 @@ class MainWindow(Gtk.Window):
         self.treeview.connect("button-press-event", self.on_double_unit_click)
 
         self.add(grid)
+        self.refresh_services_view()
+
+    def decodeUnit(self, unit):
+        return os.path.basename(unit.decode('UTF-8'))
+
+    def decodeTuple(self, tuple):
+        return self.decodeUnit(tuple[0]), self.decodeUnit(
+            tuple[1]), self.decodeUnit(tuple[2])
+
+    def refresh_services_view(self):
+        self.liststore = Gtk.ListStore(str, str, str)
         self.systemdUnitsList = SystemdManager.getUnitsList()
 
         # only service unit should remain
-        def decodeUnit(unit):
-            return os.path.basename(unit.decode('UTF-8'))
-
-        def decodeTuple(tuple):
-            return decodeUnit(tuple[0]), decodeUnit(tuple[1]), decodeUnit(
-                tuple[2])
-
-        self.systemdUnitsList = map(decodeTuple, self.systemdUnitsList)
+        self.systemdUnitsList = map(self.decodeTuple, self.systemdUnitsList)
 
         self.systemdUnitsList = list(
             filter(lambda unit: "service" in unit[0], self.systemdUnitsList))
-
+        self.systemdUnitsList.sort()
         for unit in self.systemdUnitsList:
             serivce_name = unit[0]
             is_loaded_field = unit[1]
@@ -87,6 +91,7 @@ class MainWindow(Gtk.Window):
 
             self.liststore.append(
                 [serivce_name, is_loaded_field, is_active_field])
+        self.treeview.set_model(self.liststore)
 
     def on_double_unit_click(self, widget, event):
         if event.button == 1 and event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
@@ -110,6 +115,7 @@ class MainWindow(Gtk.Window):
             print("Service restarted")
         elif (serice_action == ServiceAction.SERVICE_RESTART_FAILED):
             print("Service restart failed")
+        self.refresh_services_view()
 
     def on_close_clicked(self, button):
         print("Closing application")
@@ -125,3 +131,4 @@ class MainWindow(Gtk.Window):
         service_creator.createService(service_name, service_description,
                                       service_extec_start)
         addServiceWindow.destroy()
+        self.refresh_services_view()
