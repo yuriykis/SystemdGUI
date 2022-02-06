@@ -131,6 +131,5 @@ class MainWindow(Gtk.Window):
         service_name = service_creator.createService(service_name,
                                                      service_description,
                                                      service_extec_start)
-        SystemdManager.enableUnit(service_name + ".service")
         addServiceWindow.destroy()
         self.refresh_services_view()

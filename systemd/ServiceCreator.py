@@ -16,6 +16,12 @@ class ServiceCreator():
                 f.write("\n")
                 f.write("[Install]\n")
                 f.write("WantedBy=multi-user.target\n")
-            return service_name
+            self.enableService(service_name)
+        except Exception as e:
+            print("Error: %s" % e)
+
+    def enableService(self, service_name):
+        try:
+            SystemdManager.enableUnit(service_name + ".service")
         except Exception as e:
             print("Error: %s" % e)
