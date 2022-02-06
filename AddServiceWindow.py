@@ -5,10 +5,12 @@ from gi.repository import Gtk
 
 
 class AddServiceWindow(Gtk.Dialog):
-    def __init__(self, parent):
-        Gtk.Dialog.__init__(self, "Add Service", parent, 0,
-                            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                             Gtk.STOCK_OK, Gtk.ResponseType.OK))
+    def __init__(self, parent, infoText):
+        self._infoText = infoText
+        Gtk.Dialog.__init__(
+            self, self._infoText.getAddNewServiceText(), parent, 0,
+            (self._infoText.getCancelText(), Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OK, Gtk.ResponseType.OK))
         self.set_default_size(300, 100)
         self.set_border_width(10)
 
@@ -18,7 +20,8 @@ class AddServiceWindow(Gtk.Dialog):
         content_area.add(self.whole_screen)
 
         self.service_name_box = Gtk.Box(spacing=6)
-        self.service_name_label = Gtk.Label("Service Name:")
+        self.service_name_label = Gtk.Label(
+            self._infoText.getServiceNameText())
         self.service_name_entry = Gtk.Entry()
         self.service_name_box.pack_start(self.service_name_label, False, True,
                                          0)
@@ -33,7 +36,8 @@ class AddServiceWindow(Gtk.Dialog):
         self.whole_screen.pack_start(self.unit_statement_box, False, False, 0)
 
         self.service_description_box = Gtk.Box(spacing=6)
-        self.service_description_label = Gtk.Label("Description:")
+        self.service_description_label = Gtk.Label(
+            self._infoText.getDescriptionText())
         self.service_description_entry = Gtk.Entry()
         self.service_description_box.pack_start(self.service_description_label,
                                                 False, True, 0)

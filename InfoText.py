@@ -8,27 +8,35 @@ class InfoText():
     def changeLanguage(self, language):
         self._language = language
 
+    def getAddNewServiceText(self):
+        if self._language == Language.EN:
+            return "Add new service"
+        elif self._language == Language.PL:
+            return "Dodaj nową usługę"
+        else:
+            return "Add new service"
+
     def getServiceNameText(self):
         if self._language == Language.EN:
-            return "Service Name:"
+            return "Service Name"
         elif self._language == Language.PL:
-            return "Nazwa usługi:"
+            return "Nazwa usługi"
         else:
             return "Service Name:"
 
     def getLoadStateText(self):
         if self._language == Language.EN:
-            return "Load State:"
+            return "Load State"
         elif self._language == Language.PL:
-            return "Czy załadowany:"
+            return "Czy załadowana"
         else:
             return "Load State:"
 
     def getActiveStateText(self):
         if self._language == Language.EN:
-            return "Active State:"
+            return "Active State"
         elif self._language == Language.PL:
-            return "Czy aktywny:"
+            return "Czy aktywna"
         else:
             return "Active State:"
 
@@ -76,7 +84,7 @@ class InfoText():
         if self._language == Language.EN:
             return "Active"
         elif self._language == Language.PL:
-            return "Aktywny"
+            return "Aktywna"
         else:
             return "Active"
 
@@ -140,6 +148,36 @@ class InfoText():
         if self._language == Language.EN:
             return "Are you sure you want to " + action + " the service?"
         elif self._language == Language.PL:
-            return "Czy na pewno chcesz " + action + " usługę?"
+            if action == "start":
+                action_pl = "uruchomić"
+            elif action == "stop":
+                action_pl = "zatrzymać"
+            elif action == "restart":
+                action_pl = "ponownie uruchomić"
+            return "Czy na pewno chcesz " + action_pl + " usługę?"
         else:
             return "Are you sure you want to " + action + " the service?"
+
+    def getServicePropertiesText(self):
+        if self._language == Language.EN:
+            return "Service Properties"
+        elif self._language == Language.PL:
+            return "Właściwości usługi"
+        else:
+            return "Service Properties"
+
+    def getComfirmActionText(self):
+        if self._language == Language.EN:
+            return "Confirm action"
+        elif self._language == Language.PL:
+            return "Potwierdź czynność"
+        else:
+            return "Confirm"
+
+    def getDescriptionText(self):
+        if self._language == Language.EN:
+            return "Description:"
+        elif self._language == Language.PL:
+            return "Opis:"
+        else:
+            return "Description:"

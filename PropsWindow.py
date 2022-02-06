@@ -10,10 +10,12 @@ from systemd.SystemdManager import SystemdManager
 
 
 class PropsWindow(Gtk.Dialog):
-    def __init__(self, parent, serviceName):
-        Gtk.Dialog.__init__(self, "Service Properties", parent, 0,
-                            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                             Gtk.STOCK_OK, Gtk.ResponseType.OK))
+    def __init__(self, parent, serviceName, infoText):
+        self._infoText = infoText
+        Gtk.Dialog.__init__(
+            self, self._infoText.getServicePropertiesText(), parent, 0,
+            (self._infoText.getCancelText(), Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OK, Gtk.ResponseType.OK))
         self.set_default_size(600, 400)
         self.set_border_width(10)
         self._serviceName = serviceName
@@ -57,13 +59,15 @@ class PropsWindow(Gtk.Dialog):
         main_area.pack_start(vbox_left, True, True, 0)
 
         vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        start_button = Gtk.Button("Start")
+        start_button = Gtk.Button(self._infoText.getStartText())
         start_button.connect("clicked", self.on_start_clicked)
-        stop_button = Gtk.Button.new_with_label("Stop")
+        stop_button = Gtk.Button.new_with_label(self._infoText.getStopText())
         stop_button.connect("clicked", self.on_stop_clicked)
-        restart_button = Gtk.Button.new_with_label("Restart")
+        restart_button = Gtk.Button.new_with_label(
+            self._infoText.getRestartText())
         restart_button.connect("clicked", self.on_restart_clicked)
-        edit_config_file_button = Gtk.Button.new_with_label("Edit config file")
+        edit_config_file_button = Gtk.Button.new_with_label(
+            self._infoText.getEditConfigFileText())
         edit_config_file_button.connect("clicked",
                                         self.on_edit_config_file_clicked)
         vbox_right.pack_start(start_button, True, True, 0)
@@ -82,14 +86,13 @@ class PropsWindow(Gtk.Dialog):
             buttons=Gtk.ButtonsType.OK,
             text="Error",
         )
-        dialog.format_secondary_text(
-            "You need a sudo privileges to perform this action")
+        dialog.format_secondary_text(self._infoText.getSudoPrivText())
         dialog.run()
 
         dialog.destroy()
 
     def on_start_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self, "start")
+        confirmWindow = ConfirmWindow(self, "start", self._infoText)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
             service_action_result = SystemdManager.startUnit(self._serviceName)
@@ -100,7 +103,7 @@ class PropsWindow(Gtk.Dialog):
         confirmWindow.destroy()
 
     def on_restart_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self, "restart")
+        confirmWindow = ConfirmWindow(self, "restart", self._infoText)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
             service_action_result = SystemdManager.restartUnit(
@@ -112,7 +115,7 @@ class PropsWindow(Gtk.Dialog):
         confirmWindow.destroy()
 
     def on_stop_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self, "stop")
+        confirmWindow = ConfirmWindow(self, "stop", self._infoText)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
             service_action_result = SystemdManager.stopUnit(self._serviceName)

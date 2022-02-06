@@ -10,11 +10,13 @@ from gi.repository import Gtk, Gdk, GdkPixbuf
 from systemd.SystemdManager import SystemdManager
 from PropsWindow import PropsWindow
 from AddServiceWindow import AddServiceWindow
+from InfoText import InfoText
+from Language import Language
 
 
 class MainWindow(Gtk.Window):
     def __init__(self):
-
+        self._infoText = InfoText(Language.PL)
         Gtk.init_check()
         super().__init__(title="Systemd GUI")
         self.set_border_width(10)
@@ -35,7 +37,8 @@ class MainWindow(Gtk.Window):
         img = Gtk.Image()
         img.set_from_pixbuf(add_service_icon)
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        add_new_service_button = Gtk.Button(label="Add service")
+        add_new_service_button = Gtk.Button(
+            label=self._infoText.getAddNewServiceText())
         add_new_service_button.connect("clicked",
                                        self.on_add_new_service_clicked)
         add_new_service_button.set_image(img)
@@ -45,21 +48,18 @@ class MainWindow(Gtk.Window):
         grid.attach_next_to(box, scrolledwindow, Gtk.PositionType.RIGHT, 1, 1)
 
         firstColumnName = Gtk.CellRendererText()
-        systemdUnitsNames = Gtk.TreeViewColumn("Service Name",
-                                               firstColumnName,
-                                               text=0)
+        systemdUnitsNames = Gtk.TreeViewColumn(
+            self._infoText.getServiceNameText(), firstColumnName, text=0)
         self.treeview.append_column(systemdUnitsNames)
 
         secondColumnName = Gtk.CellRendererText()
-        systemdUnitsStatus = Gtk.TreeViewColumn("Load State",
-                                                secondColumnName,
-                                                text=1)
+        systemdUnitsStatus = Gtk.TreeViewColumn(
+            self._infoText.getLoadStateText(), secondColumnName, text=1)
         self.treeview.append_column(systemdUnitsStatus)
 
         thirdColumnName = Gtk.CellRendererText()
-        systemdUnitsDescription = Gtk.TreeViewColumn("Active State",
-                                                     thirdColumnName,
-                                                     text=2)
+        systemdUnitsDescription = Gtk.TreeViewColumn(
+            self._infoText.getActiveStateText(), thirdColumnName, text=2)
         self.treeview.append_column(systemdUnitsDescription)
 
         self.treeview.connect("button-press-event", self.on_double_unit_click)
@@ -98,7 +98,7 @@ class MainWindow(Gtk.Window):
             mouse_x, mouse_y = self.treeview.get_pointer()
             row_number = int(str(widget.get_path_at_pos(mouse_x, mouse_y)[0]))
             clicked_service = self.systemdUnitsList[row_number - 1][0]
-            propsWindow = PropsWindow(self, clicked_service)
+            propsWindow = PropsWindow(self, clicked_service, self._infoText)
             propsWindow.run()
             propsWindow.destroy()
 
@@ -122,7 +122,7 @@ class MainWindow(Gtk.Window):
         Gtk.main_quit()
 
     def on_add_new_service_clicked(self, button):
-        addServiceWindow = AddServiceWindow(self)
+        addServiceWindow = AddServiceWindow(self, self._infoText)
         addServiceWindow.run()
         service_name = addServiceWindow.getServiceName()
         service_description = addServiceWindow.getServiceDescription()
