@@ -16,6 +16,14 @@ class InfoText():
         else:
             return "Add new service"
 
+    def getRemoveServiceText(self):
+        if self._language == Language.EN:
+            return "Remove Service"
+        elif self._language == Language.PL:
+            return "Usuń usługę"
+        else:
+            return "Remove Service"
+
     def getServiceNameText(self):
         if self._language == Language.EN:
             return "Service Name"

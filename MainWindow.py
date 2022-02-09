@@ -31,12 +31,20 @@ class MainWindow(Gtk.Window):
         scrolledwindow.add(self.treeview)
         grid.attach(scrolledwindow, 0, 0, 1, 1)
 
+        box_outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        listbox = Gtk.ListBox()
+        listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+        box_outer.pack_start(listbox, True, True, 0)
+
         # Add new service button
+        row = Gtk.ListBoxRow()
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
+        row.add(hbox)
+
         add_service_icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
             'assets/green-plus-sign-icon-6.jpg', 25, 25)
         img = Gtk.Image()
         img.set_from_pixbuf(add_service_icon)
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         add_new_service_button = Gtk.Button(
             label=self._infoText.getAddNewServiceText())
         add_new_service_button.connect("clicked",
@@ -44,8 +52,30 @@ class MainWindow(Gtk.Window):
         add_new_service_button.set_image(img)
         add_new_service_button.set_image_position(Gtk.PositionType.TOP)
         add_new_service_button.set_always_show_image(True)
-        box.pack_start(add_new_service_button, False, True, 1)
-        grid.attach_next_to(box, scrolledwindow, Gtk.PositionType.RIGHT, 1, 1)
+        hbox.pack_start(add_new_service_button, True, True, 0)
+        listbox.add(row)
+
+        row = Gtk.ListBoxRow()
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
+        row.add(hbox)
+        remove_service_icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
+            'assets/red-minus-sign-icon-6.png', 25, 25)
+        img = Gtk.Image()
+        img.set_from_pixbuf(remove_service_icon)
+
+        remove_service_button = Gtk.Button(
+            label=self._infoText.getRemoveServiceText())
+        remove_service_button.connect("clicked",
+                                      self.on_remove_service_clicked)
+        remove_service_button.set_image(img)
+        remove_service_button.set_image_position(Gtk.PositionType.TOP)
+        remove_service_button.set_always_show_image(True)
+        remove_service_button.set_sensitive(False)
+        hbox.pack_start(remove_service_button, True, True, 0)
+        listbox.add(row)
+
+        grid.attach_next_to(box_outer, scrolledwindow, Gtk.PositionType.RIGHT,
+                            1, 1)
 
         firstColumnName = Gtk.CellRendererText()
         systemdUnitsNames = Gtk.TreeViewColumn(
@@ -132,4 +162,12 @@ class MainWindow(Gtk.Window):
                                                      service_description,
                                                      service_extec_start)
         addServiceWindow.destroy()
+        self.refresh_services_view()
+
+    def on_remove_service_clicked(self, button):
+        mouse_x, mouse_y = self.treeview.get_pointer()
+        row_number = int(
+            str(self.treeview.get_path_at_pos(mouse_x, mouse_y)[0]))
+        clicked_service = self.systemdUnitsList[row_number - 1][0]
+        self.systemdUnitsList.remove(clicked_service)
         self.refresh_services_view()
