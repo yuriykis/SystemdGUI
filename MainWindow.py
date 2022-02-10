@@ -173,7 +173,8 @@ class MainWindow(Gtk.Window):
 
     def on_remove_service_clicked(self, button):
         _serviceName = self.cureent_selected_service
-        confirmWindow = ConfirmWindow(self, "remove", self._infoText)
+        confirmWindow = ConfirmWindow(self, "remove", self._infoText,
+                                      _serviceName)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
             service_action_result = SystemdManager.removeUnit(_serviceName)

@@ -152,9 +152,9 @@ class InfoText():
         else:
             return "Cancel"
 
-    def getAreYouSurePerfActionText(self, action):
+    def getAreYouSurePerfActionText(self, action, serviceName):
         if self._language == Language.EN:
-            return "Are you sure you want to " + action + " the service?"
+            return "Are you sure you want to " + action + " the " + serviceName + "?"
         elif self._language == Language.PL:
             if action == "start":
                 action_pl = "uruchomić"
@@ -164,9 +164,9 @@ class InfoText():
                 action_pl = "ponownie uruchomić"
             elif action == "remove":
                 action_pl = "usunąć"
-            return "Czy na pewno chcesz " + action_pl + " usługę?"
+            return "Czy na pewno chcesz " + action_pl + " usługę " + serviceName + "?"
         else:
-            return "Are you sure you want to " + action + " the service?"
+            return "Are you sure you want to " + action + " the " + serviceName + "?"
 
     def getServicePropertiesText(self):
         if self._language == Language.EN:

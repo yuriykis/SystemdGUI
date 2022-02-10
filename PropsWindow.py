@@ -92,7 +92,8 @@ class PropsWindow(Gtk.Dialog):
         dialog.destroy()
 
     def on_start_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self, "start", self._infoText)
+        confirmWindow = ConfirmWindow(self, "start", self._infoText,
+                                      self._serviceName)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
             service_action_result = SystemdManager.startUnit(self._serviceName)
@@ -103,7 +104,8 @@ class PropsWindow(Gtk.Dialog):
         confirmWindow.destroy()
 
     def on_restart_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self, "restart", self._infoText)
+        confirmWindow = ConfirmWindow(self, "restart", self._infoText,
+                                      self._serviceName)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
             service_action_result = SystemdManager.restartUnit(
@@ -115,7 +117,8 @@ class PropsWindow(Gtk.Dialog):
         confirmWindow.destroy()
 
     def on_stop_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self, "stop", self._infoText)
+        confirmWindow = ConfirmWindow(self, "stop", self._infoText,
+                                      self._serviceName)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
             service_action_result = SystemdManager.stopUnit(self._serviceName)

@@ -5,7 +5,7 @@ from gi.repository import Gtk
 
 
 class ConfirmWindow(Gtk.Dialog):
-    def __init__(self, parent, action, infoText):
+    def __init__(self, parent, action, infoText, serviceName):
         self._infoText = infoText
         super().__init__(title=self._infoText.getComfirmActionText(),
                          transient_for=parent,
@@ -20,7 +20,8 @@ class ConfirmWindow(Gtk.Dialog):
 
         vbox = Gtk.VBox()
 
-        label = Gtk.Label(self._infoText.getAreYouSurePerfActionText(action))
+        label = Gtk.Label(
+            self._infoText.getAreYouSurePerfActionText(action, serviceName))
         label.set_justify(Gtk.Justification.CENTER)
         vbox.pack_start(label, False, False, 0)
 
