@@ -162,6 +162,8 @@ class InfoText():
                 action_pl = "zatrzymać"
             elif action == "restart":
                 action_pl = "ponownie uruchomić"
+            elif action == "remove":
+                action_pl = "usunąć"
             return "Czy na pewno chcesz " + action_pl + " usługę?"
         else:
             return "Are you sure you want to " + action + " the service?"

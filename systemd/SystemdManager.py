@@ -62,3 +62,6 @@ class SystemdManager():
             subprocess.run(["systemctl", "daemon-reload"])
         except Exception as e:
             print(e)
+
+    def removeUnit(serviceName):
+        print("Remove unit" + serviceName)

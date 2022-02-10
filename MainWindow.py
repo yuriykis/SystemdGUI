@@ -12,6 +12,7 @@ from PropsWindow import PropsWindow
 from AddServiceWindow import AddServiceWindow
 from InfoText import InfoText
 from Language import Language
+from ConfirmWindow import ConfirmWindow
 
 
 class MainWindow(Gtk.Window):
@@ -70,7 +71,7 @@ class MainWindow(Gtk.Window):
         remove_service_button.set_image(img)
         remove_service_button.set_image_position(Gtk.PositionType.TOP)
         remove_service_button.set_always_show_image(True)
-        remove_service_button.set_sensitive(False)
+        remove_service_button.set_sensitive(True)
         hbox.pack_start(remove_service_button, True, True, 0)
         listbox.add(row)
 
@@ -93,6 +94,8 @@ class MainWindow(Gtk.Window):
         self.treeview.append_column(systemdUnitsDescription)
 
         self.treeview.connect("button-press-event", self.on_double_unit_click)
+        self.tree_selection = self.treeview.get_selection()
+        self.tree_selection.connect("changed", self.on_service_selection)
 
         self.add(grid)
         self.refresh_services_view()
@@ -145,6 +148,10 @@ class MainWindow(Gtk.Window):
             print("Service restarted")
         elif (serice_action == ServiceAction.SERVICE_RESTART_FAILED):
             print("Service restart failed")
+        elif (serice_action == ServiceAction.SERVICE_REMOVE_OK):
+            print("Service removed")
+        elif (serice_action == ServiceAction.SERVICE_REMOVE_FAILED):
+            print("Service remove failed")
         self.refresh_services_view()
 
     def on_close_clicked(self, button):
@@ -165,9 +172,20 @@ class MainWindow(Gtk.Window):
         self.refresh_services_view()
 
     def on_remove_service_clicked(self, button):
-        mouse_x, mouse_y = self.treeview.get_pointer()
-        row_number = int(
-            str(self.treeview.get_path_at_pos(mouse_x, mouse_y)[0]))
-        clicked_service = self.systemdUnitsList[row_number - 1][0]
-        self.systemdUnitsList.remove(clicked_service)
-        self.refresh_services_view()
+        _serviceName = self.cureent_selected_service
+        confirmWindow = ConfirmWindow(self, "remove", self._infoText)
+        response = confirmWindow.run()
+        if response == Gtk.ResponseType.OK:
+            service_action_result = SystemdManager.removeUnit(_serviceName)
+            if service_action_result == ServiceAction.SERVICE_START_FAILED:
+                self.show_required_privileges_dialog()
+
+            self.on_service_action_performed(service_action_result)
+        confirmWindow.destroy()
+
+    def on_service_selection(self, selection):
+        (model, pathlist) = selection.get_selected_rows()
+        for path in pathlist:
+            tree_iter = model.get_iter(path)
+            value = model.get_value(tree_iter, 0)
+            self.cureent_selected_service = value
