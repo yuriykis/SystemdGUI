@@ -8,6 +8,9 @@ class InfoText():
     def changeLanguage(self, language):
         self._language = language
 
+    def getCurrentLanguage(self):
+        return self._language
+
     def getAddNewServiceText(self):
         if self._language == Language.EN:
             return "Add new service"
@@ -191,3 +194,67 @@ class InfoText():
             return "Opis:"
         else:
             return "Description:"
+
+    def getNewServiceText(self):
+        if self._language == Language.EN:
+            return "New Service"
+        elif self._language == Language.PL:
+            return "Nowa usługa"
+        else:
+            return "New Service"
+
+    def getExitText(self):
+        if self._language == Language.EN:
+            return "Exit"
+        elif self._language == Language.PL:
+            return "Wyjdź"
+        else:
+            return "Exit"
+
+    def getLanguageText(self):
+        if self._language == Language.EN:
+            return "Language"
+        elif self._language == Language.PL:
+            return "Język"
+        else:
+            return "Language"
+
+    def getFileText(self):
+        if self._language == Language.EN:
+            return "File"
+        elif self._language == Language.PL:
+            return "Plik"
+        else:
+            return "File"
+
+    def getViewText(self):
+        if self._language == Language.EN:
+            return "View"
+        elif self._language == Language.PL:
+            return "Widok"
+        else:
+            return "View"
+
+    def getAboutText(self):
+        if self._language == Language.EN:
+            return "About"
+        elif self._language == Language.PL:
+            return "O programie"
+        else:
+            return "About"
+
+    def getViewProgramInfo(self):
+        if self._language == Language.EN:
+            return "View program info"
+        elif self._language == Language.PL:
+            return "Wyświetl informacje o programie"
+        else:
+            return "View program info"
+
+    def getApplicationName(self):
+        if self._language == Language.EN:
+            return "Graphical User Interface for Systemd"
+        elif self._language == Language.PL:
+            return "Graficzny interfejs użytkownika dla Systemd"
+        else:
+            return "Graphical User Interface for Systemd"

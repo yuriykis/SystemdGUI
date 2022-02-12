@@ -1,5 +1,7 @@
+from tokenize import group
 import gi
 import os
+from AboutWindow import AboutWindow
 
 from ServiceAction import ServiceAction
 from systemd.ServiceCreator import ServiceCreator
@@ -20,17 +22,66 @@ class MainWindow(Gtk.Window):
         self._infoText = InfoText(Language.PL)
         Gtk.init_check()
         super().__init__(title="Systemd GUI")
-        self.set_border_width(10)
+        self.set_border_width(5)
         self.set_default_size(1000, 500)
         grid = Gtk.Grid()
         scrolledwindow = Gtk.ScrolledWindow()
+
+        menu_bar = Gtk.MenuBar()
+        file_menu = Gtk.Menu()
+        file_menu_item = Gtk.MenuItem(label=self._infoText.getFileText())
+        file_menu_item.set_submenu(file_menu)
+        acgroup_file = Gtk.AccelGroup()
+        self.add_accel_group(acgroup_file)
+        new = Gtk.ImageMenuItem.new_from_stock(
+            self._infoText.getNewServiceText(), acgroup_file)
+        file_menu.append(new)
+        separator = Gtk.SeparatorMenuItem()
+        file_menu.append(separator)
+        quit = Gtk.ImageMenuItem.new_from_stock(self._infoText.getExitText(),
+                                                acgroup_file)
+        file_menu.append(quit)
+
+        menu_bar.append(file_menu_item)
+        view_menu = Gtk.Menu()
+        view_menu_item = Gtk.MenuItem(label=self._infoText.getViewText())
+        view_menu_item.set_submenu(view_menu)
+        menu_bar.append(view_menu_item)
+        acgroup_view = Gtk.AccelGroup()
+        self.add_accel_group(acgroup_view)
+        language = Gtk.ImageMenuItem.new_from_stock(
+            self._infoText.getLanguageText(), acgroup_view)
+        language.set_sensitive(False)
+        view_menu.append(language)
+        separator = Gtk.SeparatorMenuItem()
+        view_menu.append(separator)
+        language_pl = Gtk.RadioMenuItem("Polski")
+        view_menu.append(language_pl)
+        language_en = Gtk.RadioMenuItem("English", group=language_pl)
+        view_menu.append(language_en)
+        if (self._infoText.getCurrentLanguage() == Language.PL):
+            language_pl.set_active(True)
+        else:
+            language_en.set_active(True)
+
+        about_menu = Gtk.Menu()
+        about_menu_item = Gtk.MenuItem(label=self._infoText.getAboutText())
+        about_menu_item.set_submenu(about_menu)
+        view_program_info = Gtk.ImageMenuItem.new_from_stock(
+            self._infoText.getViewProgramInfo(), acgroup_view)
+        view_program_info.connect("activate",
+                                  self.on_view_program_info_clicked)
+        about_menu.append(view_program_info)
+        menu_bar.append(about_menu_item)
+        grid.attach(menu_bar, 0, 0, 1, 1)
 
         self.liststore = Gtk.ListStore(str, str, str)
         self.treeview = Gtk.TreeView(model=self.liststore)
         self.treeview.set_hexpand(True)
         self.treeview.set_vexpand(True)
         scrolledwindow.add(self.treeview)
-        grid.attach(scrolledwindow, 0, 0, 1, 1)
+        grid.attach_next_to(scrolledwindow, menu_bar, Gtk.PositionType.BOTTOM,
+                            1, 1)
 
         box_outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         listbox = Gtk.ListBox()
@@ -172,7 +223,7 @@ class MainWindow(Gtk.Window):
         self.refresh_services_view()
 
     def on_remove_service_clicked(self, button):
-        _serviceName = self.cureent_selected_service
+        _serviceName = self.current_selected_service
         confirmWindow = ConfirmWindow(self, "remove", self._infoText,
                                       _serviceName)
         response = confirmWindow.run()
@@ -189,4 +240,9 @@ class MainWindow(Gtk.Window):
         for path in pathlist:
             tree_iter = model.get_iter(path)
             value = model.get_value(tree_iter, 0)
-            self.cureent_selected_service = value
+            self.current_selected_service = value
+
+    def on_view_program_info_clicked(self, button):
+        aboutWindow = AboutWindow(self, self._infoText)
+        aboutWindow.run()
+        aboutWindow.destroy()
