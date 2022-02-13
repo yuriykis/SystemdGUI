@@ -1,3 +1,4 @@
+from re import S
 from tokenize import group
 import gi
 import os
@@ -19,45 +20,47 @@ from ConfirmWindow import ConfirmWindow
 
 class MainWindow(Gtk.Window):
     def __init__(self):
-        self._infoText = InfoText(Language.PL)
+        self._infoText = InfoText(Language.EN)
         Gtk.init_check()
         super().__init__(title="Systemd GUI")
         self.set_border_width(5)
         self.set_default_size(1000, 500)
-        grid = Gtk.Grid()
+        self.grid = Gtk.Grid()
         scrolledwindow = Gtk.ScrolledWindow()
 
         menu_bar = Gtk.MenuBar()
         file_menu = Gtk.Menu()
-        file_menu_item = Gtk.MenuItem(label=self._infoText.getFileText())
-        file_menu_item.set_submenu(file_menu)
+        self.file_menu_item = Gtk.MenuItem(label=self._infoText.getFileText())
+        self.file_menu_item.set_submenu(file_menu)
         acgroup_file = Gtk.AccelGroup()
         self.add_accel_group(acgroup_file)
-        new = Gtk.ImageMenuItem.new_from_stock(
+        self.new = Gtk.ImageMenuItem.new_from_stock(
             self._infoText.getNewServiceText(), acgroup_file)
-        file_menu.append(new)
+        file_menu.append(self.new)
         separator = Gtk.SeparatorMenuItem()
         file_menu.append(separator)
-        quit = Gtk.ImageMenuItem.new_from_stock(self._infoText.getExitText(),
-                                                acgroup_file)
-        file_menu.append(quit)
+        self.quit = Gtk.ImageMenuItem.new_from_stock(
+            self._infoText.getExitText(), acgroup_file)
+        file_menu.append(self.quit)
 
-        menu_bar.append(file_menu_item)
+        menu_bar.append(self.file_menu_item)
         view_menu = Gtk.Menu()
-        view_menu_item = Gtk.MenuItem(label=self._infoText.getViewText())
-        view_menu_item.set_submenu(view_menu)
-        menu_bar.append(view_menu_item)
+        self.view_menu_item = Gtk.MenuItem(label=self._infoText.getViewText())
+        self.view_menu_item.set_submenu(view_menu)
+        menu_bar.append(self.view_menu_item)
         acgroup_view = Gtk.AccelGroup()
         self.add_accel_group(acgroup_view)
-        language = Gtk.ImageMenuItem.new_from_stock(
+        self.language = Gtk.ImageMenuItem.new_from_stock(
             self._infoText.getLanguageText(), acgroup_view)
-        language.set_sensitive(False)
-        view_menu.append(language)
+        self.language.set_sensitive(False)
+        view_menu.append(self.language)
         separator = Gtk.SeparatorMenuItem()
         view_menu.append(separator)
         language_pl = Gtk.RadioMenuItem("Polski")
+        language_pl.connect("activate", self.on_language_pl_clicked)
         view_menu.append(language_pl)
         language_en = Gtk.RadioMenuItem("English", group=language_pl)
+        language_en.connect("activate", self.on_language_en_clicked)
         view_menu.append(language_en)
         if (self._infoText.getCurrentLanguage() == Language.PL):
             language_pl.set_active(True)
@@ -65,23 +68,24 @@ class MainWindow(Gtk.Window):
             language_en.set_active(True)
 
         about_menu = Gtk.Menu()
-        about_menu_item = Gtk.MenuItem(label=self._infoText.getAboutText())
-        about_menu_item.set_submenu(about_menu)
-        view_program_info = Gtk.ImageMenuItem.new_from_stock(
+        self.about_menu_item = Gtk.MenuItem(
+            label=self._infoText.getAboutText())
+        self.about_menu_item.set_submenu(about_menu)
+        self.view_program_info = Gtk.ImageMenuItem.new_from_stock(
             self._infoText.getViewProgramInfo(), acgroup_view)
-        view_program_info.connect("activate",
-                                  self.on_view_program_info_clicked)
-        about_menu.append(view_program_info)
-        menu_bar.append(about_menu_item)
-        grid.attach(menu_bar, 0, 0, 1, 1)
+        self.view_program_info.connect("activate",
+                                       self.on_view_program_info_clicked)
+        about_menu.append(self.view_program_info)
+        menu_bar.append(self.about_menu_item)
+        self.grid.attach(menu_bar, 0, 0, 1, 1)
 
         self.liststore = Gtk.ListStore(str, str, str)
         self.treeview = Gtk.TreeView(model=self.liststore)
         self.treeview.set_hexpand(True)
         self.treeview.set_vexpand(True)
         scrolledwindow.add(self.treeview)
-        grid.attach_next_to(scrolledwindow, menu_bar, Gtk.PositionType.BOTTOM,
-                            1, 1)
+        self.grid.attach_next_to(scrolledwindow, menu_bar,
+                                 Gtk.PositionType.BOTTOM, 1, 1)
 
         box_outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         listbox = Gtk.ListBox()
@@ -97,14 +101,14 @@ class MainWindow(Gtk.Window):
             'assets/green-plus-sign-icon-6.jpg', 25, 25)
         img = Gtk.Image()
         img.set_from_pixbuf(add_service_icon)
-        add_new_service_button = Gtk.Button(
+        self.add_new_service_button = Gtk.Button(
             label=self._infoText.getAddNewServiceText())
-        add_new_service_button.connect("clicked",
-                                       self.on_add_new_service_clicked)
-        add_new_service_button.set_image(img)
-        add_new_service_button.set_image_position(Gtk.PositionType.TOP)
-        add_new_service_button.set_always_show_image(True)
-        hbox.pack_start(add_new_service_button, True, True, 0)
+        self.add_new_service_button.connect("clicked",
+                                            self.on_add_new_service_clicked)
+        self.add_new_service_button.set_image(img)
+        self.add_new_service_button.set_image_position(Gtk.PositionType.TOP)
+        self.add_new_service_button.set_always_show_image(True)
+        hbox.pack_start(self.add_new_service_button, True, True, 0)
         listbox.add(row)
 
         row = Gtk.ListBoxRow()
@@ -115,40 +119,40 @@ class MainWindow(Gtk.Window):
         img = Gtk.Image()
         img.set_from_pixbuf(remove_service_icon)
 
-        remove_service_button = Gtk.Button(
+        self.remove_service_button = Gtk.Button(
             label=self._infoText.getRemoveServiceText())
-        remove_service_button.connect("clicked",
-                                      self.on_remove_service_clicked)
-        remove_service_button.set_image(img)
-        remove_service_button.set_image_position(Gtk.PositionType.TOP)
-        remove_service_button.set_always_show_image(True)
-        remove_service_button.set_sensitive(True)
-        hbox.pack_start(remove_service_button, True, True, 0)
+        self.remove_service_button.connect("clicked",
+                                           self.on_remove_service_clicked)
+        self.remove_service_button.set_image(img)
+        self.remove_service_button.set_image_position(Gtk.PositionType.TOP)
+        self.remove_service_button.set_always_show_image(True)
+        self.remove_service_button.set_sensitive(True)
+        hbox.pack_start(self.remove_service_button, True, True, 0)
         listbox.add(row)
 
-        grid.attach_next_to(box_outer, scrolledwindow, Gtk.PositionType.RIGHT,
-                            1, 1)
+        self.grid.attach_next_to(box_outer, scrolledwindow,
+                                 Gtk.PositionType.RIGHT, 1, 1)
 
         firstColumnName = Gtk.CellRendererText()
-        systemdUnitsNames = Gtk.TreeViewColumn(
+        self.systemdUnitsNames = Gtk.TreeViewColumn(
             self._infoText.getServiceNameText(), firstColumnName, text=0)
-        self.treeview.append_column(systemdUnitsNames)
+        self.treeview.append_column(self.systemdUnitsNames)
 
         secondColumnName = Gtk.CellRendererText()
-        systemdUnitsStatus = Gtk.TreeViewColumn(
+        self.systemdUnitsStatus = Gtk.TreeViewColumn(
             self._infoText.getLoadStateText(), secondColumnName, text=1)
-        self.treeview.append_column(systemdUnitsStatus)
+        self.treeview.append_column(self.systemdUnitsStatus)
 
         thirdColumnName = Gtk.CellRendererText()
-        systemdUnitsDescription = Gtk.TreeViewColumn(
+        self.systemdUnitsDescription = Gtk.TreeViewColumn(
             self._infoText.getActiveStateText(), thirdColumnName, text=2)
-        self.treeview.append_column(systemdUnitsDescription)
+        self.treeview.append_column(self.systemdUnitsDescription)
 
         self.treeview.connect("button-press-event", self.on_double_unit_click)
         self.tree_selection = self.treeview.get_selection()
         self.tree_selection.connect("changed", self.on_service_selection)
 
-        self.add(grid)
+        self.add(self.grid)
         self.refresh_services_view()
 
     def decodeUnit(self, unit):
@@ -176,6 +180,23 @@ class MainWindow(Gtk.Window):
             self.liststore.append(
                 [serivce_name, is_loaded_field, is_active_field])
         self.treeview.set_model(self.liststore)
+
+    def setAllWidgetsLabels(self):
+        self.file_menu_item.set_label(self._infoText.getFileText())
+        self.new.set_label(self._infoText.getNewServiceText())
+        self.quit.set_label(self._infoText.getExitText())
+        self.view_menu_item.set_label(self._infoText.getViewText())
+        self.language.set_label(self._infoText.getLanguageText())
+        self.about_menu_item.set_label(self._infoText.getAboutText())
+        self.view_program_info.set_label(self._infoText.getViewProgramInfo())
+        self.add_new_service_button.set_label(
+            self._infoText.getAddNewServiceText())
+        self.remove_service_button.set_label(
+            self._infoText.getRemoveServiceText())
+        self.systemdUnitsNames.set_title(self._infoText.getServiceNameText())
+        self.systemdUnitsStatus.set_title(self._infoText.getLoadStateText())
+        self.systemdUnitsDescription.set_title(
+            self._infoText.getActiveStateText())
 
     def on_double_unit_click(self, widget, event):
         if event.button == 1 and event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
@@ -246,3 +267,11 @@ class MainWindow(Gtk.Window):
         aboutWindow = AboutWindow(self, self._infoText)
         aboutWindow.run()
         aboutWindow.destroy()
+
+    def on_language_pl_clicked(self, button):
+        self._infoText.setLanguage(Language.PL)
+        self.setAllWidgetsLabels()
+
+    def on_language_en_clicked(self, button):
+        self._infoText.setLanguage(Language.EN)
+        self.setAllWidgetsLabels()

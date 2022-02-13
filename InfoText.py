@@ -5,7 +5,7 @@ class InfoText():
     def __init__(self, language):
         self._language = language
 
-    def changeLanguage(self, language):
+    def setLanguage(self, language):
         self._language = language
 
     def getCurrentLanguage(self):
