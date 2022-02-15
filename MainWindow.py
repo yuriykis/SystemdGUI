@@ -36,6 +36,7 @@ class MainWindow(Gtk.Window):
         self.add_accel_group(acgroup_file)
         self.new = Gtk.ImageMenuItem.new_from_stock(
             self._infoText.getNewServiceText(), acgroup_file)
+        self.new.connect("activate", self.on_add_new_service_clicked)
         file_menu.append(self.new)
         separator = Gtk.SeparatorMenuItem()
         file_menu.append(separator)
