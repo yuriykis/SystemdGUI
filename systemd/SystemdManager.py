@@ -1,5 +1,5 @@
 from pystemd.systemd1 import Manager, Unit
-from ServiceAction import ServiceAction
+from systemd import ServiceAction
 import subprocess
 
 

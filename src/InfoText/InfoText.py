@@ -1,4 +1,4 @@
-from Language import Language
+from ..Language.Language import Language
 
 
 class InfoText():

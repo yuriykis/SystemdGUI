@@ -1,21 +1,21 @@
-from re import S
-from tokenize import group
 import gi
 import os
-from AboutWindow import AboutWindow
+from ..AboutWindow.AboutWindow import AboutWindow
+from .MainMenuBar import MainMenuBar
 
-from ServiceAction import ServiceAction
+from systemd.ServiceAction import ServiceAction
 from systemd.ServiceCreator import ServiceCreator
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GdkPixbuf
 
 from systemd.SystemdManager import SystemdManager
-from PropsWindow import PropsWindow
-from AddServiceWindow import AddServiceWindow
-from InfoText import InfoText
-from Language import Language
-from ConfirmWindow import ConfirmWindow
+from ..PropsWindow.PropsWindow import PropsWindow
+from ..AddServiceWindow.AddServiceWindow import AddServiceWindow
+from ..InfoText.InfoText import InfoText
+from src.Language.Language import Language
+
+from ..ConfirmWindow.ConfirmWindow import ConfirmWindow
 
 
 class MainWindow(Gtk.Window):
@@ -28,65 +28,15 @@ class MainWindow(Gtk.Window):
         self.grid = Gtk.Grid()
         scrolledwindow = Gtk.ScrolledWindow()
 
-        menu_bar = Gtk.MenuBar()
-        file_menu = Gtk.Menu()
-        self.file_menu_item = Gtk.MenuItem(label=self._infoText.getFileText())
-        self.file_menu_item.set_submenu(file_menu)
-        acgroup_file = Gtk.AccelGroup()
-        self.add_accel_group(acgroup_file)
-        self.new = Gtk.ImageMenuItem.new_from_stock(
-            self._infoText.getNewServiceText(), acgroup_file)
-        self.new.connect("activate", self.on_add_new_service_clicked)
-        file_menu.append(self.new)
-        separator = Gtk.SeparatorMenuItem()
-        file_menu.append(separator)
-        self.quit = Gtk.ImageMenuItem.new_from_stock(
-            self._infoText.getExitText(), acgroup_file)
-        self.quit.connect("activate", self.on_close_clicked)
-        file_menu.append(self.quit)
-
-        menu_bar.append(self.file_menu_item)
-        view_menu = Gtk.Menu()
-        self.view_menu_item = Gtk.MenuItem(label=self._infoText.getViewText())
-        self.view_menu_item.set_submenu(view_menu)
-        menu_bar.append(self.view_menu_item)
-        acgroup_view = Gtk.AccelGroup()
-        self.add_accel_group(acgroup_view)
-        self.language = Gtk.ImageMenuItem.new_from_stock(
-            self._infoText.getLanguageText(), acgroup_view)
-        self.language.set_sensitive(False)
-        view_menu.append(self.language)
-        separator = Gtk.SeparatorMenuItem()
-        view_menu.append(separator)
-        language_pl = Gtk.RadioMenuItem("Polski")
-        language_pl.connect("activate", self.on_language_pl_clicked)
-        view_menu.append(language_pl)
-        language_en = Gtk.RadioMenuItem("English", group=language_pl)
-        language_en.connect("activate", self.on_language_en_clicked)
-        view_menu.append(language_en)
-        if (self._infoText.getCurrentLanguage() == Language.PL):
-            language_pl.set_active(True)
-        else:
-            language_en.set_active(True)
-
-        about_menu = Gtk.Menu()
-        self.about_menu_item = Gtk.MenuItem(
-            label=self._infoText.getAboutText())
-        self.about_menu_item.set_submenu(about_menu)
-        self.view_program_info = Gtk.ImageMenuItem.new_from_stock(
-            self._infoText.getViewProgramInfo(), acgroup_view)
-        self.view_program_info.connect("activate",
-                                       self.on_view_program_info_clicked)
-        about_menu.append(self.view_program_info)
-        menu_bar.append(self.about_menu_item)
-        self.grid.attach(menu_bar, 0, 0, 1, 1)
+        self.menu_bar = MainMenuBar(self, self._infoText)
+        self.grid.attach(self.menu_bar, 0, 0, 1, 1)
 
         self.liststore = Gtk.ListStore(str, str, str)
         self.treeview = Gtk.TreeView(model=self.liststore)
         self.treeview.set_hexpand(True)
         self.treeview.set_vexpand(True)
         scrolledwindow.add(self.treeview)
-        self.grid.attach_next_to(scrolledwindow, menu_bar,
+        self.grid.attach_next_to(scrolledwindow, self.menu_bar,
                                  Gtk.PositionType.BOTTOM, 1, 1)
 
         box_outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
@@ -100,7 +50,7 @@ class MainWindow(Gtk.Window):
         row.add(hbox)
 
         add_service_icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            'assets/green-plus-sign-icon-6.jpg', 25, 25)
+            'src/assets/green-plus-sign-icon-6.jpg', 25, 25)
         img = Gtk.Image()
         img.set_from_pixbuf(add_service_icon)
         self.add_new_service_button = Gtk.Button(
@@ -117,7 +67,7 @@ class MainWindow(Gtk.Window):
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         row.add(hbox)
         remove_service_icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            'assets/red-minus-sign-icon-6.png', 25, 25)
+            'src/assets/red-minus-sign-icon-6.png', 25, 25)
         img = Gtk.Image()
         img.set_from_pixbuf(remove_service_icon)
 
@@ -184,13 +134,14 @@ class MainWindow(Gtk.Window):
         self.treeview.set_model(self.liststore)
 
     def setAllWidgetsLabels(self):
-        self.file_menu_item.set_label(self._infoText.getFileText())
-        self.new.set_label(self._infoText.getNewServiceText())
-        self.quit.set_label(self._infoText.getExitText())
-        self.view_menu_item.set_label(self._infoText.getViewText())
-        self.language.set_label(self._infoText.getLanguageText())
-        self.about_menu_item.set_label(self._infoText.getAboutText())
-        self.view_program_info.set_label(self._infoText.getViewProgramInfo())
+        self.menu_bar.file_menu_item.set_label(self._infoText.getFileText())
+        self.menu_bar.new.set_label(self._infoText.getNewServiceText())
+        self.menu_bar.quit.set_label(self._infoText.getExitText())
+        self.menu_bar.view_menu_item.set_label(self._infoText.getViewText())
+        self.menu_bar.language.set_label(self._infoText.getLanguageText())
+        self.menu_bar.about_menu_item.set_label(self._infoText.getAboutText())
+        self.menu_bar.view_program_info.set_label(
+            self._infoText.getViewProgramInfo())
         self.add_new_service_button.set_label(
             self._infoText.getAddNewServiceText())
         self.remove_service_button.set_label(

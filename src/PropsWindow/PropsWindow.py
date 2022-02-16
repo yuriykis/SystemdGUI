@@ -1,11 +1,11 @@
 import gi
 
-from ServiceAction import ServiceAction
+from systemd.ServiceAction import ServiceAction
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-from ConfirmWindow import ConfirmWindow
+from ..ConfirmWindow.ConfirmWindow import ConfirmWindow
 from systemd.SystemdManager import SystemdManager
 
 
