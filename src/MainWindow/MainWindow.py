@@ -1,5 +1,8 @@
 import gi
 import os
+from src.MainWindow.ServicesList import ServicesList
+
+from src.MainWindow.SideMenu import SideMenu
 from ..AboutWindow.AboutWindow import AboutWindow
 from .MainMenuBar import MainMenuBar
 
@@ -7,7 +10,7 @@ from systemd.ServiceAction import ServiceAction
 from systemd.ServiceCreator import ServiceCreator
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GdkPixbuf
+from gi.repository import Gtk, Gdk
 
 from systemd.SystemdManager import SystemdManager
 from ..PropsWindow.PropsWindow import PropsWindow
@@ -26,83 +29,18 @@ class MainWindow(Gtk.Window):
         self.set_border_width(5)
         self.set_default_size(1000, 500)
         self.grid = Gtk.Grid()
-        scrolledwindow = Gtk.ScrolledWindow()
 
         self.menu_bar = MainMenuBar(self, self._infoText)
         self.grid.attach(self.menu_bar, 0, 0, 1, 1)
 
-        self.liststore = Gtk.ListStore(str, str, str)
-        self.treeview = Gtk.TreeView(model=self.liststore)
-        self.treeview.set_hexpand(True)
-        self.treeview.set_vexpand(True)
-        scrolledwindow.add(self.treeview)
-        self.grid.attach_next_to(scrolledwindow, self.menu_bar,
+        self.services_list = ServicesList(self, self._infoText)
+        self.grid.attach_next_to(self.services_list, self.menu_bar,
                                  Gtk.PositionType.BOTTOM, 1, 1)
 
-        box_outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        listbox = Gtk.ListBox()
-        listbox.set_selection_mode(Gtk.SelectionMode.NONE)
-        box_outer.pack_start(listbox, True, True, 0)
+        side_menu = SideMenu(self, self._infoText)
 
-        # Add new service button
-        row = Gtk.ListBoxRow()
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
-        row.add(hbox)
-
-        add_service_icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            'src/assets/green-plus-sign-icon-6.jpg', 25, 25)
-        img = Gtk.Image()
-        img.set_from_pixbuf(add_service_icon)
-        self.add_new_service_button = Gtk.Button(
-            label=self._infoText.getAddNewServiceText())
-        self.add_new_service_button.connect("clicked",
-                                            self.on_add_new_service_clicked)
-        self.add_new_service_button.set_image(img)
-        self.add_new_service_button.set_image_position(Gtk.PositionType.TOP)
-        self.add_new_service_button.set_always_show_image(True)
-        hbox.pack_start(self.add_new_service_button, True, True, 0)
-        listbox.add(row)
-
-        row = Gtk.ListBoxRow()
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
-        row.add(hbox)
-        remove_service_icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            'src/assets/red-minus-sign-icon-6.png', 25, 25)
-        img = Gtk.Image()
-        img.set_from_pixbuf(remove_service_icon)
-
-        self.remove_service_button = Gtk.Button(
-            label=self._infoText.getRemoveServiceText())
-        self.remove_service_button.connect("clicked",
-                                           self.on_remove_service_clicked)
-        self.remove_service_button.set_image(img)
-        self.remove_service_button.set_image_position(Gtk.PositionType.TOP)
-        self.remove_service_button.set_always_show_image(True)
-        self.remove_service_button.set_sensitive(True)
-        hbox.pack_start(self.remove_service_button, True, True, 0)
-        listbox.add(row)
-
-        self.grid.attach_next_to(box_outer, scrolledwindow,
+        self.grid.attach_next_to(side_menu, self.services_list,
                                  Gtk.PositionType.RIGHT, 1, 1)
-
-        firstColumnName = Gtk.CellRendererText()
-        self.systemdUnitsNames = Gtk.TreeViewColumn(
-            self._infoText.getServiceNameText(), firstColumnName, text=0)
-        self.treeview.append_column(self.systemdUnitsNames)
-
-        secondColumnName = Gtk.CellRendererText()
-        self.systemdUnitsStatus = Gtk.TreeViewColumn(
-            self._infoText.getLoadStateText(), secondColumnName, text=1)
-        self.treeview.append_column(self.systemdUnitsStatus)
-
-        thirdColumnName = Gtk.CellRendererText()
-        self.systemdUnitsDescription = Gtk.TreeViewColumn(
-            self._infoText.getActiveStateText(), thirdColumnName, text=2)
-        self.treeview.append_column(self.systemdUnitsDescription)
-
-        self.treeview.connect("button-press-event", self.on_double_unit_click)
-        self.tree_selection = self.treeview.get_selection()
-        self.tree_selection.connect("changed", self.on_service_selection)
 
         self.add(self.grid)
         self.refresh_services_view()
@@ -131,7 +69,7 @@ class MainWindow(Gtk.Window):
 
             self.liststore.append(
                 [serivce_name, is_loaded_field, is_active_field])
-        self.treeview.set_model(self.liststore)
+        self.services_list.treeview.set_model(self.liststore)
 
     def setAllWidgetsLabels(self):
         self.menu_bar.file_menu_item.set_label(self._infoText.getFileText())
@@ -153,7 +91,7 @@ class MainWindow(Gtk.Window):
 
     def on_double_unit_click(self, widget, event):
         if event.button == 1 and event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
-            mouse_x, mouse_y = self.treeview.get_pointer()
+            mouse_x, mouse_y = self.services_list.treeview.get_pointer()
             row_number = int(str(widget.get_path_at_pos(mouse_x, mouse_y)[0]))
             clicked_service = self.systemdUnitsList[row_number - 1][0]
             propsWindow = PropsWindow(self, clicked_service, self._infoText)
