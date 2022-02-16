@@ -42,6 +42,7 @@ class MainWindow(Gtk.Window):
         file_menu.append(separator)
         self.quit = Gtk.ImageMenuItem.new_from_stock(
             self._infoText.getExitText(), acgroup_file)
+        self.quit.connect("activate", self.on_close_clicked)
         file_menu.append(self.quit)
 
         menu_bar.append(self.file_menu_item)
