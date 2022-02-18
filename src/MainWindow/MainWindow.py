@@ -37,9 +37,9 @@ class MainWindow(Gtk.Window):
         self.grid.attach_next_to(self.services_list, self.menu_bar,
                                  Gtk.PositionType.BOTTOM, 1, 1)
 
-        side_menu = SideMenu(self, self._infoText)
+        self.side_menu = SideMenu(self, self._infoText)
 
-        self.grid.attach_next_to(side_menu, self.services_list,
+        self.grid.attach_next_to(self.side_menu, self.services_list,
                                  Gtk.PositionType.RIGHT, 1, 1)
 
         self.add(self.grid)
@@ -53,7 +53,7 @@ class MainWindow(Gtk.Window):
             tuple[1]), self.decodeUnit(tuple[2])
 
     def refresh_services_view(self):
-        self.liststore = Gtk.ListStore(str, str, str)
+        self.liststore = Gtk.ListStore(str, str, str, str, str)
         self.systemdUnitsList = SystemdManager.getUnitsList()
 
         # only service unit should remain
@@ -63,12 +63,23 @@ class MainWindow(Gtk.Window):
             filter(lambda unit: "service" in unit[0], self.systemdUnitsList))
         self.systemdUnitsList.sort()
         for unit in self.systemdUnitsList:
+            color_point = "● "
             serivce_name = unit[0]
             is_loaded_field = unit[1]
             is_active_field = unit[2]
+            if is_active_field == "active":
+                status_color = "green"
+            elif is_active_field == "inactive" and is_loaded_field == "loaded":
+                status_color = "yellow"
+            else:
+                status_color = "red"
 
-            self.liststore.append(
-                [serivce_name, is_loaded_field, is_active_field])
+            self.liststore.append([
+                color_point, serivce_name, is_loaded_field, is_active_field,
+                status_color
+            ])
+            a = self.liststore[len(self.liststore) - 1]
+            # self.liststore.set(iter, COL_COLOR, "red")
         self.services_list.treeview.set_model(self.liststore)
 
     def setAllWidgetsLabels(self):
@@ -80,13 +91,15 @@ class MainWindow(Gtk.Window):
         self.menu_bar.about_menu_item.set_label(self._infoText.getAboutText())
         self.menu_bar.view_program_info.set_label(
             self._infoText.getViewProgramInfo())
-        self.add_new_service_button.set_label(
+        self.side_menu.add_new_service_button.set_label(
             self._infoText.getAddNewServiceText())
-        self.remove_service_button.set_label(
+        self.side_menu.remove_service_button.set_label(
             self._infoText.getRemoveServiceText())
-        self.systemdUnitsNames.set_title(self._infoText.getServiceNameText())
-        self.systemdUnitsStatus.set_title(self._infoText.getLoadStateText())
-        self.systemdUnitsDescription.set_title(
+        self.services_list.systemdUnitsNames.set_title(
+            self._infoText.getServiceNameText())
+        self.services_list.systemdUnitsStatus.set_title(
+            self._infoText.getLoadStateText())
+        self.services_list.systemdUnitsDescription.set_title(
             self._infoText.getActiveStateText())
 
     def on_double_unit_click(self, widget, event):
@@ -151,7 +164,7 @@ class MainWindow(Gtk.Window):
         (model, pathlist) = selection.get_selected_rows()
         for path in pathlist:
             tree_iter = model.get_iter(path)
-            value = model.get_value(tree_iter, 0)
+            value = model.get_value(tree_iter, 1)
             self.current_selected_service = value
 
     def on_view_program_info_clicked(self, button):

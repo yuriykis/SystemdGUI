@@ -23,15 +23,14 @@ class SideMenu(Gtk.Box):
             'src/assets/green-plus-sign-icon-6.jpg', 25, 25)
         img = Gtk.Image()
         img.set_from_pixbuf(add_service_icon)
-        main_window.add_new_service_button = Gtk.Button(
+        self.add_new_service_button = Gtk.Button(
             label=self._infoText.getAddNewServiceText())
-        main_window.add_new_service_button.connect(
+        self.add_new_service_button.connect(
             "clicked", main_window.on_add_new_service_clicked)
-        main_window.add_new_service_button.set_image(img)
-        main_window.add_new_service_button.set_image_position(
-            Gtk.PositionType.TOP)
-        main_window.add_new_service_button.set_always_show_image(True)
-        hbox.pack_start(main_window.add_new_service_button, True, True, 0)
+        self.add_new_service_button.set_image(img)
+        self.add_new_service_button.set_image_position(Gtk.PositionType.TOP)
+        self.add_new_service_button.set_always_show_image(True)
+        hbox.pack_start(self.add_new_service_button, True, True, 0)
         listbox.add(row)
 
         # Remove service button
@@ -43,14 +42,13 @@ class SideMenu(Gtk.Box):
         img = Gtk.Image()
         img.set_from_pixbuf(remove_service_icon)
 
-        main_window.remove_service_button = Gtk.Button(
+        self.remove_service_button = Gtk.Button(
             label=self._infoText.getRemoveServiceText())
-        main_window.remove_service_button.connect(
+        self.remove_service_button.connect(
             "clicked", main_window.on_remove_service_clicked)
-        main_window.remove_service_button.set_image(img)
-        main_window.remove_service_button.set_image_position(
-            Gtk.PositionType.TOP)
-        main_window.remove_service_button.set_always_show_image(True)
-        main_window.remove_service_button.set_sensitive(True)
-        hbox.pack_start(main_window.remove_service_button, True, True, 0)
+        self.remove_service_button.set_image(img)
+        self.remove_service_button.set_image_position(Gtk.PositionType.TOP)
+        self.remove_service_button.set_always_show_image(True)
+        self.remove_service_button.set_sensitive(True)
+        hbox.pack_start(self.remove_service_button, True, True, 0)
         listbox.add(row)

@@ -3,7 +3,7 @@ import gi
 from src.Language.Language import Language
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 
 
 class ServicesList(Gtk.ScrolledWindow):
@@ -11,25 +11,33 @@ class ServicesList(Gtk.ScrolledWindow):
         super().__init__()
 
         self._infoText = infoText
-        self.liststore = Gtk.ListStore(str, str, str)
+        self.liststore = Gtk.ListStore(str, str, str, str, str)
         self.treeview = Gtk.TreeView(model=self.liststore)
         self.treeview.set_hexpand(True)
         self.treeview.set_vexpand(True)
         self.add(self.treeview)
 
         firstColumnName = Gtk.CellRendererText()
-        self.systemdUnitsNames = Gtk.TreeViewColumn(
-            self._infoText.getServiceNameText(), firstColumnName, text=0)
-        self.treeview.append_column(self.systemdUnitsNames)
+        firstColumnName.set_property("foreground", "green")
+        self.systemdUnitsColorPoint = Gtk.TreeViewColumn("",
+                                                         firstColumnName,
+                                                         text=0,
+                                                         foreground=4)
+        self.treeview.append_column(self.systemdUnitsColorPoint)
 
         secondColumnName = Gtk.CellRendererText()
-        self.systemdUnitsStatus = Gtk.TreeViewColumn(
-            self._infoText.getLoadStateText(), secondColumnName, text=1)
-        self.treeview.append_column(self.systemdUnitsStatus)
+        self.systemdUnitsNames = Gtk.TreeViewColumn(
+            self._infoText.getServiceNameText(), secondColumnName, text=1)
+        self.treeview.append_column(self.systemdUnitsNames)
 
         thirdColumnName = Gtk.CellRendererText()
+        self.systemdUnitsStatus = Gtk.TreeViewColumn(
+            self._infoText.getLoadStateText(), thirdColumnName, text=2)
+        self.treeview.append_column(self.systemdUnitsStatus)
+
+        forthColumnName = Gtk.CellRendererText()
         self.systemdUnitsDescription = Gtk.TreeViewColumn(
-            self._infoText.getActiveStateText(), thirdColumnName, text=2)
+            self._infoText.getActiveStateText(), forthColumnName, text=3)
         self.treeview.append_column(self.systemdUnitsDescription)
 
         self.treeview.connect("button-press-event",
