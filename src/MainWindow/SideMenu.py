@@ -52,3 +52,21 @@ class SideMenu(Gtk.Box):
         self.remove_service_button.set_sensitive(True)
         hbox.pack_start(self.remove_service_button, True, True, 0)
         listbox.add(row)
+
+        # Reload list of services
+        row = Gtk.ListBoxRow()
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
+        row.add(hbox)
+        reload_icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
+            'src/assets/reload-icon-6.png', 25, 25)
+        img = Gtk.Image()
+        img.set_from_pixbuf(reload_icon)
+        self.reload_button = Gtk.Button(label=self._infoText.getReloadText())
+        self.reload_button.connect("clicked",
+                                   main_window.refresh_services_view)
+        self.reload_button.set_image(img)
+        self.reload_button.set_image_position(Gtk.PositionType.TOP)
+        self.reload_button.set_always_show_image(True)
+        self.reload_button.set_sensitive(True)
+        hbox.pack_start(self.reload_button, True, True, 0)
+        listbox.add(row)

@@ -52,7 +52,7 @@ class MainWindow(Gtk.Window):
         return self.decodeUnit(tuple[0]), self.decodeUnit(
             tuple[1]), self.decodeUnit(tuple[2])
 
-    def refresh_services_view(self):
+    def refresh_services_view(self, button=None):
         self.liststore = Gtk.ListStore(str, str, str, str, str)
         self.systemdUnitsList = SystemdManager.getUnitsList()
 
@@ -63,13 +63,15 @@ class MainWindow(Gtk.Window):
             filter(lambda unit: "service" in unit[0], self.systemdUnitsList))
         self.systemdUnitsList.sort()
         for unit in self.systemdUnitsList:
-            color_point = "● "
+            color_point = "●"
             serivce_name = unit[0]
             is_loaded_field = unit[1]
             is_active_field = unit[2]
             if is_active_field == "active":
                 status_color = "green"
-            elif is_active_field == "inactive" and is_loaded_field == "loaded":
+            elif (is_active_field == "inactive"
+                  and is_loaded_field == "loaded") or (is_active_field
+                                                       == "activating"):
                 status_color = "yellow"
             else:
                 status_color = "red"
@@ -95,6 +97,7 @@ class MainWindow(Gtk.Window):
             self._infoText.getAddNewServiceText())
         self.side_menu.remove_service_button.set_label(
             self._infoText.getRemoveServiceText())
+        self.side_menu.reload_button.set_label(self._infoText.getReloadText())
         self.services_list.systemdUnitsNames.set_title(
             self._infoText.getServiceNameText())
         self.services_list.systemdUnitsStatus.set_title(

@@ -258,3 +258,11 @@ class InfoText():
             return "Graficzny interfejs użytkownika dla Systemd"
         else:
             return "Graphical User Interface for Systemd"
+
+    def getReloadText(self):
+        if self._language == Language.EN:
+            return "Reload list of services"
+        elif self._language == Language.PL:
+            return "Przeładuj listę usług"
+        else:
+            return "Reload list of services"
