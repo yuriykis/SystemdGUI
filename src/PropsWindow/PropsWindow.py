@@ -138,5 +138,6 @@ class PropsWindow(Gtk.Dialog):
         pass
 
     def on_show_logs_clicked(self, widget):
-        logs_window = LogsWindow(self, self._infoText)
-        logs_window.show_all()
+        logs_window = LogsWindow(self, self._infoText, self._serviceName)
+        logs_window.run()
+        logs_window.destroy()

@@ -1,3 +1,4 @@
+from distutils import command
 from pystemd.systemd1 import Manager, Unit
 from systemd.ServiceAction import ServiceAction
 import subprocess
@@ -67,15 +68,27 @@ class SystemdManager():
     def removeUnit(serviceName):
         print("Remove unit" + serviceName)
 
-    def getServiceLogs(serviceName):
+    def loadServiceLogs(serviceName):
         try:
             unit = Unit(serviceName)
             unit.load()
-            subprocess.run([
-                "sudo", "journalctl", "-eu", serviceName, ">",
-                pathlib.Path().resolve() + "/logs/service.log"
-            ])
-            return ServiceAction.SERVICE_ENABLE_OK
+            command = ["sudo", "journalctl", "-eu", serviceName]
+            with open(
+                    str(pathlib.Path().resolve()) +
+                    "/systemd/logs/service.log", "w") as f:
+                subprocess.run(command, stdout=f)
+            return ServiceAction.SERVICE_LOGS_LOAD_OK
         except Exception as e:
             print(e)
-            return ServiceAction.SERVICE_ENABLE_FAILED
+            return ServiceAction.SERVICE_LOGS_LOAD_FAILED
+
+    def getServiceLogs(serviceName):
+        try:
+            SystemdManager.loadServiceLogs(serviceName)
+            with open(
+                    str(pathlib.Path().resolve()) +
+                    "/systemd/logs/service.log", "r") as f:
+                return f.read()
+        except Exception as e:
+            print(e)
+            return ServiceAction.SERVICE_LOGS_LOAD_FAILED

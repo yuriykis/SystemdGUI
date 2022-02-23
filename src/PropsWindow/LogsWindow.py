@@ -2,15 +2,24 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from systemd.SystemdManager import SystemdManager
 
 
-class LogsWindow(Gtk.Window):
-    def __init__(self, parent, infoText):
+class LogsWindow(Gtk.Dialog):
+    def __init__(self, parent, infoText, serviceName):
         self._infoText = infoText
+        self._serviceName = serviceName
         Gtk.init_check()
         super().__init__(title=self._infoText.getLogsWindowTitle())
-
+        self.add_buttons(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         self.set_default_size(800, 600)
+
+        content_area = self.get_content_area()
+        self.whole_screen = Gtk.VBox(spacing=6)
+        self.whole_screen.set_orientation(Gtk.Orientation.VERTICAL)
+        self.whole_screen.set_hexpand(True)
+        self.whole_screen.set_vexpand(True)
+        content_area.add(self.whole_screen)
 
         self.grid = Gtk.Grid()
         self.grid.set_column_homogeneous(True)
@@ -19,27 +28,17 @@ class LogsWindow(Gtk.Window):
         self.grid.set_row_spacing(5)
         self.grid.set_border_width(5)
 
+        # load current service logs
+        logs = SystemdManager.getServiceLogs(self._serviceName)
         textbuffer = Gtk.TextBuffer()
-        textbuffer.set_text(
-            "GTK+, or the GIMP Toolkit, is a multi-platform toolkit for creating graphical user interfaces. Offering a complete set of widgets, GTK+ is suitable for projects ranging from small one-off tools to complete application suites."
-        )
+        textbuffer.set_text(logs)
 
         self.logs_textview = Gtk.TextView(buffer=textbuffer)
         self.logs_textview.set_editable(False)
         self.logs_textview.set_cursor_visible(False)
-        self.logs_textview.set_wrap_mode(Gtk.WrapMode.WORD)
-        self.logs_textview.set_justification(Gtk.Justification.LEFT)
-        self.logs_textview.set_left_margin(5)
-        self.logs_textview.set_right_margin(5)
-        self.logs_textview.set_top_margin(5)
-        self.logs_textview.set_bottom_margin(5)
-        self.logs_textview.set_border_width(5)
-        self.logs_textview.set_pixels_above_lines(5)
-        self.logs_textview.set_pixels_below_lines(5)
-        self.logs_textview.set_pixels_inside_wrap(5)
-        self.logs_textview.set_left_margin(5)
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.add(self.logs_textview)
-        self.grid.attach(scrolled_window, 0, 0, 2, 1)
-        self.add(self.grid)
+        self.grid.attach(scrolled_window, 0, 0, 1, 1)
+        self.whole_screen.pack_start(self.grid, True, True, 0)
+        self.show_all()
