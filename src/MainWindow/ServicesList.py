@@ -3,7 +3,7 @@ import gi
 from src.Language.Language import Language
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk
 
 
 class ServicesList(Gtk.ScrolledWindow):
@@ -18,7 +18,6 @@ class ServicesList(Gtk.ScrolledWindow):
         self.add(self.treeview)
 
         firstColumnName = Gtk.CellRendererText()
-        firstColumnName.set_property("foreground", "green")
         self.systemdUnitsColorPoint = Gtk.TreeViewColumn("",
                                                          firstColumnName,
                                                          text=0,

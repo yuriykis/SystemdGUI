@@ -7,6 +7,7 @@ from gi.repository import Gtk
 
 from ..ConfirmWindow.ConfirmWindow import ConfirmWindow
 from systemd.SystemdManager import SystemdManager
+from .LogsWindow import LogsWindow
 
 
 class PropsWindow(Gtk.Dialog):
@@ -70,10 +71,15 @@ class PropsWindow(Gtk.Dialog):
             self._infoText.getEditConfigFileText())
         edit_config_file_button.connect("clicked",
                                         self.on_edit_config_file_clicked)
+        show_logs_button = Gtk.Button.new_with_label(
+            self._infoText.getShowLogsText())
+        show_logs_button.connect("clicked", self.on_show_logs_clicked)
+
         vbox_right.pack_start(start_button, True, True, 0)
         vbox_right.pack_start(stop_button, True, True, 0)
         vbox_right.pack_start(restart_button, True, True, 0)
         vbox_right.pack_start(edit_config_file_button, True, True, 0)
+        vbox_right.pack_start(show_logs_button, True, True, 0)
         main_area.pack_end(vbox_right, True, True, 0)
 
         self.show_all()
@@ -130,3 +136,7 @@ class PropsWindow(Gtk.Dialog):
 
     def on_edit_config_file_clicked(self, widget):
         pass
+
+    def on_show_logs_clicked(self, widget):
+        logs_window = LogsWindow(self, self._infoText)
+        logs_window.show_all()

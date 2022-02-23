@@ -1,6 +1,7 @@
 from pystemd.systemd1 import Manager, Unit
 from systemd.ServiceAction import ServiceAction
 import subprocess
+import pathlib
 
 
 class SystemdManager():
@@ -65,3 +66,16 @@ class SystemdManager():
 
     def removeUnit(serviceName):
         print("Remove unit" + serviceName)
+
+    def getServiceLogs(serviceName):
+        try:
+            unit = Unit(serviceName)
+            unit.load()
+            subprocess.run([
+                "sudo", "journalctl", "-eu", serviceName, ">",
+                pathlib.Path().resolve() + "/logs/service.log"
+            ])
+            return ServiceAction.SERVICE_ENABLE_OK
+        except Exception as e:
+            print(e)
+            return ServiceAction.SERVICE_ENABLE_FAILED

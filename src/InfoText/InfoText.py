@@ -266,3 +266,19 @@ class InfoText():
             return "Przeładuj listę usług"
         else:
             return "Reload list of services"
+
+    def getShowLogsText(self):
+        if self._language == Language.EN:
+            return "Show logs"
+        elif self._language == Language.PL:
+            return "Pokaż logi"
+        else:
+            return "Show logs"
+
+    def getLogsWindowTitle(self):
+        if self._language == Language.EN:
+            return "Logs"
+        elif self._language == Language.PL:
+            return "Logi"
+        else:
+            return "Logs"
