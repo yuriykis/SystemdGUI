@@ -282,3 +282,27 @@ class InfoText():
             return "Logi"
         else:
             return "Logs"
+
+    def getCpuUtilizationGraphText(self):
+        if self._language == Language.EN:
+            return "CPU Utilization Graph"
+        elif self._language == Language.PL:
+            return "Wykres zużycia CPU"
+        else:
+            return "CPU Utilization Graph"
+
+    def getCpuUtilizationText(self):
+        if self._language == Language.EN:
+            return "CPU Utilization"
+        elif self._language == Language.PL:
+            return "Zużycie CPU"
+        else:
+            return "CPU Utilization"
+
+    def getCpuUtilizationGraphWindowTitle(self):
+        if self._language == Language.EN:
+            return "CPU Utilization Graph"
+        elif self._language == Language.PL:
+            return "Wykres zużycia CPU"
+        else:
+            return "CPU Utilization Graph"

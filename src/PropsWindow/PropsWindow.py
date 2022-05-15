@@ -8,6 +8,7 @@ from gi.repository import Gtk
 from ..ConfirmWindow.ConfirmWindow import ConfirmWindow
 from systemd.SystemdManager import SystemdManager
 from .LogsWindow import LogsWindow
+from src.CpuUtilizationGraphWindow.CpuUtilizationGraphWindow import CpuUtilizationGraphWindow
 
 
 class PropsWindow(Gtk.Dialog):
@@ -75,6 +76,13 @@ class PropsWindow(Gtk.Dialog):
             self._infoText.getShowLogsText())
         show_logs_button.connect("clicked", self.on_show_logs_clicked)
 
+        if self._serviceName == "cpu_utilization.service":
+            cpu_utilizztion_graph_button = Gtk.Button.new_with_label(
+                self._infoText.getCpuUtilizationGraphText())
+            cpu_utilizztion_graph_button.connect(
+                "clicked", self.on_cpu_utilization_graph_clicked)
+            vbox_right.pack_start(cpu_utilizztion_graph_button, True, True, 0)
+
         vbox_right.pack_start(start_button, True, True, 0)
         vbox_right.pack_start(stop_button, True, True, 0)
         vbox_right.pack_start(restart_button, True, True, 0)
@@ -141,3 +149,10 @@ class PropsWindow(Gtk.Dialog):
         logs_window = LogsWindow(self, self._infoText, self._serviceName)
         logs_window.run()
         logs_window.destroy()
+
+    def on_cpu_utilization_graph_clicked(self, widget):
+        cpu_utilization_graph_window = CpuUtilizationGraphWindow(
+            self._infoText)
+        cpu_utilization_graph_window.connect("destroy", Gtk.main_quit)
+
+        cpu_utilization_graph_window.show_all()
