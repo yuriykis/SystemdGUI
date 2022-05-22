@@ -10,6 +10,7 @@ import numpy as np
 
 
 class CpuUtilizationGraphWindow(Gtk.Dialog):
+
     def __init__(self, infoText):
         self._infoText = infoText
         Gtk.init_check()
@@ -17,13 +18,26 @@ class CpuUtilizationGraphWindow(Gtk.Dialog):
             title=self._infoText.getCpuUtilizationGraphWindowTitle())
         self.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
         self.set_border_width(10)
-        self.set_default_size(800, 600)
+        self.set_default_size(1500, 1000)
 
         fig = Figure(figsize=(5, 4), dpi=100)
         ax = fig.add_subplot()
-        t = np.arange(0.0, 3.0, 0.01)
-        s = np.cos(2 * np.pi * t)
-        ax.plot(t, s)
+        ax.title.set_text(self._infoText.getCpuUtilizationGraphWindowTitle())
+
+        logs_list = SystemdManager.getLastServiceLogs().split("\n")
+        logs = list(map(lambda x: x.split(" "), logs_list))
+        system_utilization_values = []
+        system_utilization_times = []
+        for log in logs:
+            log[:] = [x for x in log if x != ""]
+            if (len(log) >= 9):
+                system_utilization_values.append(log[9])
+                system_utilization_times.append(log[2])
+        system_utilization_values = system_utilization_values[900:]
+        system_utilization_times = system_utilization_times[900:]
+        ax.set_xticks(np.arange(0, len(system_utilization_times), 10),
+                      minor=False)
+        ax.plot(system_utilization_times, system_utilization_values)
 
         content_area = self.get_content_area()
         self.whole_screen = Gtk.VBox(spacing=6)

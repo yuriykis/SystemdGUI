@@ -22,6 +22,7 @@ from ..ConfirmWindow.ConfirmWindow import ConfirmWindow
 
 
 class MainWindow(Gtk.Window):
+
     def __init__(self):
         self._infoText = InfoText(Language.EN)
         Gtk.init_check()

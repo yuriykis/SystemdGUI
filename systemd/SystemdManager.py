@@ -6,6 +6,7 @@ import pathlib
 
 
 class SystemdManager():
+
     def getUnitsList():
         with Manager() as manager:
             unitList = []
@@ -85,6 +86,16 @@ class SystemdManager():
     def getServiceLogs(serviceName):
         try:
             SystemdManager.loadServiceLogs(serviceName)
+            with open(
+                    str(pathlib.Path().resolve()) +
+                    "/systemd/logs/service.log", "r") as f:
+                return f.read()
+        except Exception as e:
+            print(e)
+            return ServiceAction.SERVICE_LOGS_LOAD_FAILED
+
+    def getLastServiceLogs():
+        try:
             with open(
                     str(pathlib.Path().resolve()) +
                     "/systemd/logs/service.log", "r") as f:
