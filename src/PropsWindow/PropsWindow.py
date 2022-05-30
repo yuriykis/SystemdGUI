@@ -156,7 +156,7 @@ class PropsWindow(Gtk.Dialog):
 
     def on_cpu_utilization_graph_clicked(self, widget):
         cpu_utilization_graph_window = CpuUtilizationGraphWindow(
-            self._info_text)
+            self._service_name, self._info_text)
         cpu_utilization_graph_window.connect("destroy", Gtk.main_quit)
 
         cpu_utilization_graph_window.show_all()

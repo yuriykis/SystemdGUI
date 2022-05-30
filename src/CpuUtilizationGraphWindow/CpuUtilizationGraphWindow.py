@@ -11,8 +11,9 @@ import numpy as np
 
 class CpuUtilizationGraphWindow(Gtk.Dialog):
 
-    def __init__(self, info_text):
+    def __init__(self, service_name, info_text):
         self._info_text = info_text
+        self._service_name = service_name
         Gtk.init_check()
         super().__init__(
             title=self._info_text.get_cpu_utilization_graph_window_title())
@@ -25,7 +26,8 @@ class CpuUtilizationGraphWindow(Gtk.Dialog):
         ax.title.set_text(
             self._info_text.get_cpu_utilization_graph_window_title())
 
-        logs_list = SystemdManager.get_service_logs().split("\n")
+        logs_list = SystemdManager.get_service_logs(
+            self._service_name).split("\n")
         logs = list(map(lambda x: x.split(" "), logs_list))
         system_utilization_values = []
         system_utilization_times = []

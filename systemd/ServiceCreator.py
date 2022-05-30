@@ -4,8 +4,8 @@ from .SystemdManager import SystemdManager
 
 class ServiceCreator():
 
-    def createService(self, service_name, service_description,
-                      service_exec_start):
+    def create_service(self, service_name, service_description,
+                       service_exec_start):
         try:
             with open("/lib/systemd/system/%s.service" % service_name,
                       "w") as f:
@@ -17,11 +17,11 @@ class ServiceCreator():
                 f.write("\n")
                 f.write("[Install]\n")
                 f.write("WantedBy=multi-user.target\n")
-            self.enableService(service_name)
+            self.enable_service(service_name)
         except Exception as e:
             print("Error: %s" % e)
 
-    def enableService(self, service_name):
+    def enable_service(self, service_name):
         try:
             SystemdManager.enable_unit(service_name + ".service")
         except Exception as e:
