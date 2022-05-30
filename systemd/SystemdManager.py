@@ -7,7 +7,7 @@ import pathlib
 
 class SystemdManager():
 
-    def getUnitsList():
+    def get_units_list():
         with Manager() as manager:
             unitList = []
             for unit in manager.Manager.ListUnits():
@@ -15,12 +15,12 @@ class SystemdManager():
                 unitList.append(unit_element)
             return unitList
 
-    def getUnitDetails(unitName):
+    def get_unit_details(unitName):
         unit = Unit(unitName)
         unit.load()
         return unit
 
-    def stopUnit(unitName):
+    def stop_unit(unitName):
         try:
             unit = Unit(unitName)
             unit.load()
@@ -30,7 +30,7 @@ class SystemdManager():
             print(e)
             return ServiceAction.SERVICE_STOP_FAILED
 
-    def restartUnit(unitName):
+    def restart_unit(unitName):
         try:
             unit = Unit(unitName)
             unit.load()
@@ -40,7 +40,7 @@ class SystemdManager():
             print(e)
             return ServiceAction.SERVICE_RESTART_FAILED
 
-    def startUnit(unitName):
+    def start_unit(unitName):
         try:
             unit = Unit(unitName)
             unit.load()
@@ -50,7 +50,7 @@ class SystemdManager():
             print(e)
             return ServiceAction.SERVICE_START_FAILED
 
-    def enableUnit(unitName):
+    def enable_unit(unitName):
         try:
             unit = Unit(unitName)
             unit.load()
@@ -60,20 +60,20 @@ class SystemdManager():
             print(e)
             return ServiceAction.SERVICE_ENABLE_FAILED
 
-    def reloadDaemon():
+    def reload_daemon():
         try:
             subprocess.run(["systemctl", "daemon-reload"])
         except Exception as e:
             print(e)
 
-    def removeUnit(serviceName):
-        print("Remove unit" + serviceName)
+    def remove_unit(service_name):
+        print("Remove unit" + service_name)
 
-    def loadServiceLogs(serviceName):
+    def load_service_logs(service_name):
         try:
-            unit = Unit(serviceName)
+            unit = Unit(service_name)
             unit.load()
-            command = ["sudo", "journalctl", "-eu", serviceName]
+            command = ["sudo", "journalctl", "-eu", service_name]
             with open(
                     str(pathlib.Path().resolve()) +
                     "/systemd/logs/service.log", "w") as f:
@@ -83,19 +83,9 @@ class SystemdManager():
             print(e)
             return ServiceAction.SERVICE_LOGS_LOAD_FAILED
 
-    def getServiceLogs(serviceName):
+    def get_service_logs(service_name):
         try:
-            SystemdManager.loadServiceLogs(serviceName)
-            with open(
-                    str(pathlib.Path().resolve()) +
-                    "/systemd/logs/service.log", "r") as f:
-                return f.read()
-        except Exception as e:
-            print(e)
-            return ServiceAction.SERVICE_LOGS_LOAD_FAILED
-
-    def getLastServiceLogs():
-        try:
+            SystemdManager.load_service_logs(service_name)
             with open(
                     str(pathlib.Path().resolve()) +
                     "/systemd/logs/service.log", "r") as f:

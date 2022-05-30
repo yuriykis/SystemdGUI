@@ -3,6 +3,7 @@ from .SystemdManager import SystemdManager
 
 
 class ServiceCreator():
+
     def createService(self, service_name, service_description,
                       service_exec_start):
         try:
@@ -22,6 +23,6 @@ class ServiceCreator():
 
     def enableService(self, service_name):
         try:
-            SystemdManager.enableUnit(service_name + ".service")
+            SystemdManager.enable_unit(service_name + ".service")
         except Exception as e:
             print("Error: %s" % e)

@@ -7,10 +7,11 @@ from gi.repository import Gtk
 
 
 class ServicesList(Gtk.ScrolledWindow):
-    def __init__(self, main_window, infoText):
+
+    def __init__(self, main_window, info_text):
         super().__init__()
 
-        self._infoText = infoText
+        self._info_text = info_text
         self.liststore = Gtk.ListStore(str, str, str, str, str)
         self.treeview = Gtk.TreeView(model=self.liststore)
         self.treeview.set_hexpand(True)
@@ -26,17 +27,17 @@ class ServicesList(Gtk.ScrolledWindow):
 
         secondColumnName = Gtk.CellRendererText()
         self.systemdUnitsNames = Gtk.TreeViewColumn(
-            self._infoText.getServiceNameText(), secondColumnName, text=1)
+            self._info_text.get_service_name_text(), secondColumnName, text=1)
         self.treeview.append_column(self.systemdUnitsNames)
 
         thirdColumnName = Gtk.CellRendererText()
         self.systemdUnitsStatus = Gtk.TreeViewColumn(
-            self._infoText.getLoadStateText(), thirdColumnName, text=2)
+            self._info_text.get_load_state_text(), thirdColumnName, text=2)
         self.treeview.append_column(self.systemdUnitsStatus)
 
         forthColumnName = Gtk.CellRendererText()
         self.systemdUnitsDescription = Gtk.TreeViewColumn(
-            self._infoText.getActiveStateText(), forthColumnName, text=3)
+            self._info_text.get_active_state_text(), forthColumnName, text=3)
         self.treeview.append_column(self.systemdUnitsDescription)
 
         self.treeview.connect("button-press-event",

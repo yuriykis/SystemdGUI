@@ -6,11 +6,12 @@ from systemd.SystemdManager import SystemdManager
 
 
 class LogsWindow(Gtk.Dialog):
-    def __init__(self, parent, infoText, serviceName):
-        self._infoText = infoText
-        self._serviceName = serviceName
+
+    def __init__(self, parent, info_text, service_name):
+        self._info_text = info_text
+        self._service_name = service_name
         Gtk.init_check()
-        super().__init__(title=self._infoText.getLogsWindowTitle())
+        super().__init__(title=self._info_text.get_logs_window_title())
         self.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
         self.set_default_size(800, 600)
 
@@ -29,7 +30,7 @@ class LogsWindow(Gtk.Dialog):
         self.grid.set_border_width(5)
 
         # get current service logs
-        logs = SystemdManager.getServiceLogs(self._serviceName)
+        logs = SystemdManager.get_service_logs(self._service_name)
         textbuffer = Gtk.TextBuffer()
         textbuffer.set_text(logs)
 

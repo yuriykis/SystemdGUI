@@ -24,21 +24,21 @@ from ..ConfirmWindow.ConfirmWindow import ConfirmWindow
 class MainWindow(Gtk.Window):
 
     def __init__(self):
-        self._infoText = InfoText(Language.EN)
+        self._info_text = InfoText(Language.EN)
         Gtk.init_check()
         super().__init__(title="Systemd GUI")
         self.set_border_width(5)
         self.set_default_size(1000, 500)
         self.grid = Gtk.Grid()
 
-        self.menu_bar = MainMenuBar(self, self._infoText)
+        self.menu_bar = MainMenuBar(self, self._info_text)
         self.grid.attach(self.menu_bar, 0, 0, 1, 1)
 
-        self.services_list = ServicesList(self, self._infoText)
+        self.services_list = ServicesList(self, self._info_text)
         self.grid.attach_next_to(self.services_list, self.menu_bar,
                                  Gtk.PositionType.BOTTOM, 1, 1)
 
-        self.side_menu = SideMenu(self, self._infoText)
+        self.side_menu = SideMenu(self, self._info_text)
 
         self.grid.attach_next_to(self.side_menu, self.services_list,
                                  Gtk.PositionType.RIGHT, 1, 1)
@@ -46,19 +46,19 @@ class MainWindow(Gtk.Window):
         self.add(self.grid)
         self.refresh_services_view()
 
-    def decodeUnit(self, unit):
+    def decode_unit(self, unit):
         return os.path.basename(unit.decode('UTF-8'))
 
-    def decodeTuple(self, tuple):
-        return self.decodeUnit(tuple[0]), self.decodeUnit(
-            tuple[1]), self.decodeUnit(tuple[2])
+    def decode_tuple(self, tuple):
+        return self.decode_unit(tuple[0]), self.decode_unit(
+            tuple[1]), self.decode_unit(tuple[2])
 
     def refresh_services_view(self, button=None):
         self.liststore = Gtk.ListStore(str, str, str, str, str)
-        self.systemdUnitsList = SystemdManager.getUnitsList()
+        self.systemdUnitsList = SystemdManager.get_units_list()
 
         # only service unit should remain
-        self.systemdUnitsList = map(self.decodeTuple, self.systemdUnitsList)
+        self.systemdUnitsList = map(self.decode_tuple, self.systemdUnitsList)
 
         self.systemdUnitsList = list(
             filter(lambda unit: "service" in unit[0], self.systemdUnitsList))
@@ -85,33 +85,35 @@ class MainWindow(Gtk.Window):
             # self.liststore.set(iter, COL_COLOR, "red")
         self.services_list.treeview.set_model(self.liststore)
 
-    def setAllWidgetsLabels(self):
-        self.menu_bar.file_menu_item.set_label(self._infoText.getFileText())
-        self.menu_bar.new.set_label(self._infoText.getNewServiceText())
-        self.menu_bar.quit.set_label(self._infoText.getExitText())
-        self.menu_bar.view_menu_item.set_label(self._infoText.getViewText())
-        self.menu_bar.language.set_label(self._infoText.getLanguageText())
-        self.menu_bar.about_menu_item.set_label(self._infoText.getAboutText())
+    def set_all_widgets_labels(self):
+        self.menu_bar.file_menu_item.set_label(self._info_text.get_file_text())
+        self.menu_bar.new.set_label(self._info_text.get_new_service_text())
+        self.menu_bar.quit.set_label(self._info_text.get_exit_text())
+        self.menu_bar.view_menu_item.set_label(self._info_text.get_view_text())
+        self.menu_bar.language.set_label(self._info_text.get_language_text())
+        self.menu_bar.about_menu_item.set_label(
+            self._info_text.get_about_text())
         self.menu_bar.view_program_info.set_label(
-            self._infoText.getViewProgramInfo())
+            self._info_text.get_view_program_info())
         self.side_menu.add_new_service_button.set_label(
-            self._infoText.getAddNewServiceText())
+            self._info_text.get_add_new_service_text())
         self.side_menu.remove_service_button.set_label(
-            self._infoText.getRemoveServiceText())
-        self.side_menu.reload_button.set_label(self._infoText.getReloadText())
+            self._info_text.get_remove_service_text())
+        self.side_menu.reload_button.set_label(
+            self._info_text.get_reload_text())
         self.services_list.systemdUnitsNames.set_title(
-            self._infoText.getServiceNameText())
+            self._info_text.get_service_name_text())
         self.services_list.systemdUnitsStatus.set_title(
-            self._infoText.getLoadStateText())
+            self._info_text.get_load_state_text())
         self.services_list.systemdUnitsDescription.set_title(
-            self._infoText.getActiveStateText())
+            self._info_text.get_active_state_text())
 
     def on_double_unit_click(self, widget, event):
         if event.button == 1 and event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
             mouse_x, mouse_y = self.services_list.treeview.get_pointer()
             row_number = int(str(widget.get_path_at_pos(mouse_x, mouse_y)[0]))
             clicked_service = self.systemdUnitsList[row_number - 1][0]
-            propsWindow = PropsWindow(self, clicked_service, self._infoText)
+            propsWindow = PropsWindow(self, clicked_service, self._info_text)
             propsWindow.run()
             propsWindow.destroy()
 
@@ -139,9 +141,9 @@ class MainWindow(Gtk.Window):
         Gtk.main_quit()
 
     def on_add_new_service_clicked(self, button):
-        addServiceWindow = AddServiceWindow(self, self._infoText)
+        addServiceWindow = AddServiceWindow(self, self._info_text)
         addServiceWindow.run()
-        service_name = addServiceWindow.getServiceName()
+        service_name = addServiceWindow.getservice_name()
         service_description = addServiceWindow.getServiceDescription()
         service_extec_start = addServiceWindow.getServiceExecStart()
         service_creator = ServiceCreator()
@@ -152,12 +154,12 @@ class MainWindow(Gtk.Window):
         self.refresh_services_view()
 
     def on_remove_service_clicked(self, button):
-        _serviceName = self.current_selected_service
-        confirmWindow = ConfirmWindow(self, "remove", self._infoText,
-                                      _serviceName)
+        _service_name = self.current_selected_service
+        confirmWindow = ConfirmWindow(self, "remove", self._info_text,
+                                      _service_name)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
-            service_action_result = SystemdManager.removeUnit(_serviceName)
+            service_action_result = SystemdManager.remove_unit(_service_name)
             if service_action_result == ServiceAction.SERVICE_START_FAILED:
                 self.show_required_privileges_dialog()
 
@@ -172,14 +174,14 @@ class MainWindow(Gtk.Window):
             self.current_selected_service = value
 
     def on_view_program_info_clicked(self, button):
-        aboutWindow = AboutWindow(self, self._infoText)
+        aboutWindow = AboutWindow(self, self._info_text)
         aboutWindow.run()
         aboutWindow.destroy()
 
     def on_language_pl_clicked(self, button):
-        self._infoText.setLanguage(Language.PL)
-        self.setAllWidgetsLabels()
+        self._info_text.set_language(Language.PL)
+        self.set_all_widgets_labels()
 
     def on_language_en_clicked(self, button):
-        self._infoText.setLanguage(Language.EN)
-        self.setAllWidgetsLabels()
+        self._info_text.set_language(Language.EN)
+        self.set_all_widgets_labels()

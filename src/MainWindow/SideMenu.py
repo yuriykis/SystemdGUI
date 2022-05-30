@@ -7,9 +7,10 @@ from gi.repository import Gtk, GdkPixbuf
 
 
 class SideMenu(Gtk.Box):
+
     def __init__(self, main_window, info_text):
         super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        self._infoText = info_text
+        self._info_text = info_text
         listbox = Gtk.ListBox()
         listbox.set_selection_mode(Gtk.SelectionMode.NONE)
         self.pack_start(listbox, True, True, 0)
@@ -24,7 +25,7 @@ class SideMenu(Gtk.Box):
         img = Gtk.Image()
         img.set_from_pixbuf(add_service_icon)
         self.add_new_service_button = Gtk.Button(
-            label=self._infoText.getAddNewServiceText())
+            label=self._info_text.get_add_new_service_text())
         self.add_new_service_button.connect(
             "clicked", main_window.on_add_new_service_clicked)
         self.add_new_service_button.set_image(img)
@@ -43,7 +44,7 @@ class SideMenu(Gtk.Box):
         img.set_from_pixbuf(remove_service_icon)
 
         self.remove_service_button = Gtk.Button(
-            label=self._infoText.getRemoveServiceText())
+            label=self._info_text.get_remove_service_text())
         self.remove_service_button.connect(
             "clicked", main_window.on_remove_service_clicked)
         self.remove_service_button.set_image(img)
@@ -61,7 +62,8 @@ class SideMenu(Gtk.Box):
             'src/assets/reload-icon-6.png', 25, 25)
         img = Gtk.Image()
         img.set_from_pixbuf(reload_icon)
-        self.reload_button = Gtk.Button(label=self._infoText.getReloadText())
+        self.reload_button = Gtk.Button(
+            label=self._info_text.get_reload_text())
         self.reload_button.connect("clicked",
                                    main_window.refresh_services_view)
         self.reload_button.set_image(img)

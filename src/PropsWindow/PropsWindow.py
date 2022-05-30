@@ -12,15 +12,16 @@ from src.CpuUtilizationGraphWindow.CpuUtilizationGraphWindow import CpuUtilizati
 
 
 class PropsWindow(Gtk.Dialog):
-    def __init__(self, parent, serviceName, infoText):
-        self._infoText = infoText
+
+    def __init__(self, parent, service_name, info_text):
+        self._info_text = info_text
         Gtk.Dialog.__init__(
-            self, self._infoText.getServicePropertiesText(), parent, 0,
-            (self._infoText.getCancelText(), Gtk.ResponseType.CANCEL,
+            self, self._info_text.get_service_properties_text(), parent, 0,
+            (self._info_text.get_cancel_text(), Gtk.ResponseType.CANCEL,
              Gtk.STOCK_OK, Gtk.ResponseType.OK))
         self.set_default_size(600, 400)
         self.set_border_width(10)
-        self._serviceName = serviceName
+        self._service_name = service_name
         self._parent = parent
         content_area = self.get_content_area()
         main_area = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
@@ -29,11 +30,11 @@ class PropsWindow(Gtk.Dialog):
         vbox_left = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
 
         service_name_label = Gtk.Label(xalign=2)
-        service_name_label.set_markup("<big>" + serviceName + "</big>")
+        service_name_label.set_markup("<big>" + service_name + "</big>")
         vbox_left.pack_start(service_name_label, False, True, 10)
 
-        unit_details = SystemdManager.getUnitDetails(serviceName).Unit
-        service_details = SystemdManager.getUnitDetails(serviceName).Service
+        unit_details = SystemdManager.get_unit_details(service_name).Unit
+        service_details = SystemdManager.get_unit_details(service_name).Service
 
         serice_description_label = Gtk.Label(
             unit_details.Description.decode('UTF-8'), xalign=0)
@@ -61,24 +62,25 @@ class PropsWindow(Gtk.Dialog):
         main_area.pack_start(vbox_left, True, True, 0)
 
         vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        start_button = Gtk.Button(self._infoText.getStartText())
+        start_button = Gtk.Button(self._info_text.get_start_text())
         start_button.connect("clicked", self.on_start_clicked)
-        stop_button = Gtk.Button.new_with_label(self._infoText.getStopText())
+        stop_button = Gtk.Button.new_with_label(
+            self._info_text.get_stop_text())
         stop_button.connect("clicked", self.on_stop_clicked)
         restart_button = Gtk.Button.new_with_label(
-            self._infoText.getRestartText())
+            self._info_text.get_restart_text())
         restart_button.connect("clicked", self.on_restart_clicked)
         edit_config_file_button = Gtk.Button.new_with_label(
-            self._infoText.getEditConfigFileText())
+            self._info_text.get_edit_config_file_text())
         edit_config_file_button.connect("clicked",
                                         self.on_edit_config_file_clicked)
         show_logs_button = Gtk.Button.new_with_label(
-            self._infoText.getShowLogsText())
+            self._info_text.get_show_logs_text())
         show_logs_button.connect("clicked", self.on_show_logs_clicked)
 
-        if self._serviceName == "cpu_utilization.service":
+        if self._service_name == "cpu_utilization.service":
             cpu_utilizztion_graph_button = Gtk.Button.new_with_label(
-                self._infoText.getCpuUtilizationGraphText())
+                self._info_text.get_cpu_utilization_graph_text())
             cpu_utilizztion_graph_button.connect(
                 "clicked", self.on_cpu_utilization_graph_clicked)
             vbox_right.pack_start(cpu_utilizztion_graph_button, True, True, 0)
@@ -100,17 +102,18 @@ class PropsWindow(Gtk.Dialog):
             buttons=Gtk.ButtonsType.OK,
             text="Error",
         )
-        dialog.format_secondary_text(self._infoText.getSudoPrivText())
+        dialog.format_secondary_text(self._info_text.get_sudo_priv_text())
         dialog.run()
 
         dialog.destroy()
 
     def on_start_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self, "start", self._infoText,
-                                      self._serviceName)
+        confirmWindow = ConfirmWindow(self, "start", self._info_text,
+                                      self._service_name)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
-            service_action_result = SystemdManager.startUnit(self._serviceName)
+            service_action_result = SystemdManager.start_unit(
+                self._service_name)
             if service_action_result == ServiceAction.SERVICE_START_FAILED:
                 self.show_required_privileges_dialog()
 
@@ -118,12 +121,12 @@ class PropsWindow(Gtk.Dialog):
         confirmWindow.destroy()
 
     def on_restart_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self, "restart", self._infoText,
-                                      self._serviceName)
+        confirmWindow = ConfirmWindow(self, "restart", self._info_text,
+                                      self._service_name)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
-            service_action_result = SystemdManager.restartUnit(
-                self._serviceName)
+            service_action_result = SystemdManager.restart_unit(
+                self._service_name)
             if service_action_result == ServiceAction.SERVICE_RESTART_FAILED:
                 self.show_required_privileges_dialog()
 
@@ -131,11 +134,12 @@ class PropsWindow(Gtk.Dialog):
         confirmWindow.destroy()
 
     def on_stop_clicked(self, widget):
-        confirmWindow = ConfirmWindow(self, "stop", self._infoText,
-                                      self._serviceName)
+        confirmWindow = ConfirmWindow(self, "stop", self._info_text,
+                                      self._service_name)
         response = confirmWindow.run()
         if response == Gtk.ResponseType.OK:
-            service_action_result = SystemdManager.stopUnit(self._serviceName)
+            service_action_result = SystemdManager.stop_unit(
+                self._service_name)
             if service_action_result == ServiceAction.SERVICE_STOP_FAILED:
                 self.show_required_privileges_dialog()
 
@@ -146,13 +150,13 @@ class PropsWindow(Gtk.Dialog):
         pass
 
     def on_show_logs_clicked(self, widget):
-        logs_window = LogsWindow(self, self._infoText, self._serviceName)
+        logs_window = LogsWindow(self, self._info_text, self._service_name)
         logs_window.run()
         logs_window.destroy()
 
     def on_cpu_utilization_graph_clicked(self, widget):
         cpu_utilization_graph_window = CpuUtilizationGraphWindow(
-            self._infoText)
+            self._info_text)
         cpu_utilization_graph_window.connect("destroy", Gtk.main_quit)
 
         cpu_utilization_graph_window.show_all()

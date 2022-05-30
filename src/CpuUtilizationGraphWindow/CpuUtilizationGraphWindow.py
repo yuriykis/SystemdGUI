@@ -11,20 +11,21 @@ import numpy as np
 
 class CpuUtilizationGraphWindow(Gtk.Dialog):
 
-    def __init__(self, infoText):
-        self._infoText = infoText
+    def __init__(self, info_text):
+        self._info_text = info_text
         Gtk.init_check()
         super().__init__(
-            title=self._infoText.getCpuUtilizationGraphWindowTitle())
+            title=self._info_text.get_cpu_utilization_graph_window_title())
         self.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
         self.set_border_width(10)
         self.set_default_size(1500, 1000)
 
         fig = Figure(figsize=(5, 4), dpi=100)
         ax = fig.add_subplot()
-        ax.title.set_text(self._infoText.getCpuUtilizationGraphWindowTitle())
+        ax.title.set_text(
+            self._info_text.get_cpu_utilization_graph_window_title())
 
-        logs_list = SystemdManager.getLastServiceLogs().split("\n")
+        logs_list = SystemdManager.get_service_logs().split("\n")
         logs = list(map(lambda x: x.split(" "), logs_list))
         system_utilization_values = []
         system_utilization_times = []

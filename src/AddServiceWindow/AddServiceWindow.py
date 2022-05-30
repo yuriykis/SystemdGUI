@@ -5,11 +5,12 @@ from gi.repository import Gtk
 
 
 class AddServiceWindow(Gtk.Dialog):
-    def __init__(self, parent, infoText):
-        self._infoText = infoText
+
+    def __init__(self, parent, info_text):
+        self._info_text = info_text
         Gtk.Dialog.__init__(
-            self, self._infoText.getAddNewServiceText(), parent, 0,
-            (self._infoText.getCancelText(), Gtk.ResponseType.CANCEL,
+            self, self._info_text.get_add_new_service_text(), parent, 0,
+            (self._info_text.get_cancel_text(), Gtk.ResponseType.CANCEL,
              Gtk.STOCK_OK, Gtk.ResponseType.OK))
         self.set_default_size(300, 100)
         self.set_border_width(10)
@@ -21,7 +22,7 @@ class AddServiceWindow(Gtk.Dialog):
 
         self.service_name_box = Gtk.Box(spacing=6)
         self.service_name_label = Gtk.Label(
-            self._infoText.getServiceNameText())
+            self._info_text.get_service_name_text())
         self.service_name_entry = Gtk.Entry()
         self.service_name_box.pack_start(self.service_name_label, False, True,
                                          0)
@@ -37,7 +38,7 @@ class AddServiceWindow(Gtk.Dialog):
 
         self.service_description_box = Gtk.Box(spacing=6)
         self.service_description_label = Gtk.Label(
-            self._infoText.getDescriptionText())
+            self._info_text.get_description_text())
         self.service_description_entry = Gtk.Entry()
         self.service_description_box.pack_start(self.service_description_label,
                                                 False, True, 0)
@@ -92,7 +93,7 @@ class AddServiceWindow(Gtk.Dialog):
 
         self.show_all()
 
-    def getServiceName(self):
+    def getservice_name(self):
         return self.service_name_entry.get_text()
 
     def getServiceDescription(self):
