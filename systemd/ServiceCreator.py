@@ -1,5 +1,5 @@
 from pystemd.systemd1 import Manager, Unit
-from .SystemdManager import SystemdManager
+from SystemdManager import SystemdManager
 
 
 class ServiceCreator():

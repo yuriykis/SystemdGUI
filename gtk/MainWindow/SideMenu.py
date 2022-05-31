@@ -1,6 +1,6 @@
 import gi
 
-from src.Language.Language import Language
+from Language.Language import Language
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GdkPixbuf
@@ -21,7 +21,7 @@ class SideMenu(Gtk.Box):
         row.add(hbox)
 
         add_service_icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            'src/assets/green-plus-sign-icon-6.jpg', 25, 25)
+            'gtk/assets/green-plus-sign-icon-6.jpg', 25, 25)
         img = Gtk.Image()
         img.set_from_pixbuf(add_service_icon)
         self.add_new_service_button = Gtk.Button(
@@ -39,7 +39,7 @@ class SideMenu(Gtk.Box):
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         row.add(hbox)
         remove_service_icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            'src/assets/red-minus-sign-icon-6.png', 25, 25)
+            'gtk/assets/red-minus-sign-icon-6.png', 25, 25)
         img = Gtk.Image()
         img.set_from_pixbuf(remove_service_icon)
 
@@ -59,7 +59,7 @@ class SideMenu(Gtk.Box):
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         row.add(hbox)
         reload_icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            'src/assets/reload-icon-6.png', 25, 25)
+            'gtk/assets/reload-icon-6.png', 25, 25)
         img = Gtk.Image()
         img.set_from_pixbuf(reload_icon)
         self.reload_button = Gtk.Button(

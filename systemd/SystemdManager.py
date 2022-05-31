@@ -1,6 +1,6 @@
 from distutils import command
 from pystemd.systemd1 import Manager, Unit
-from systemd.ServiceAction import ServiceAction
+from ServiceAction import ServiceAction
 import subprocess
 import pathlib
 

@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from systemd.SystemdManager import SystemdManager
+from SystemdManager import SystemdManager
 
 
 class LogsWindow(Gtk.Dialog):

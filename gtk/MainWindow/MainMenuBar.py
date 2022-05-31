@@ -1,6 +1,6 @@
 import gi
 
-from src.Language.Language import Language
+from Language.Language import Language
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk

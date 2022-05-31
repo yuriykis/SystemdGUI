@@ -1,14 +1,14 @@
 import gi
 
-from systemd.ServiceAction import ServiceAction
+from ServiceAction import ServiceAction
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-from ..ConfirmWindow.ConfirmWindow import ConfirmWindow
-from systemd.SystemdManager import SystemdManager
+from ConfirmWindow.ConfirmWindow import ConfirmWindow
+from SystemdManager import SystemdManager
 from .LogsWindow import LogsWindow
-from src.CpuUtilizationGraphWindow.CpuUtilizationGraphWindow import CpuUtilizationGraphWindow
+from CpuUtilizationGraphWindow.CpuUtilizationGraphWindow import CpuUtilizationGraphWindow
 
 
 class PropsWindow(Gtk.Dialog):

@@ -1,24 +1,26 @@
 import gi
 import os
-from src.MainWindow.ServicesList import ServicesList
+import sys
+from MainWindow.ServicesList import ServicesList
 
-from src.MainWindow.SideMenu import SideMenu
-from ..AboutWindow.AboutWindow import AboutWindow
+from MainWindow.SideMenu import SideMenu
+from AboutWindow.AboutWindow import AboutWindow
 from .MainMenuBar import MainMenuBar
 
-from systemd.ServiceAction import ServiceAction
-from systemd.ServiceCreator import ServiceCreator
+sys.path.append("/home/yuriy/GTK/SystemdGUI/systemd")
+from ServiceAction import ServiceAction
+from ServiceCreator import ServiceCreator
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 
-from systemd.SystemdManager import SystemdManager
-from ..PropsWindow.PropsWindow import PropsWindow
-from ..AddServiceWindow.AddServiceWindow import AddServiceWindow
-from ..InfoText.InfoText import InfoText
-from src.Language.Language import Language
+from SystemdManager import SystemdManager
+from PropsWindow.PropsWindow import PropsWindow
+from AddServiceWindow.AddServiceWindow import AddServiceWindow
+from InfoText.InfoText import InfoText
+from Language.Language import Language
 
-from ..ConfirmWindow.ConfirmWindow import ConfirmWindow
+from ConfirmWindow.ConfirmWindow import ConfirmWindow
 
 
 class MainWindow(Gtk.Window):
