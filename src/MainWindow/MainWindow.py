@@ -55,15 +55,16 @@ class MainWindow(Gtk.Window):
 
     def refresh_services_view(self, button=None):
         self.liststore = Gtk.ListStore(str, str, str, str, str)
-        self.systemdUnitsList = SystemdManager.get_units_list()
+        self.systemd_units_list = SystemdManager.get_units_list()
 
         # only service unit should remain
-        self.systemdUnitsList = map(self.decode_tuple, self.systemdUnitsList)
+        self.systemd_units_list = map(self.decode_tuple,
+                                      self.systemd_units_list)
 
-        self.systemdUnitsList = list(
-            filter(lambda unit: "service" in unit[0], self.systemdUnitsList))
-        self.systemdUnitsList.sort()
-        for unit in self.systemdUnitsList:
+        self.systemd_units_list = list(
+            filter(lambda unit: "service" in unit[0], self.systemd_units_list))
+        self.systemd_units_list.sort()
+        for unit in self.systemd_units_list:
             color_point = "●"
             serivce_name = unit[0]
             is_loaded_field = unit[1]
@@ -112,7 +113,7 @@ class MainWindow(Gtk.Window):
         if event.button == 1 and event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
             mouse_x, mouse_y = self.services_list.treeview.get_pointer()
             row_number = int(str(widget.get_path_at_pos(mouse_x, mouse_y)[0]))
-            clicked_service = self.systemdUnitsList[row_number - 1][0]
+            clicked_service = self.systemd_units_list[row_number - 1][0]
             propsWindow = PropsWindow(self, clicked_service, self._info_text)
             propsWindow.run()
             propsWindow.destroy()

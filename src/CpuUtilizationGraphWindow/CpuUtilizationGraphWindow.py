@@ -14,10 +14,11 @@ class CpuUtilizationGraphWindow(Gtk.Dialog):
     def __init__(self, service_name, info_text):
         self._info_text = info_text
         self._service_name = service_name
+        self._values_number = 300
         Gtk.init_check()
         super().__init__(
             title=self._info_text.get_cpu_utilization_graph_window_title())
-        self.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+        self.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         self.set_border_width(10)
         self.set_default_size(1500, 1000)
 
@@ -36,9 +37,18 @@ class CpuUtilizationGraphWindow(Gtk.Dialog):
             if (len(log) >= 9):
                 system_utilization_values.append(log[9])
                 system_utilization_times.append(log[2])
-        system_utilization_values = system_utilization_values[900:]
-        system_utilization_times = system_utilization_times[900:]
-        ax.set_xticks(np.arange(0, len(system_utilization_times), 10),
+        system_utilization_values = system_utilization_values[:self.
+                                                              _values_number]
+        # replace commas with dots
+        system_utilization_values = list(
+            map(lambda x: x.replace(",", "."), system_utilization_values))
+        # map to float
+        system_utilization_values = list(
+            map(lambda x: float(x), system_utilization_values))
+        system_utilization_times = system_utilization_times[:self.
+                                                            _values_number]
+        ax.set_xticks(np.arange(0, len(system_utilization_times),
+                                self._values_number / 10),
                       minor=False)
         ax.plot(system_utilization_times, system_utilization_values)
 
