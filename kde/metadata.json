@@ -1,0 +1,24 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "yurakis9@gmail.com",
+                "Name": "Yuriy Kis"
+            }
+        ],
+        "Category": "Development",
+        "Description": "SystemdGUI",
+        "Icon": "kbugbuster",
+        "Id": "kde.systemdgui",
+        "License": "LGPLv2+",
+        "Name": "SystemdGUI",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "Version": "1.0",
+        "Website": "https://www.kde.org"
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml",
+    "X-KDE-PluginInfo-Name": "kde.systemdgui"
+}
