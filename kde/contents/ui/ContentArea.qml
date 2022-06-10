@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.0
 
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.components 3.0 as PlasmaComponents3
+import Qt.labs.qmlmodels 1.0
 import io.thp.pyotherside 1.4
 
 Item {
@@ -14,6 +15,7 @@ Item {
         id : libraryModel
     }
     TableView {
+        id : libraryView
         anchors.fill : parent
         TableViewColumn {
             role : "service_name"
@@ -30,29 +32,37 @@ Item {
             title : "Active State"
             width : 100
         }
+        onDoubleClicked : {
+            console.log(libraryModel.get(libraryView.currentRow)['service_name']);
+        }
         model : libraryModel
     }
 
     Python {
         id : python
 
-        Component.onCompleted : { // Print version of plugin and Python interpreter
-            console.log('PyOtherSide version: ' + pluginVersion());
-            console.log('Python version: ' + pythonVersion());
+        Component.onCompleted : {
 
-            addImportPath(Qt.resolvedUrl('.'));
-            // Asynchronous module importing
-            importModule('systemd.SystemdManager', function () {
-                console.log('Python module "systemd" is now imported');
-                python.call('systemd.SystemdManager.SystemdManager.get_units_list', [], function (result) { // Load the received data into the list model
-                    for (var i = 0; i < result.length; i++) { // console.log(result[i]['0'].toString());
-                        libraryModel.append({service_name: result[i]['0'].toString(),
-                            load_state: result[i]['1'].toString(),
-                            active_state: result[i]['2'].toString()
-                        });
+            addImportPath(Qt.resolvedUrl('/home/yuriy/GTK/SystemdGUI/systemd'));
+            // Function to call after python module is loaded
+            const processItems = function () {
+                python.call('SystemdManager.get_units_list', [], function (result) {
+                    var tmpArray = [];
+                    for (var i = 0; i < result.length; i++) { // only services unit should remain
+                        if (result[i]['0'].toString().endsWith('service')) {
+                            tmpArray.push({service_name: result[i]['0'].toString(),
+                                load_state: result[i]['1'].toString(),
+                                active_state: result[i]['2'].toString()
+                            });
+                        }
                     }
+                    tmpArray.sort((a, b) => a.service_name.localeCompare(b.service_name));
+                    tmpArray.forEach(function (item) {
+                        libraryModel.append(item);
+                    });
                 });
-            });
+            }
+            importNames('SystemdManager', ['SystemdManager'], processItems);
 
         }
 

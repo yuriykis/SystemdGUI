@@ -11,16 +11,16 @@ Item {
     Layout.fillWidth : true
     ColumnLayout {
         PlasmaComponents3.ToolButton {
-            icon.name : "view-refresh-symbolic"
-            text : i18n("Refresh")
+            icon.name : "list-add-symbolic"
+            text : i18n("Add new service")
+        }
+        PlasmaComponents3.ToolButton {
+            icon.name : "list-remove-symbolic"
+            text : i18n("Remove service")
         }
         PlasmaComponents3.ToolButton {
             icon.name : "view-refresh-symbolic"
-            text : i18n("Refresh")
-        }
-        PlasmaComponents3.ToolButton {
-            icon.name : "view-refresh-symbolic"
-            text : i18n("Refresh")
+            text : i18n("Reload list of services")
         }
     }
 }
