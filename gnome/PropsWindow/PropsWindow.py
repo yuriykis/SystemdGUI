@@ -33,8 +33,8 @@ class PropsWindow(Gtk.Dialog):
         service_name_label.set_markup("<big>" + service_name + "</big>")
         vbox_left.pack_start(service_name_label, False, True, 10)
 
-        unit_details = SystemdManager.get_unit_details(service_name).Unit
-        service_details = SystemdManager.get_unit_details(service_name).Service
+        unit_details = SystemdManager.get_unit_details_Unit(service_name)
+        service_details = SystemdManager.get_unit_details_Service(service_name)
 
         serice_description_label = Gtk.Label(
             unit_details.Description.decode('UTF-8'), xalign=0)

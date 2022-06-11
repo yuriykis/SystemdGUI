@@ -5,21 +5,21 @@ import QtQml.Models 2.1
 import QtQuick.Layouts 1.0
 import org.kde.plasma.components 3.0 as PlasmaComponents3
 
-Item {
+PlasmaComponents3.Page {
     implicitWidth : 20
     Layout.fillHeight : true
     Layout.fillWidth : true
-    ColumnLayout {
+    Column {
         PlasmaComponents3.ToolButton {
-            icon.name : "list-add-symbolic"
+            icon.name : "package-install"
             text : i18n("Add new service")
         }
         PlasmaComponents3.ToolButton {
-            icon.name : "list-remove-symbolic"
+            icon.name : "package-remove"
             text : i18n("Remove service")
         }
         PlasmaComponents3.ToolButton {
-            icon.name : "view-refresh-symbolic"
+            icon.name : "package-reinstall"
             text : i18n("Reload list of services")
         }
     }

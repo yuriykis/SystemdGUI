@@ -15,10 +15,15 @@ class SystemdManager():
                 unitList.append(unit_element)
             return unitList
 
-    def get_unit_details(unitName):
+    def get_unit_details_Unit(unitName):
         unit = Unit(unitName)
         unit.load()
-        return unit
+        return unit.Unit
+
+    def get_unit_details_Service(unitName):
+        unit = Unit(unitName)
+        unit.load()
+        return unit.Service
 
     def stop_unit(unitName):
         try:

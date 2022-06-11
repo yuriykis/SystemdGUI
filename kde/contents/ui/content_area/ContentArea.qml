@@ -7,7 +7,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents3
 import Qt.labs.qmlmodels 1.0
 import io.thp.pyotherside 1.4
 
-Item {
+PlasmaComponents3.Page {
     implicitWidth : 80
     Layout.fillHeight : true
     Layout.fillWidth : true
@@ -34,6 +34,11 @@ Item {
         }
         onDoubleClicked : {
             console.log(libraryModel.get(libraryView.currentRow)['service_name']);
+            var component = Qt.createComponent("../props_window/PropsWindow.qml");
+            var win = component.createObject(root, {
+                serviceName: libraryModel.get(libraryView.currentRow)['service_name']
+            });
+            win.show();
         }
         model : libraryModel
     }
