@@ -56,13 +56,13 @@ Item {
         Component.onCompleted : {
             addImportPath(Qt.resolvedUrl('/home/yuriy/GTK/SystemdGUI/systemd'));
             const obtainUnitDetails = function () {
-                python.call('SystemdManager.get_unit_details_Unit', [serviceName], function (result) {
+                python.call('SystemdManager.get_unit_details_Unit', [infoArea.serviceName], function (result) {
                     infoArea.serviceDescription = getattr(result, 'Description').toString();
                     infoArea.serviceLoaded = getattr(result, 'LoadState').toString();
                     infoArea.servicePath = getattr(result, 'FragmentPath').toString();
                     infoArea.serviceActive = getattr(result, 'ActiveState').toString();
                 });
-                python.call('SystemdManager.get_unit_details_Service', [serviceName], function (result) {
+                python.call('SystemdManager.get_unit_details_Service', [infoArea.serviceName], function (result) {
                     infoArea.serviceMainPID = getattr(result, 'MainPID').toString();
                 });
             }

@@ -26,7 +26,7 @@ PlasmaComponents3.Page {
             model : serviceActionsArea.serviceActions
             delegate : ServiceActionButton {
                 text : modelData
-                serviceName : root.serviceName
+                serviceName : serviceActionsArea.serviceName
             }
         }
     }

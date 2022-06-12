@@ -30,11 +30,14 @@ PlasmaComponents3.Button {
         }
     }
     onClicked : { // test
+        var component = Qt.createComponent("../confirm_dialog/ConfirmDialog.qml");
+        var dialog = component.createObject(root, {});
         const obtainUnitDetails = function () {
             python.call('SystemdManager.remove_unit', [serviceActionButton.serviceName], function (result) {});
         }
         python.importNames('SystemdManager', ['SystemdManager'], obtainUnitDetails);
     }
+
     Python {
         id : python
 

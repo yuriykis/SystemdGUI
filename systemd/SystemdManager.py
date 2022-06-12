@@ -72,7 +72,7 @@ class SystemdManager():
             print(e)
 
     def remove_unit(service_name):
-        print("Remove unit" + service_name)
+        print("Remove unit: " + service_name)
 
     def load_service_logs(service_name):
         try:
