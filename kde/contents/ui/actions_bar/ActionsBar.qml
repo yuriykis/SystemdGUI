@@ -10,17 +10,8 @@ PlasmaComponents3.Page {
     Layout.fillHeight : true
     Layout.fillWidth : true
     Column {
-        PlasmaComponents3.ToolButton {
-            icon.name : "package-install"
-            text : i18n("Add new service")
-        }
-        PlasmaComponents3.ToolButton {
-            icon.name : "package-remove"
-            text : i18n("Remove service")
-        }
-        PlasmaComponents3.ToolButton {
-            icon.name : "package-reinstall"
-            text : i18n("Reload list of services")
-        }
+        AddNewServiceButton {}
+        RemoveServiceButton {}
+        ReloadServicesButton {}
     }
 }

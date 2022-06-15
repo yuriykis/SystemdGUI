@@ -1,1 +1,28 @@
--- No entries --
+cze 12 21:37:17 yuriy-Parallels-Virtual-Platform systemd[1]: Stopping Bluetooth service...
+cze 12 21:37:17 yuriy-Parallels-Virtual-Platform bluetoothd[1054]: Terminating
+cze 12 21:37:17 yuriy-Parallels-Virtual-Platform bluetoothd[1054]: Stopping SDP server
+cze 12 21:37:17 yuriy-Parallels-Virtual-Platform bluetoothd[1054]: Exit
+cze 12 21:37:17 yuriy-Parallels-Virtual-Platform systemd[1]: bluetooth.service: Deactivated successfully.
+cze 12 21:37:17 yuriy-Parallels-Virtual-Platform systemd[1]: Stopped Bluetooth service.
+-- Boot 9734f7ea92144ba3a642ea138f67cfc1 --
+cze 13 20:54:02 yuriy-Parallels-Virtual-Platform systemd[1]: Starting Bluetooth service...
+cze 13 20:54:02 yuriy-Parallels-Virtual-Platform bluetoothd[1064]: Bluetooth daemon 5.64
+cze 13 20:54:02 yuriy-Parallels-Virtual-Platform bluetoothd[1064]: Starting SDP server
+cze 13 20:54:02 yuriy-Parallels-Virtual-Platform bluetoothd[1064]: Bluetooth management interface 1.21 initialized
+cze 13 20:54:03 yuriy-Parallels-Virtual-Platform systemd[1]: Started Bluetooth service.
+cze 13 20:54:12 yuriy-Parallels-Virtual-Platform bluetoothd[1064]: src/profile.c:register_profile() :1.79 tried to register 00001108-0000-1000-8000-00805f9b34fb which is already registered
+cze 13 20:54:12 yuriy-Parallels-Virtual-Platform bluetoothd[1064]: src/profile.c:register_profile() :1.79 tried to register 0000111f-0000-1000-8000-00805f9b34fb which is already registered
+cze 13 22:28:31 yuriy-Parallels-Virtual-Platform bluetoothd[1064]: Terminating
+cze 13 22:28:31 yuriy-Parallels-Virtual-Platform systemd[1]: Stopping Bluetooth service...
+cze 13 22:28:31 yuriy-Parallels-Virtual-Platform bluetoothd[1064]: Stopping SDP server
+cze 13 22:28:31 yuriy-Parallels-Virtual-Platform bluetoothd[1064]: Exit
+cze 13 22:28:31 yuriy-Parallels-Virtual-Platform systemd[1]: bluetooth.service: Deactivated successfully.
+cze 13 22:28:31 yuriy-Parallels-Virtual-Platform systemd[1]: Stopped Bluetooth service.
+-- Boot 4adc813ae6ea44b3ba8066028e12c920 --
+cze 15 15:52:45 yuriy-Parallels-Virtual-Platform systemd[1]: Starting Bluetooth service...
+cze 15 15:52:46 yuriy-Parallels-Virtual-Platform bluetoothd[1055]: Bluetooth daemon 5.64
+cze 15 15:52:46 yuriy-Parallels-Virtual-Platform systemd[1]: Started Bluetooth service.
+cze 15 15:52:46 yuriy-Parallels-Virtual-Platform bluetoothd[1055]: Starting SDP server
+cze 15 15:52:46 yuriy-Parallels-Virtual-Platform bluetoothd[1055]: Bluetooth management interface 1.21 initialized
+cze 15 15:52:54 yuriy-Parallels-Virtual-Platform bluetoothd[1055]: src/profile.c:register_profile() :1.77 tried to register 00001108-0000-1000-8000-00805f9b34fb which is already registered
+cze 15 15:52:54 yuriy-Parallels-Virtual-Platform bluetoothd[1055]: src/profile.c:register_profile() :1.77 tried to register 0000111f-0000-1000-8000-00805f9b34fb which is already registered

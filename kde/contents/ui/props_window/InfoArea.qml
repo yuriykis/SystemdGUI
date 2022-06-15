@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.components 3.0 as PlasmaComponents3
-import io.thp.pyotherside 1.4
+import "../python_api"
 
 Item {
     implicitWidth : 70
@@ -50,31 +50,21 @@ Item {
             }
         }
     }
-    Python {
-        id : python
-
-        Component.onCompleted : {
-            addImportPath(Qt.resolvedUrl('/home/yuriy/GTK/SystemdGUI/systemd'));
-            const obtainUnitDetails = function () {
-                python.call('SystemdManager.get_unit_details_Unit', [infoArea.serviceName], function (result) {
-                    infoArea.serviceDescription = getattr(result, 'Description').toString();
-                    infoArea.serviceLoaded = getattr(result, 'LoadState').toString();
-                    infoArea.servicePath = getattr(result, 'FragmentPath').toString();
-                    infoArea.serviceActive = getattr(result, 'ActiveState').toString();
-                });
-                python.call('SystemdManager.get_unit_details_Service', [infoArea.serviceName], function (result) {
-                    infoArea.serviceMainPID = getattr(result, 'MainPID').toString();
-                });
-            }
-            importNames('SystemdManager', ['SystemdManager'], obtainUnitDetails);
+    function obtainUnitDetails() {
+        const obtainUnitDetailsPython = function () {
+            python.call('SystemdManager.get_unit_details_Unit', [infoArea.serviceName], function (result) {
+                infoArea.serviceDescription = python.getattr(result, 'Description').toString();
+                infoArea.serviceLoaded = python.getattr(result, 'LoadState').toString();
+                infoArea.servicePath = python.getattr(result, 'FragmentPath').toString();
+                infoArea.serviceActive = python.getattr(result, 'ActiveState').toString();
+            });
+            python.call('SystemdManager.get_unit_details_Service', [infoArea.serviceName], function (result) {
+                infoArea.serviceMainPID = python.getattr(result, 'MainPID').toString();
+            });
         }
-
-        onError : {
-            console.log('python error: ' + traceback);
-        }
-
-        onReceived : {
-            console.log('got message from python: ' + data);
-        }
+        python.importNames('SystemdManager', ['SystemdManager'], obtainUnitDetailsPython);
+    }
+    PythonApi {
+        Component.onCompleted : obtainUnitDetails()
     }
 }
