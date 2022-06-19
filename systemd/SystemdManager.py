@@ -67,12 +67,34 @@ class SystemdManager():
 
     def reload_daemon():
         try:
-            subprocess.run(["systemctl", "daemon-reload"])
+            subprocess.run(["sudo", "systemctl", "daemon-reload"])
+        except Exception as e:
+            print(e)
+
+    def reset_failed():
+        try:
+            subprocess.run(["sudo", "systemctl", "reset-failed"])
         except Exception as e:
             print(e)
 
     def remove_unit(service_name):
-        print("Remove unit: " + service_name)
+        try:
+            subprocess.run(["sudo", "systemctl", "stop", service_name])
+            subprocess.run(["sudo", "systemctl", "disable", service_name])
+            subprocess.run([
+                "sudo", "rm",
+                "/lib/systemd/system/%s.service" % service_name
+            ])
+            subprocess.run([
+                "sudo", "rm",
+                "/usr/lib/systemd/system/%s.service" % service_name
+            ])
+            SystemdManager.reload_daemon()
+            SystemdManager.reset_failed()
+            return ServiceAction.SERVICE_REMOVE_OK
+        except Exception as e:
+            print(e)
+            return ServiceAction.SERVICE_REMOVE_FAILED
 
     def load_service_logs(service_name):
         try:

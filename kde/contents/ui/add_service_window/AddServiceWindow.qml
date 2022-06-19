@@ -62,10 +62,23 @@ Dialog {
             python.call('ServiceCreator.create_service', [
                 serviceName, serviceDescription, serviceExecStart
             ], function (result) {
-                console.log(result)
+                if (result[0].toString() == "true") {
+                    showServiceActionStatusDialog("Info", "Service created successfully");
+                    root.reloadServices();
+                } else {
+                    showServiceActionStatusDialog("Error", result[1]);
+                    root.reloadServices();
+                }
             });
         }
         python.importNames('ServiceCreator', ['ServiceCreator'], createNewServicePython);
+    }
+    function showServiceActionStatusDialog(title, text) {
+        var component = Qt.createComponent("../service_action_dialog/ServiceActionStatusDialog.qml");
+        var dialog = component.createObject(root, {
+            title: title,
+            text: text
+        });
     }
     onAccepted : {
         createNewService(serviceNameField.fieldText, serviceDescriptionField.fieldText, serviceExecStartField.fieldText);

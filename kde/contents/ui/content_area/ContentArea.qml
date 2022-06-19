@@ -8,6 +8,7 @@ import Qt.labs.qmlmodels 1.0
 import "../python_api"
 
 PlasmaComponents3.Page {
+    id : contentArea
     implicitWidth : 80
     Layout.fillHeight : true
     Layout.fillWidth : true
@@ -45,7 +46,6 @@ PlasmaComponents3.Page {
             }
         }
         onDoubleClicked : {
-            console.log(libraryModel.get(libraryView.currentRow)['service_name']);
             var component = Qt.createComponent("../props_window/PropsWindow.qml");
             var win = component.createObject(root, {
                 serviceName: libraryModel.get(libraryView.currentRow)['service_name']
@@ -54,12 +54,15 @@ PlasmaComponents3.Page {
         }
         model : libraryModel
     }
-
+    function getCurrentlySelectedServiceName() {
+        return libraryModel.get(libraryView.currentRow)['service_name'];
+    }
     function loadUnitsList() {
+        libraryModel.clear();
         const processItems = function () {
             python.call('SystemdManager.get_units_list', [], function (result) {
                 var tmpArray = [];
-                for (var i = 0; i < result.length; i++) { // only services unit should remain
+                for (var i = 0; i < result.length; i++) { // only service units should remain
                     if (result[i]['0'].toString().endsWith('service')) {
                         tmpArray.push({status_point: "●", service_name: result[i]['0'].toString(),
                             load_state: result[i]['1'].toString(),

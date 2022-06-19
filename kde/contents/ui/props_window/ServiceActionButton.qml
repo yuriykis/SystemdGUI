@@ -46,6 +46,7 @@ PlasmaComponents3.Button {
             python.call('SystemdManager.' + functionToCall, [serviceActionButton.serviceName], function (result) {});
         }
         python.importNames('SystemdManager', ['SystemdManager'], obtainUnitDetails);
+        contentArea.loadUnitsList();
     }
 
     PythonApi {}

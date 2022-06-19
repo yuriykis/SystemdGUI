@@ -13,7 +13,6 @@ ApplicationWindow {
     id : root
     visible : true
 
-    // title of the application
     title : qsTr("SystemdGUI")
     width : 800
     height : 600
@@ -26,10 +25,18 @@ ApplicationWindow {
         RowLayout {
 
             Layout.preferredHeight : 200
-            ContentArea {}
+            ContentArea {
+                id : contentArea
+            }
 
             ActionsBar {}
         }
     }
+    function reloadServices() {
+        contentArea.loadUnitsList();
+    }
 
+    function getCurrentService() {
+        return contentArea.getCurrentlySelectedServiceName();
+    }
 }

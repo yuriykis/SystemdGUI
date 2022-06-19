@@ -28,10 +28,10 @@ class ServiceCreator():
                 f.write("[Install]\n")
                 f.write("WantedBy=multi-user.target\n")
             ServiceCreator.enable_service(service_name)
-            return "Service %s created" % service_name
+            return (True, "Service %s created" % service_name)
         except Exception as e:
             print("Error: %s" % e)
-            return "Failed to create service %s" % service_name
+            return (False, "Failed to create service %s" % service_name)
 
     def enable_service(service_name):
         try:

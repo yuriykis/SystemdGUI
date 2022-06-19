@@ -11,4 +11,8 @@ PlasmaComponents3.Button {
     text : i18n("Reload list of services")
     height : parent.height * 0.1
     width : parent.width
+
+    onClicked : {
+        root.reloadServices();
+    }
 }

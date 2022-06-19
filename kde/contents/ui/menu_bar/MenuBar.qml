@@ -10,7 +10,7 @@ Item {
     width : parent.width
     height : parent.height * 0.05
 
-    RowLayout {
+    Row {
         PlasmaComponents3.Button {
             id : fileButton
             text : "File"
@@ -23,7 +23,7 @@ Item {
                 title : qsTr("File")
                 MenuItem {
                     text : qsTr("&New Service")
-                    onTriggered : console.log("Open action triggered");
+                    onTriggered : showAddServiceDialog();
                 }
                 MenuItem {
                     text : qsTr("Exit")
@@ -41,15 +41,33 @@ Item {
             Menu {
                 id : menu1
                 y : fileButton.height
-                title : qsTr("File")
+                title : qsTr("View")
                 MenuItem {
-                    text : qsTr("&New Service")
+                    text : qsTr("&Language")
+                    enabled : false
                     onTriggered : console.log("Open action triggered");
                 }
                 MenuItem {
-                    text : qsTr("Exit")
-                    onTriggered : Qt.quit();
+                    PlasmaComponents3.RadioButton {
+                        text : i18n("Polski")
+                        checked : false
+                        autoExclusive : true
+                        padding : 5
+                        ButtonGroup.group : radioGroup
+                    }
                 }
+                MenuItem {
+                    PlasmaComponents3.RadioButton {
+                        text : i18n("English")
+                        checked : true
+                        autoExclusive : true
+                        padding : 5
+                        ButtonGroup.group : radioGroup
+                    }
+                }
+            }
+            ButtonGroup {
+                id : radioGroup
             }
         }
 
@@ -62,16 +80,21 @@ Item {
             Menu {
                 id : menu2
                 y : fileButton.height
-                title : qsTr("File")
+                title : qsTr("About")
                 MenuItem {
-                    text : qsTr("&New Service")
-                    onTriggered : console.log("Open action triggered");
-                }
-                MenuItem {
-                    text : qsTr("Exit")
-                    onTriggered : Qt.quit();
+                    text : qsTr("&View program info")
+                    onTriggered : showAboutProgramDialog();
                 }
             }
         }
+    }
+
+    function showAddServiceDialog() {
+        var component = Qt.createComponent("../add_service_window/AddServiceWindow.qml");
+        var dialog = component.createObject(root, {});
+    }
+    function showAboutProgramDialog() {
+        var component = Qt.createComponent("../about_dialog/AboutDialog.qml");
+        var dialog = component.createObject(root, {});
     }
 }
