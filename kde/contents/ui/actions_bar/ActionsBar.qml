@@ -10,6 +10,8 @@ PlasmaComponents3.Page {
     Layout.fillHeight : true
     Layout.fillWidth : true
     Column {
+        anchors.fill : parent
+        spacing : 5
         AddNewServiceButton {}
         RemoveServiceButton {}
         ReloadServicesButton {}

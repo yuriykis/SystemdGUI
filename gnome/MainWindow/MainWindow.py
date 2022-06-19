@@ -149,8 +149,7 @@ class MainWindow(Gtk.Window):
         service_name = addServiceWindow.getservice_name()
         service_description = addServiceWindow.getServiceDescription()
         service_extec_start = addServiceWindow.getServiceExecStart()
-        service_creator = ServiceCreator()
-        service_name = service_creator.create_service(service_name,
+        service_name = ServiceCreator.create_service(service_name,
                                                       service_description,
                                                       service_extec_start)
         addServiceWindow.destroy()
