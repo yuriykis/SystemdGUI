@@ -18,6 +18,12 @@ PlasmaComponents3.Page {
         id : libraryView
         anchors.fill : parent
         TableViewColumn {
+            role : "status_point"
+            title : ""
+            width : 20
+            horizontalAlignment : 5
+        }
+        TableViewColumn {
             role : "service_name"
             title : "Service Name"
             width : 300
@@ -31,6 +37,12 @@ PlasmaComponents3.Page {
             role : "active_state"
             title : "Active State"
             width : 100
+        }
+        itemDelegate : Item {
+            Text {
+                color : styleData.value == "●" ? (libraryModel.get(styleData.row).active_state == "active" ? "green" : ((libraryModel.get(styleData.row).active_state == "inactive" && libraryModel.get(styleData.row).load_state == "loaded") || (libraryModel.get(styleData.row).active_state == "activating") ? "yellow" : "red")) : "white"
+                text : styleData.value
+            }
         }
         onDoubleClicked : {
             console.log(libraryModel.get(libraryView.currentRow)['service_name']);
@@ -49,7 +61,7 @@ PlasmaComponents3.Page {
                 var tmpArray = [];
                 for (var i = 0; i < result.length; i++) { // only services unit should remain
                     if (result[i]['0'].toString().endsWith('service')) {
-                        tmpArray.push({service_name: result[i]['0'].toString(),
+                        tmpArray.push({status_point: "●", service_name: result[i]['0'].toString(),
                             load_state: result[i]['1'].toString(),
                             active_state: result[i]['2'].toString()
                         });
