@@ -17,4 +17,4 @@ class AboutWindow(Gtk.AboutDialog):
         self.set_website("https://github.com/yuriykis/SystemdGUI.git")
         self.set_website_label("SystemdGUI")
         self.set_authors(["Yuriy Kis"])
-        self.set_license_type(Gtk.License.GPL_3_0)
+        self.set_license_type(Gtk.License.LGPL_3_0)

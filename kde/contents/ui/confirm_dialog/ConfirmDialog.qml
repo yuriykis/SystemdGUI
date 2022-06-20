@@ -12,6 +12,7 @@ Dialog {
     property string actionName
     property string serviceName
     property string functionToCall
+    property var caller
     standardButtons : StandardButton.Ok | StandardButton.Cancel
 
     PlasmaComponents3.Label {
@@ -19,5 +20,7 @@ Dialog {
         text : "Are you sure you want to " + confirmDialog.actionName.toLowerCase() + " " + confirmDialog.serviceName + "?"
     }
 
-    onAccepted : serviceActionButton.performAction(functionToCall)
+    onAccepted : {
+        caller.performAction(functionToCall)
+    }
 }

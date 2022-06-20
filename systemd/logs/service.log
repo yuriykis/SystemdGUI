@@ -1,64 +1,10 @@
-cze 19 10:33:00 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 10:33:00 yuriy-Parallels-Virtual-Platform anacron[169195]: Anacron 2.3 started on 2022-06-19
-cze 19 10:33:00 yuriy-Parallels-Virtual-Platform anacron[169195]: Normal exit (0 jobs run)
-cze 19 10:33:00 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 11:33:55 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 11:33:55 yuriy-Parallels-Virtual-Platform anacron[179914]: Anacron 2.3 started on 2022-06-19
-cze 19 11:33:55 yuriy-Parallels-Virtual-Platform anacron[179914]: Normal exit (0 jobs run)
-cze 19 11:33:55 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 12:34:06 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 12:34:06 yuriy-Parallels-Virtual-Platform anacron[186681]: Anacron 2.3 started on 2022-06-19
-cze 19 12:34:06 yuriy-Parallels-Virtual-Platform anacron[186681]: Normal exit (0 jobs run)
-cze 19 12:34:06 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 12:49:15 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 12:49:15 yuriy-Parallels-Virtual-Platform anacron[189603]: Anacron 2.3 started on 2022-06-19
-cze 19 12:49:15 yuriy-Parallels-Virtual-Platform anacron[189603]: Normal exit (0 jobs run)
-cze 19 12:49:15 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 12:49:28 yuriy-Parallels-Virtual-Platform anacron[189641]: Anacron 2.3 started on 2022-06-19
-cze 19 12:49:28 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 12:49:28 yuriy-Parallels-Virtual-Platform anacron[189641]: Normal exit (0 jobs run)
-cze 19 12:49:28 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 12:49:35 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 12:49:35 yuriy-Parallels-Virtual-Platform anacron[189657]: Anacron 2.3 started on 2022-06-19
-cze 19 12:49:35 yuriy-Parallels-Virtual-Platform anacron[189657]: Normal exit (0 jobs run)
-cze 19 12:49:35 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 12:54:38 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 12:54:38 yuriy-Parallels-Virtual-Platform anacron[190635]: Anacron 2.3 started on 2022-06-19
-cze 19 12:54:38 yuriy-Parallels-Virtual-Platform anacron[190635]: Normal exit (0 jobs run)
-cze 19 12:54:38 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 13:30:15 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 13:30:15 yuriy-Parallels-Virtual-Platform anacron[197659]: Anacron 2.3 started on 2022-06-19
-cze 19 13:30:15 yuriy-Parallels-Virtual-Platform anacron[197659]: Normal exit (0 jobs run)
-cze 19 13:30:15 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 14:30:52 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 14:30:52 yuriy-Parallels-Virtual-Platform anacron[210442]: Anacron 2.3 started on 2022-06-19
-cze 19 14:30:52 yuriy-Parallels-Virtual-Platform anacron[210442]: Normal exit (0 jobs run)
-cze 19 14:30:52 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 15:33:54 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 15:33:54 yuriy-Parallels-Virtual-Platform anacron[222610]: Anacron 2.3 started on 2022-06-19
-cze 19 15:33:54 yuriy-Parallels-Virtual-Platform anacron[222610]: Normal exit (0 jobs run)
-cze 19 15:33:54 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 16:34:37 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 16:34:37 yuriy-Parallels-Virtual-Platform anacron[233096]: Anacron 2.3 started on 2022-06-19
-cze 19 16:34:37 yuriy-Parallels-Virtual-Platform anacron[233096]: Normal exit (0 jobs run)
-cze 19 16:34:37 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 17:31:37 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 17:31:37 yuriy-Parallels-Virtual-Platform anacron[243840]: Anacron 2.3 started on 2022-06-19
-cze 19 17:31:37 yuriy-Parallels-Virtual-Platform anacron[243840]: Normal exit (0 jobs run)
-cze 19 17:31:37 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 18:33:20 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 18:33:20 yuriy-Parallels-Virtual-Platform anacron[256500]: Anacron 2.3 started on 2022-06-19
-cze 19 18:33:20 yuriy-Parallels-Virtual-Platform anacron[256500]: Normal exit (0 jobs run)
-cze 19 18:33:20 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 19:30:08 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 19:30:08 yuriy-Parallels-Virtual-Platform anacron[268000]: Anacron 2.3 started on 2022-06-19
-cze 19 19:30:08 yuriy-Parallels-Virtual-Platform anacron[268000]: Normal exit (0 jobs run)
-cze 19 19:30:08 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 20:32:21 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 20:32:21 yuriy-Parallels-Virtual-Platform anacron[281050]: Anacron 2.3 started on 2022-06-19
-cze 19 20:32:21 yuriy-Parallels-Virtual-Platform anacron[281050]: Normal exit (0 jobs run)
-cze 19 20:32:21 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
-cze 19 21:05:16 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
-cze 19 21:05:16 yuriy-Parallels-Virtual-Platform anacron[288949]: Anacron 2.3 started on 2022-06-19
-cze 19 21:05:16 yuriy-Parallels-Virtual-Platform anacron[288949]: Normal exit (0 jobs run)
-cze 19 21:05:16 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+cze 19 23:19:13 yuriy-Parallels-Virtual-Platform systemd[1]: Stopping LSB: automatic crash report generation...
+cze 19 23:19:14 yuriy-Parallels-Virtual-Platform apport[309491]:  * Stopping automatic crash report generation: apport
+cze 19 23:19:14 yuriy-Parallels-Virtual-Platform apport[309491]:    ...done.
+cze 19 23:19:14 yuriy-Parallels-Virtual-Platform systemd[1]: apport.service: Deactivated successfully.
+cze 19 23:19:14 yuriy-Parallels-Virtual-Platform systemd[1]: Stopped LSB: automatic crash report generation.
+-- Boot 1d3fe9d521a345f599c4f88eb73651c1 --
+cze 20 19:30:44 yuriy-Parallels-Virtual-Platform systemd[1]: Starting LSB: automatic crash report generation...
+cze 20 19:30:45 yuriy-Parallels-Virtual-Platform apport[1053]:  * Starting automatic crash report generation: apport
+cze 20 19:30:45 yuriy-Parallels-Virtual-Platform apport[1053]:    ...done.
+cze 20 19:30:45 yuriy-Parallels-Virtual-Platform systemd[1]: Started LSB: automatic crash report generation.

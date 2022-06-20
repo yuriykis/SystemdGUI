@@ -33,7 +33,8 @@ PlasmaComponents3.Button {
         var dialog = component.createObject(root, {
             actionName: serviceActionButton.text,
             serviceName: serviceActionButton.serviceName,
-            functionToCall: functionToCall
+            functionToCall: functionToCall,
+            caller: serviceActionButton
         });
     }
     function showLogsWindow() {

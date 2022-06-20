@@ -7,6 +7,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents3
 import "../python_api"
 
 PlasmaComponents3.Button {
+    id : removeServiceButton
     icon.name : "package-remove"
     text : i18n("Remove service")
     height : parent.height * 0.1
@@ -14,6 +15,9 @@ PlasmaComponents3.Button {
     property string serviceName
     onClicked : {
         serviceName = root.getCurrentService();
+        showConfirmDialog(serviceName);
+    }
+    function performAction() {
         removeService();
     }
     function removeService() {
@@ -36,6 +40,14 @@ PlasmaComponents3.Button {
         var dialog = component.createObject(root, {
             title: title,
             text: text
+        });
+    }
+    function showConfirmDialog() {
+        var component = Qt.createComponent("../confirm_dialog/ConfirmDialog.qml");
+        var dialog = component.createObject(root, {
+            actionName: "Remove",
+            serviceName: serviceName,
+            caller: removeServiceButton
         });
     }
     PythonApi {
