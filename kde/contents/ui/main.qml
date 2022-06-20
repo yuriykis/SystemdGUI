@@ -8,6 +8,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents3
 import "menu_bar"
 import "actions_bar"
 import "content_area"
+import "language"
 
 ApplicationWindow {
     id : root
@@ -38,5 +39,8 @@ ApplicationWindow {
 
     function getCurrentService() {
         return contentArea.getCurrentlySelectedServiceName();
+    }
+    Language {
+        id : language
     }
 }

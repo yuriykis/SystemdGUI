@@ -5,7 +5,7 @@ import QtQuick.Dialogs 1.2
 MessageDialog {
     id : fieldsEmptyErrorDialog
     visible : true
-    title : "Error"
-    text : "Fields cannot be empty"
+    title : language.getErrorText()
+    text : language.getFieldsCannotBeEmptyText()
     width : 300
 }

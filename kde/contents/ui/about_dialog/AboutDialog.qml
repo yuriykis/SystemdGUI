@@ -6,7 +6,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents3
 Dialog {
     id : aboutDialog
     visible : true
-    title : "About Systemd GUI"
+    title : language.getAboutProgramText()
     width : 300
 
     Column {
@@ -24,7 +24,7 @@ Dialog {
 
         PlasmaComponents3.Label {
             anchors.horizontalCenter : parent.horizontalCenter
-            text : i18n("Graphical User Interface for Systemd")
+            text : language.getAboutWindowDescriptionText()
         }
 
         PlasmaComponents3.Label {

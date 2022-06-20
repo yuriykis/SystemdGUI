@@ -8,7 +8,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents3
 Dialog {
     id : confirmDialog
     visible : true
-    title : "Confirm Action"
+    title : language.getConfirmActionText()
     property string actionName
     property string serviceName
     property string functionToCall
@@ -17,7 +17,7 @@ Dialog {
 
     PlasmaComponents3.Label {
         id : label
-        text : "Are you sure you want to " + confirmDialog.actionName.toLowerCase() + " " + confirmDialog.serviceName + "?"
+        text : language.getAreYouSureToPerfActionText(confirmDialog.actionName.toLowerCase(), confirmDialog.serviceName)
     }
 
     onAccepted : {

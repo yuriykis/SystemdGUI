@@ -1,10 +1,1 @@
-cze 19 23:19:13 yuriy-Parallels-Virtual-Platform systemd[1]: Stopping LSB: automatic crash report generation...
-cze 19 23:19:14 yuriy-Parallels-Virtual-Platform apport[309491]:  * Stopping automatic crash report generation: apport
-cze 19 23:19:14 yuriy-Parallels-Virtual-Platform apport[309491]:    ...done.
-cze 19 23:19:14 yuriy-Parallels-Virtual-Platform systemd[1]: apport.service: Deactivated successfully.
-cze 19 23:19:14 yuriy-Parallels-Virtual-Platform systemd[1]: Stopped LSB: automatic crash report generation.
--- Boot 1d3fe9d521a345f599c4f88eb73651c1 --
-cze 20 19:30:44 yuriy-Parallels-Virtual-Platform systemd[1]: Starting LSB: automatic crash report generation...
-cze 20 19:30:45 yuriy-Parallels-Virtual-Platform apport[1053]:  * Starting automatic crash report generation: apport
-cze 20 19:30:45 yuriy-Parallels-Virtual-Platform apport[1053]:    ...done.
-cze 20 19:30:45 yuriy-Parallels-Virtual-Platform systemd[1]: Started LSB: automatic crash report generation.
+-- No entries --

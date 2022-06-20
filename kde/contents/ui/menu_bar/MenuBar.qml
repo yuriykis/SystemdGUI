@@ -13,20 +13,20 @@ Item {
     Row {
         PlasmaComponents3.Button {
             id : fileButton
-            text : "File"
-            onClicked : menu.open()
+            text : language.getFileText()
+            onClicked : fileMenu.open()
             height : topbar.height
             flat : true
             Menu {
-                id : menu
+                id : fileMenu
                 y : fileButton.height
-                title : qsTr("File")
+                title : language.getFileText()
                 MenuItem {
-                    text : qsTr("&New Service")
+                    text : language.getNewServiceText()
                     onTriggered : showAddServiceDialog();
                 }
                 MenuItem {
-                    text : qsTr("Exit")
+                    text : language.getExitText()
                     onTriggered : Qt.quit();
                 }
             }
@@ -34,35 +34,29 @@ Item {
 
         PlasmaComponents3.Button {
             id : viewButton
-            text : "View"
-            onClicked : menu1.open()
+            text : language.getViewText()
+            onClicked : viewMenu.open()
             height : topbar.height
             flat : true
             Menu {
-                id : menu1
+                id : viewMenu
                 y : fileButton.height
-                title : qsTr("View")
+                title : language.getViewText()
                 MenuItem {
-                    text : qsTr("&Language")
+                    text : language.getLanguageText()
                     enabled : false
-                    onTriggered : console.log("Open action triggered");
                 }
-                MenuItem {
-                    PlasmaComponents3.RadioButton {
-                        text : i18n("Polski")
-                        checked : false
-                        autoExclusive : true
-                        padding : 5
-                        ButtonGroup.group : radioGroup
-                    }
-                }
-                MenuItem {
-                    PlasmaComponents3.RadioButton {
-                        text : i18n("English")
-                        checked : true
-                        autoExclusive : true
-                        padding : 5
-                        ButtonGroup.group : radioGroup
+                Repeater {
+                    model : language.availableLanguages
+                    delegate : MenuItem {
+                        PlasmaComponents3.RadioButton {
+                            text : language.availableLanguages[index]
+                            checked : language.currentLanguage == language.availableLanguages[index]
+                            autoExclusive : true
+                            padding : 5
+                            ButtonGroup.group : radioGroup
+                            onClicked : language.setCurrentLanguage(language.availableLanguages[index])
+                        }
                     }
                 }
             }
@@ -73,16 +67,16 @@ Item {
 
         PlasmaComponents3.Button {
             id : aboutButton
-            text : "About"
-            onClicked : menu2.open()
+            text : language.getAboutText()
+            onClicked : aboutMenu.open()
             height : topbar.height
             flat : true
             Menu {
-                id : menu2
+                id : aboutMenu
                 y : fileButton.height
-                title : qsTr("About")
+                title : language.getAboutText()
                 MenuItem {
-                    text : qsTr("&View program info")
+                    text : language.getViewProgramInfoText()
                     onTriggered : showAboutProgramDialog();
                 }
             }

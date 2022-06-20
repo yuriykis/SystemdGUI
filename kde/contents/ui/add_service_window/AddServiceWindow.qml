@@ -8,7 +8,7 @@ import "../python_api"
 Dialog {
     id : addServiceDialog
     visible : true
-    title : "Add new service"
+    title : language.getAddServiceText()
     width : 300
     standardButtons : StandardButton.Ok | StandardButton.Cancel
     property double firstColumnWidthPercent : 0.35
@@ -18,7 +18,7 @@ Dialog {
         width : parent.width
         ServiceField {
             id : serviceNameField
-            fieldName : "Service name"
+            fieldName : language.getServiceNameText()
         }
         PlasmaComponents3.Label {
             topPadding : 5
@@ -27,7 +27,7 @@ Dialog {
         }
         ServiceField {
             id : serviceDescriptionField
-            fieldName : "Description"
+            fieldName : language.getServiceDescriptionText()
         }
         PlasmaComponents3.Label {
             topPadding : 5
@@ -63,10 +63,10 @@ Dialog {
                 serviceName, serviceDescription, serviceExecStart
             ], function (result) {
                 if (result[0].toString() == "true") {
-                    showServiceActionStatusDialog("Info", "Service created successfully");
+                    showServiceActionStatusDialog("Info", language.getServiceCreatedSuccessfullyText());
                     root.reloadServices();
                 } else {
-                    showServiceActionStatusDialog("Error", result[1]);
+                    showServiceActionStatusDialog(language.getErrorText(), result[1]);
                     root.reloadServices();
                 }
             });

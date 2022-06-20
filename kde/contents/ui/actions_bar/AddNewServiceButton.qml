@@ -7,7 +7,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents3
 
 PlasmaComponents3.Button {
     icon.name : "package-install"
-    text : i18n("Add new service")
+    text : language.getAddServiceText()
     height : parent.height * 0.1
     width : parent.width
     onClicked : {

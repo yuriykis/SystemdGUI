@@ -9,7 +9,7 @@ import "../python_api"
 PlasmaComponents3.Button {
     id : removeServiceButton
     icon.name : "package-remove"
-    text : i18n("Remove service")
+    text : language.getRemoveServiceText()
     height : parent.height * 0.1
     width : parent.width
     property string serviceName
@@ -25,10 +25,10 @@ PlasmaComponents3.Button {
             python.call('SystemdManager.remove_unit', [serviceName], function (res) {
                 python.call('str', [res], function (result) {
                     if (result == "ServiceAction.SERVICE_REMOVE_OK") {
-                        showServiceActionStatusDialog("Info", "Service removed successfully");
+                        showServiceActionStatusDialog("Info", language.getServiceRemovedSuccessfullyText());
                         contentArea.loadUnitsList();
                     } else {
-                        showServiceActionStatusDialog("Error", result[1]);
+                        showServiceActionStatusDialog(language.getErrorText(), result[1]);
                     }
                 });
             });

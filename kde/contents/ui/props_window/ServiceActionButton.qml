@@ -16,15 +16,15 @@ PlasmaComponents3.Button {
     rightInset : buttonsInset
 
     onClicked : {
-        if (serviceActionButton.text == "Start") {
+        if (serviceActionButton.text == language.getStartText()) {
             showConfirmDialog('start_unit');
-        } else if (serviceActionButton.text == "Stop") {
+        } else if (serviceActionButton.text == language.getStopText()) {
             showConfirmDialog('stop_unit');
-        } else if (serviceActionButton.text == "Restart") {
+        } else if (serviceActionButton.text == language.getRestartText()) {
             showConfirmDialog('restart_unit');
-        } else if (serviceActionButton.text == "Edit config file") {
+        } else if (serviceActionButton.text == language.getEditConfigFileText()) {
             console.log("Edit config file is not implemented yet")
-        } else if (serviceActionButton.text == "Show logs") {
+        } else if (serviceActionButton.text == language.getShowLogsText()) {
             showLogsWindow();
         }
     }

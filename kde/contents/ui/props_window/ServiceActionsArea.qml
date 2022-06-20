@@ -13,11 +13,11 @@ PlasmaComponents3.Page {
     Layout.fillWidth : true
     property string serviceName
     property var serviceActions: [
-        "Start",
-        "Stop",
-        "Restart",
-        "Edit config file",
-        "Show logs"
+        language.getStartText(),
+        language.getStopText(),
+        language.getRestartText(),
+        language.getEditConfigFileText(),
+        language.getShowLogsText()
     ]
     Column {
         topPadding : 10

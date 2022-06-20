@@ -26,17 +26,17 @@ PlasmaComponents3.Page {
         }
         TableViewColumn {
             role : "service_name"
-            title : "Service Name"
+            title : language.getServiceNameText()
             width : 300
         }
         TableViewColumn {
             role : "load_state"
-            title : "Load State"
+            title : language.getLoadStateText()
             width : 100
         }
         TableViewColumn {
             role : "active_state"
-            title : "Active State"
+            title : language.getActiveStateText()
             width : 100
         }
         itemDelegate : Item {

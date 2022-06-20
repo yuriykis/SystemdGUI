@@ -8,7 +8,7 @@ import "../python_api"
 ApplicationWindow {
     id : root
     visible : true
-    title : "Service logs"
+    title : language.getServiceLogsText()
     width : 900
     height : 500
     property string serviceName
@@ -24,7 +24,6 @@ ApplicationWindow {
     }
 
     function obtainServiceLogs() {
-        console.log("obtainServiceLogs")
         const obtainUnitLogs = function () {
             python.call('SystemdManager.get_service_logs', [root.serviceName], function (result) {
                 scrollView.serviceLogs = result;

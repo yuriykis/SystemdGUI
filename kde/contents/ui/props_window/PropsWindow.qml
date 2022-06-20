@@ -7,7 +7,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents3
 
 ApplicationWindow {
     id : root
-    title : "Service Properties"
+    title : language.getServicePropertiesText()
     width : 600
     height : 400
     visible : true

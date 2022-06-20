@@ -8,7 +8,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents3
 
 PlasmaComponents3.Button {
     icon.name : "package-reinstall"
-    text : i18n("Reload list of services")
+    text : language.getReloadServicesListText()
     height : parent.height * 0.1
     width : parent.width
 
