@@ -9,25 +9,25 @@ class SystemdManager():
 
     def get_units_list():
         with Manager() as manager:
-            unitList = []
+            unit_list = []
             for unit in manager.Manager.ListUnits():
                 unit_element = (unit[0], unit[2], unit[3])
-                unitList.append(unit_element)
-            return unitList
+                unit_list.append(unit_element)
+            return unit_list
 
-    def get_unit_details_Unit(unitName):
-        unit = Unit(unitName)
+    def get_unit_details_Unit(unit_name):
+        unit = Unit(unit_name)
         unit.load()
         return unit.Unit
 
-    def get_unit_details_Service(unitName):
-        unit = Unit(unitName)
+    def get_unit_details_Service(unit_name):
+        unit = Unit(unit_name)
         unit.load()
         return unit.Service
 
-    def stop_unit(unitName):
+    def stop_unit(unit_name):
         try:
-            unit = Unit(unitName)
+            unit = Unit(unit_name)
             unit.load()
             unit.Unit.Stop(b'replace')
             return ServiceAction.SERVICE_STOP_OK
@@ -35,9 +35,9 @@ class SystemdManager():
             print(e)
             return ServiceAction.SERVICE_STOP_FAILED
 
-    def restart_unit(unitName):
+    def restart_unit(unit_name):
         try:
-            unit = Unit(unitName)
+            unit = Unit(unit_name)
             unit.load()
             unit.Unit.Restart(b'replace')
             return ServiceAction.SERVICE_RESTART_OK
@@ -45,9 +45,9 @@ class SystemdManager():
             print(e)
             return ServiceAction.SERVICE_RESTART_FAILED
 
-    def start_unit(unitName):
+    def start_unit(unit_name):
         try:
-            unit = Unit(unitName)
+            unit = Unit(unit_name)
             unit.load()
             unit.Unit.Start(b'replace')
             return ServiceAction.SERVICE_START_OK
@@ -55,11 +55,11 @@ class SystemdManager():
             print(e)
             return ServiceAction.SERVICE_START_FAILED
 
-    def enable_unit(unitName):
+    def enable_unit(unit_name):
         try:
-            unit = Unit(unitName)
+            unit = Unit(unit_name)
             unit.load()
-            subprocess.run(["sudo", "systemctl", "enable", unitName])
+            subprocess.run(["sudo", "systemctl", "enable", unit_name])
             return ServiceAction.SERVICE_ENABLE_OK
         except Exception as e:
             print(e)

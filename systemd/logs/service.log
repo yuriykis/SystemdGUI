@@ -1,1 +1,103 @@
--- No entries --
+sie 17 18:32:12 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 17 18:32:12 yuriy-Parallels-Virtual-Platform anacron[69844]: Anacron 2.3 started on 2022-08-17
+sie 17 18:32:12 yuriy-Parallels-Virtual-Platform anacron[69844]: Normal exit (0 jobs run)
+sie 17 18:32:12 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 17 19:31:15 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 17 19:31:15 yuriy-Parallels-Virtual-Platform anacron[79951]: Anacron 2.3 started on 2022-08-17
+sie 17 19:31:15 yuriy-Parallels-Virtual-Platform anacron[79951]: Normal exit (0 jobs run)
+sie 17 19:31:15 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 17 20:30:54 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 17 20:30:54 yuriy-Parallels-Virtual-Platform anacron[87555]: Anacron 2.3 started on 2022-08-17
+sie 17 20:30:54 yuriy-Parallels-Virtual-Platform anacron[87555]: Normal exit (0 jobs run)
+sie 17 20:30:54 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 17 21:34:48 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 17 21:34:48 yuriy-Parallels-Virtual-Platform anacron[97955]: Anacron 2.3 started on 2022-08-17
+sie 17 21:34:48 yuriy-Parallels-Virtual-Platform anacron[97955]: Normal exit (0 jobs run)
+sie 17 21:34:48 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+-- Boot 8aefce669e9e4f5cbb060fdf5afbd2a2 --
+sie 18 13:20:09 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 18 13:20:09 yuriy-Parallels-Virtual-Platform anacron[1088]: Anacron 2.3 started on 2022-08-18
+sie 18 13:20:09 yuriy-Parallels-Virtual-Platform anacron[1088]: Will run job `cron.daily' in 5 min.
+sie 18 13:20:09 yuriy-Parallels-Virtual-Platform anacron[1088]: Jobs will be executed sequentially
+sie 18 13:25:09 yuriy-Parallels-Virtual-Platform anacron[1088]: Job `cron.daily' started
+sie 18 13:25:09 yuriy-Parallels-Virtual-Platform anacron[5230]: Updated timestamp for job `cron.daily' to 2022-08-18
+sie 18 13:25:09 yuriy-Parallels-Virtual-Platform cracklib[5258]: no dictionary update necessary.
+sie 18 13:25:09 yuriy-Parallels-Virtual-Platform anacron[1088]: Job `cron.daily' terminated
+sie 18 13:25:09 yuriy-Parallels-Virtual-Platform anacron[1088]: Normal exit (1 job run)
+sie 18 13:25:09 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 18 13:31:17 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 18 13:31:17 yuriy-Parallels-Virtual-Platform anacron[6448]: Anacron 2.3 started on 2022-08-18
+sie 18 13:31:17 yuriy-Parallels-Virtual-Platform anacron[6448]: Normal exit (0 jobs run)
+sie 18 13:31:17 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 18 14:34:17 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 18 14:34:17 yuriy-Parallels-Virtual-Platform anacron[16776]: Anacron 2.3 started on 2022-08-18
+sie 18 14:34:17 yuriy-Parallels-Virtual-Platform anacron[16776]: Normal exit (0 jobs run)
+sie 18 14:34:17 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 18 15:31:33 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 18 15:31:33 yuriy-Parallels-Virtual-Platform anacron[24854]: Anacron 2.3 started on 2022-08-18
+sie 18 15:31:33 yuriy-Parallels-Virtual-Platform anacron[24854]: Normal exit (0 jobs run)
+sie 18 15:31:33 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 18 16:30:34 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 18 16:30:34 yuriy-Parallels-Virtual-Platform anacron[37187]: Anacron 2.3 started on 2022-08-18
+sie 18 16:30:34 yuriy-Parallels-Virtual-Platform anacron[37187]: Normal exit (0 jobs run)
+sie 18 16:30:34 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 18 17:47:56 yuriy-Parallels-Virtual-Platform anacron[45780]: Anacron 2.3 started on 2022-08-18
+sie 18 17:47:56 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 18 17:47:56 yuriy-Parallels-Virtual-Platform anacron[45780]: Normal exit (0 jobs run)
+sie 18 17:47:56 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 18 18:35:21 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 18 18:35:21 yuriy-Parallels-Virtual-Platform anacron[58092]: Anacron 2.3 started on 2022-08-18
+sie 18 18:35:21 yuriy-Parallels-Virtual-Platform anacron[58092]: Normal exit (0 jobs run)
+sie 18 18:35:21 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 18 19:31:47 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 18 19:31:47 yuriy-Parallels-Virtual-Platform anacron[67948]: Anacron 2.3 started on 2022-08-18
+sie 18 19:31:47 yuriy-Parallels-Virtual-Platform anacron[67948]: Normal exit (0 jobs run)
+sie 18 19:31:47 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 18 20:34:50 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 18 20:34:50 yuriy-Parallels-Virtual-Platform anacron[78267]: Anacron 2.3 started on 2022-08-18
+sie 18 20:34:50 yuriy-Parallels-Virtual-Platform anacron[78267]: Normal exit (0 jobs run)
+sie 18 20:34:50 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 18 21:34:42 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 18 21:34:42 yuriy-Parallels-Virtual-Platform anacron[88041]: Anacron 2.3 started on 2022-08-18
+sie 18 21:34:42 yuriy-Parallels-Virtual-Platform anacron[88041]: Normal exit (0 jobs run)
+sie 18 21:34:42 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+-- Boot 4001ae46bfda47c4bb5065aecbae653a --
+sie 22 18:44:18 yuriy-Parallels-Virtual-Platform systemd[1]: Condition check resulted in Run anacron jobs being skipped.
+sie 22 18:46:31 yuriy-Parallels-Virtual-Platform systemd[1]: Condition check resulted in Run anacron jobs being skipped.
+sie 22 19:34:32 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 22 19:34:32 yuriy-Parallels-Virtual-Platform anacron[13354]: Anacron 2.3 started on 2022-08-22
+sie 22 19:34:32 yuriy-Parallels-Virtual-Platform anacron[13354]: Will run job `cron.daily' in 5 min.
+sie 22 19:34:32 yuriy-Parallels-Virtual-Platform anacron[13354]: Jobs will be executed sequentially
+sie 22 19:39:32 yuriy-Parallels-Virtual-Platform anacron[13354]: Job `cron.daily' started
+sie 22 19:39:32 yuriy-Parallels-Virtual-Platform anacron[14185]: Updated timestamp for job `cron.daily' to 2022-08-22
+sie 22 19:39:32 yuriy-Parallels-Virtual-Platform cracklib[14212]: no dictionary update necessary.
+sie 22 19:39:32 yuriy-Parallels-Virtual-Platform anacron[13354]: Job `cron.daily' terminated
+sie 22 19:39:32 yuriy-Parallels-Virtual-Platform anacron[13354]: Normal exit (1 job run)
+sie 22 19:39:32 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 22 20:30:22 yuriy-Parallels-Virtual-Platform anacron[22568]: Anacron 2.3 started on 2022-08-22
+sie 22 20:30:22 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 22 20:30:22 yuriy-Parallels-Virtual-Platform anacron[22568]: Normal exit (0 jobs run)
+sie 22 20:30:22 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 22 21:31:31 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 22 21:31:31 yuriy-Parallels-Virtual-Platform anacron[32498]: Anacron 2.3 started on 2022-08-22
+sie 22 21:31:31 yuriy-Parallels-Virtual-Platform anacron[32498]: Normal exit (0 jobs run)
+sie 22 21:31:31 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 22 22:32:29 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 22 22:32:33 yuriy-Parallels-Virtual-Platform anacron[38670]: Anacron 2.3 started on 2022-08-22
+sie 22 22:32:33 yuriy-Parallels-Virtual-Platform anacron[38670]: Normal exit (0 jobs run)
+sie 22 22:32:33 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+-- Boot 40ced212cce3461b9844a6024f89ae7b --
+sie 23 20:57:39 yuriy-Parallels-Virtual-Platform systemd[1]: Started Run anacron jobs.
+sie 23 20:57:39 yuriy-Parallels-Virtual-Platform anacron[1093]: Anacron 2.3 started on 2022-08-23
+sie 23 20:57:39 yuriy-Parallels-Virtual-Platform anacron[1093]: Will run job `cron.daily' in 5 min.
+sie 23 20:57:39 yuriy-Parallels-Virtual-Platform anacron[1093]: Will run job `cron.weekly' in 10 min.
+sie 23 20:57:39 yuriy-Parallels-Virtual-Platform anacron[1093]: Jobs will be executed sequentially
+sie 23 21:02:39 yuriy-Parallels-Virtual-Platform anacron[1093]: Job `cron.daily' started
+sie 23 21:02:39 yuriy-Parallels-Virtual-Platform anacron[4734]: Updated timestamp for job `cron.daily' to 2022-08-23
+sie 23 21:02:39 yuriy-Parallels-Virtual-Platform cracklib[4765]: no dictionary update necessary.
+sie 23 21:02:39 yuriy-Parallels-Virtual-Platform anacron[1093]: Job `cron.daily' terminated
+sie 23 21:07:39 yuriy-Parallels-Virtual-Platform anacron[1093]: Job `cron.weekly' started
+sie 23 21:08:24 yuriy-Parallels-Virtual-Platform anacron[1093]: Job `cron.weekly' terminated
+sie 23 21:08:24 yuriy-Parallels-Virtual-Platform anacron[1093]: Normal exit (2 jobs run)
+sie 23 21:08:24 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Deactivated successfully.
+sie 23 21:08:24 yuriy-Parallels-Virtual-Platform systemd[1]: anacron.service: Consumed 44.956s CPU time.
