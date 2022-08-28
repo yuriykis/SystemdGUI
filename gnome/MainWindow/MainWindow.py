@@ -84,8 +84,6 @@ class MainWindow(Gtk.Window):
                 color_point, serivce_name, is_loaded_field, is_active_field,
                 status_color
             ])
-            a = self.liststore[len(self.liststore) - 1]
-            # self.liststore.set(iter, COL_COLOR, "red")
         self.services_list.treeview.set_model(self.liststore)
 
     def set_all_widgets_labels(self):
