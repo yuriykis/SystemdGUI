@@ -33,7 +33,7 @@ PlasmaComponents3.Button {
                 });
             });
         }
-        python.importNames('ServiceCreator', ['ServiceCreator'], removeServicePython);
+        python.importNames('SystemdManager', ['SystemdManager'], removeServicePython);
     }
     function showServiceActionStatusDialog(title, text) {
         var component = Qt.createComponent("../service_action_dialog/ServiceActionStatusDialog.qml");

@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.3
 
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.components 3.0 as PlasmaComponents3
-import "../python_api"
 
 PlasmaComponents3.Button {
     id : serviceActionButton
@@ -49,6 +48,4 @@ PlasmaComponents3.Button {
         python.importNames('SystemdManager', ['SystemdManager'], obtainUnitDetails);
         contentArea.loadUnitsList();
     }
-
-    PythonApi {}
 }
