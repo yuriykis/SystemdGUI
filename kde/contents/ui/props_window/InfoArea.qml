@@ -19,10 +19,10 @@ Item {
     property string serviceMainPID
     property var viewServiceInfoTexts: [
         "",
-        "Loaded:",
-        "Path:",
-        "Active:",
-        "Main PID:"
+        language.getLoadedText(),
+        language.getPathText(),
+        language.getActiveText(),
+        language.getMainPIDText()
     ]
 
     Column {
@@ -55,8 +55,14 @@ Item {
             python.call('SystemdManager.get_unit_details_Unit', [infoArea.serviceName], function (result) {
                 infoArea.serviceDescription = python.getattr(result, 'Description').toString();
                 infoArea.serviceLoaded = python.getattr(result, 'LoadState').toString();
+                if (language.currentLanguage == "Polski" && infoArea.serviceLoaded == "loaded") {
+                    infoArea.serviceLoaded = "tak"
+                }
                 infoArea.servicePath = python.getattr(result, 'FragmentPath').toString();
                 infoArea.serviceActive = python.getattr(result, 'ActiveState').toString();
+                if (language.currentLanguage == "Polski" && infoArea.serviceActive == "active") {
+                    infoArea.serviceActive = "tak"
+                }
             });
             python.call('SystemdManager.get_unit_details_Service', [infoArea.serviceName], function (result) {
                 infoArea.serviceMainPID = python.getattr(result, 'MainPID').toString();

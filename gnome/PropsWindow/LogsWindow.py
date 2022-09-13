@@ -12,7 +12,7 @@ class LogsWindow(Gtk.Dialog):
         self._service_name = service_name
         Gtk.init_check()
         super().__init__(title=self._info_text.get_logs_window_title())
-        self.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+        self.add_buttons(self._info_text.get_close_text(), Gtk.ResponseType.CLOSE)
         self.set_default_size(800, 600)
 
         content_area = self.get_content_area()

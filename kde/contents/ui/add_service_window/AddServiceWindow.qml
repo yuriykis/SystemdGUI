@@ -36,11 +36,11 @@ Dialog {
         }
         ServiceField {
             id : serviceTypeField
-            fieldName : "Type"
+            fieldName : language.getTypeText()
         }
         ServiceField {
             id : serviceExecStartField
-            fieldName : "ExecStart"
+            fieldName : language.getExecStartText()
         }
         PlasmaComponents3.Label {
             topPadding : 5
@@ -49,7 +49,7 @@ Dialog {
         }
         ServiceField {
             id : serviceWantedByField
-            fieldName : "WantedBy"
+            fieldName : language.getWantedByText()
         }
     }
     function createNewService(serviceName, serviceDescription, serviceExecStart) {

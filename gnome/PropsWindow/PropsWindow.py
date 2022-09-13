@@ -1,6 +1,7 @@
 import gi
 
 from ServiceAction import ServiceAction
+from Language.Language import Language
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -41,23 +42,29 @@ class PropsWindow(Gtk.Dialog):
         vbox_left.pack_start(serice_description_label, True, True, 0)
 
         is_service_loaded_label = Gtk.Label(xalign=0)
+        load_state = unit_details.LoadState.decode('UTF-8')
+        if load_state == "loaded" and self._info_text.get_current_language() == Language.PL:
+            load_state = "tak"
         is_service_loaded_label.set_markup(
-            "<b>Loaded:</b> " + unit_details.LoadState.decode('UTF-8'))
+            f"<b>{self._info_text.get_loaded_text()}</b> {load_state}")
         vbox_left.pack_start(is_service_loaded_label, True, True, 0)
 
         fragment_path_label = Gtk.Label(xalign=0)
         fragment_path_label.set_markup(
-            "<b>Path:</b> " + unit_details.FragmentPath.decode('UTF-8'))
+            f"<b>{self._info_text.get_path_text()}</b> {unit_details.FragmentPath.decode('UTF-8')}")
         vbox_left.pack_start(fragment_path_label, True, True, 0)
 
         is_service_active_label = Gtk.Label(xalign=0)
+        active_state = unit_details.ActiveState.decode('UTF-8')
+        if active_state == "active" and self._info_text.get_current_language() == Language.PL:
+            active_state = "tak"
         is_service_active_label.set_markup(
-            "<b>Active:</b> " + unit_details.ActiveState.decode('UTF-8'))
+            f"<b>{self._info_text.get_active_text()}</b> {active_state}")
         vbox_left.pack_start(is_service_active_label, True, True, 0)
 
         main_pid_label = Gtk.Label(xalign=0)
-        main_pid_label.set_markup("<b>Main PID:</b> " +
-                                  str(service_details.MainPID))
+        main_pid_label.set_markup(
+            f"<b>{self._info_text.get_main_pid_text()}</b> {str(service_details.MainPID)}")
         vbox_left.pack_start(main_pid_label, True, True, 0)
         main_area.pack_start(vbox_left, True, True, 0)
 

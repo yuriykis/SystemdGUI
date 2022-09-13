@@ -57,7 +57,7 @@ class AddServiceWindow(Gtk.Dialog):
                                      0)
 
         self.service_type_box = Gtk.Box(spacing=6)
-        self.service_type_label = Gtk.Label("Type:")
+        self.service_type_label = Gtk.Label(self._info_text.get_type_text())
         self.service_type_entry = Gtk.Entry()
         self.service_type_box.pack_start(self.service_type_label, False, True,
                                          0)
@@ -65,7 +65,7 @@ class AddServiceWindow(Gtk.Dialog):
         self.whole_screen.pack_start(self.service_type_box, True, True, 0)
 
         self.service_exec_start_box = Gtk.Box(spacing=6)
-        self.service_exec_start_label = Gtk.Label("ExecStart:")
+        self.service_exec_start_label = Gtk.Label(self._info_text.get_exec_start_text())
         self.service_exec_start_entry = Gtk.Entry()
         self.service_exec_start_box.pack_start(self.service_exec_start_label,
                                                False, True, 0)
@@ -83,7 +83,7 @@ class AddServiceWindow(Gtk.Dialog):
                                      0)
 
         self.service_wanted_by_box = Gtk.Box(spacing=6)
-        self.service_wanted_by_label = Gtk.Label("WantedBy:")
+        self.service_wanted_by_label = Gtk.Label(self._info_text.get_wanted_by_text())
         self.service_wanted_by_entry = Gtk.Entry()
         self.service_wanted_by_box.pack_start(self.service_wanted_by_label,
                                               False, True, 0)

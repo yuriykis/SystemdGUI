@@ -18,7 +18,7 @@ class CpuUtilizationGraphWindow(Gtk.Dialog):
         Gtk.init_check()
         super().__init__(
             title=self._info_text.get_cpu_utilization_graph_window_title())
-        self.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_buttons(self._info_text.get_close_text(), Gtk.ResponseType.CANCEL)
         self.set_border_width(10)
         self.set_default_size(1500, 1000)
 
@@ -34,7 +34,7 @@ class CpuUtilizationGraphWindow(Gtk.Dialog):
         system_utilization_times = []
         for log in logs:
             log[:] = [x for x in log if x != ""]
-            if (len(log) >= 9):
+            if (len(log) > 9):
                 system_utilization_values.append(log[9])
                 system_utilization_times.append(log[2])
         system_utilization_values = system_utilization_values[:self.

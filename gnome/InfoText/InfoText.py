@@ -156,6 +156,14 @@ class InfoText():
         else:
             return "Cancel"
 
+    def get_close_text(self):
+        if self._language == Language.EN:
+            return "Close"
+        elif self._language == Language.PL:
+            return "Zamknij"
+        else:
+            return "Close"
+
     def get_are_you_sure_perf_action_text(self, action, service_name):
         if self._language == Language.EN:
             return "Are you sure you want to " + action + " the " + service_name + "?"
@@ -307,3 +315,59 @@ class InfoText():
             return "Wykres zużycia CPU"
         else:
             return "CPU Utilization Graph"
+
+    def get_active_text(self):
+        if self._language == Language.EN:
+            return "Active: "
+        elif self._language == Language.PL:
+            return "Czy aktywna: "
+        else:
+            return "Active: "
+
+    def get_path_text(self):
+        if self._language == Language.EN:
+            return "Path: "
+        elif self._language == Language.PL:
+            return "Ścieżka: "
+        else:
+            return "Path: "
+    
+    def get_main_pid_text(self):
+        if self._language == Language.EN:
+            return "Main PID: "
+        elif self._language == Language.PL:
+            return "Główny PID: "
+        else:
+            return "Main PID: "
+
+    def get_loaded_text(self):
+        if self._language == Language.EN:
+            return "Loaded: "
+        elif self._language == Language.PL:
+            return "Czy załadowana: "
+        else:
+            return "Loaded: "
+
+    def get_type_text(self):
+        if self._language == Language.EN:
+            return "Type: "
+        elif self._language == Language.PL:
+            return "Typ: "
+        else:
+            return "Type: "
+
+    def get_exec_start_text(self):
+        if self._language == Language.EN:
+            return "ExecStart: "
+        elif self._language == Language.PL:
+            return "Program startowy: "
+        else:
+            return "ExecStart: "
+
+    def get_wanted_by_text(self):
+        if self._language == Language.EN:
+            return "WantedBy: "
+        elif self._language == Language.PL:
+            return "Wymagane przez: "
+        else:
+            return "WantedBy: "

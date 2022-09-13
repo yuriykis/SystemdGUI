@@ -151,6 +151,44 @@ Item {
             return "Load state";
         }
     }
+    function getLoadedText() {
+        if (currentLanguage == "English") {
+            return "Loaded: ";
+        } else if (currentLanguage == "Polski") {
+            return "Czy załadowana: ";
+        } else {
+            return "Load state: ";
+        }
+    }
+
+    function getPathText() {
+        if (currentLanguage == "English") {
+            return "Path: ";
+        } else if (currentLanguage == "Polski") {
+            return "Ścieżka: ";
+        } else {
+            return "Path: ";
+        }
+    }
+
+    function getActiveText() {
+        if (currentLanguage == "English") {
+            return "Active: ";
+        } else if (currentLanguage == "Polski") {
+            return "Czy aktywna: ";
+        } else {
+            return "Active: ";
+        }
+    }
+    function getMainPIDText() {
+        if (currentLanguage == "English") {
+            return "Main PID: ";
+        } else if (currentLanguage == "Polski") {
+            return "Główny PID: ";
+        } else {
+            return "Main PID: ";
+        }
+    }
     function getActiveStateText() {
         if (currentLanguage == "English") {
             return "Active state";
@@ -297,6 +335,56 @@ Item {
             return "Pokaż dziennik";
         } else {
             return "Show logs";
+        }
+    }
+
+    function getOKText() {
+        if (currentLanguage == "English") {
+            return "OK";
+        } else if (currentLanguage == "Polski") {
+            return "Akceptuj";
+        } else {
+            return "OK";
+        }
+    }
+
+    function getCancelText() {
+        if (currentLanguage == "English") {
+            return "Cancel";
+        } else if (currentLanguage == "Polski") {
+            return "Anuluj";
+        } else {
+            return "Cancel";
+        }
+    }
+
+    function getExecStartText() {
+        if (currentLanguage == "English") {
+            return "Exec start";
+        } else if (currentLanguage == "Polski") {
+            return "Program startowy";
+        } else {
+            return "Exec start";
+        }
+    }
+
+    function getWantedByText() {
+        if (currentLanguage == "English") {
+            return "Wanted by";
+        } else if (currentLanguage == "Polski") {
+            return "Wymagane przez";
+        } else {
+            return "Wanted by";
+        }
+    }
+
+    function getTypeText() {
+        if (currentLanguage == "English") {
+            return "Type";
+        } else if (currentLanguage == "Polski") {
+            return "Typ";
+        } else {
+            return "Type";
         }
     }
 }
